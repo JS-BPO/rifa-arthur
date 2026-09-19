@@ -14,7 +14,7 @@
 <!-- PREVIEW DO LINK: suba o arquivo capa-rifa-arthur.jpg na MESMA PASTA deste HTML.
      Se o preview não aparecer no WhatsApp, troque as duas linhas abaixo pela URL completa,
      ex.: https://rifadoarthur.com.br/capa-rifa-arthur.jpg -->
-<meta property="og:image" content="capa-rifa-arthur.jpg">
+<meta property="og:image" content="content="https://js-bpo.github.io/rifa-arthur/capa-rifa-arthur.jpg"">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Rifa do Arthur — uma pequena ajuda para um grande começo">
@@ -1271,13 +1271,20 @@ const CONFIG = {
   // Cole aqui o objeto "firebaseConfig" copiado do console do Firebase, por exemplo:
   // FIREBASE: { apiKey: "...", authDomain: "...", projectId: "...", storageBucket: "...", messagingSenderId: "...", appId: "..." },
   // Enquanto estiver null, a rifa funciona só neste aparelho (localStorage).
-  FIREBASE: null,
+  FIREBASE: {
+  apiKey: "AIzaSyBnkWLHMwT4nZBPd5SBdVmdJtVFRx4Mnpk",
+  authDomain: "rifa-arthur-f24dc.firebaseapp.com",
+  projectId: "rifa-arthur-f24dc",
+  storageBucket: "rifa-arthur-f24dc.firebasestorage.app",
+  messagingSenderId: "348274332018",
+  appId: "1:348274332018:web:f96771a0846f78bfb80deb"
+},
   // E-mail da conta criada em Firebase > Authentication para a área do organizador.
-  EMAIL_ADMIN: "",
-  LINK_PUBLICO: "",                      // <-- cole aqui a URL final depois de hospedar
+  EMAIL_ADMIN: "josimar.jsj2@gmail.com",
+  LINK_PUBLICO: "https://js-bpo.github.io/rifa-arthur/",                      // <-- cole aqui a URL final depois de hospedar
   // Data e hora do sorteio. Formato: "AAAA-MM-DDTHH:MM" (ex.: "2026-10-25T20:00").
   // Deixe vazio ("") para esconder a contagem regressiva.
-  DATA_SORTEIO: "",
+  DATA_SORTEIO: "2026-11-15T16:00",
 
   // --- PIX (para quem não consegue entregar as fraldas) ---
   PIX_ATIVO: true,
