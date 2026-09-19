@@ -538,6 +538,7 @@
   .btn-bear{background:var(--bear); color:#fff;}
   .btn-bear:hover{background:#956A48;}
   .btn-full{width:100%;}
+  .cta-bar .btn.oculto{display:none;}
   .btn:active{transform:scale(.98);}
   .btn:disabled{opacity:.45; cursor:not-allowed;}
 
@@ -716,11 +717,17 @@
   .pix-callout span{font-size:14px; color:var(--ink-soft); line-height:1.55;}
 
   /* ---------- ADMIN ---------- */
-  .admin-stats{display:grid; grid-template-columns:repeat(4,1fr); border:1px solid var(--line); border-radius:var(--r-md); margin:0 0 14px; overflow:hidden;}
+  .admin-stats{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); border:1px solid var(--line); border-radius:var(--r-md); margin:0 0 14px; overflow:hidden;}
   .admin-stat{padding:13px 6px; text-align:center; border-left:1px solid var(--line-soft);}
   .admin-stat:first-child{border-left:none;}
-  .admin-stat b{display:block; font-family:var(--font-display); font-weight:400; font-size:23px; color:var(--ink); font-variant-numeric:tabular-nums;}
-  .admin-stat span{font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint); line-height:1.25; display:block; margin-top:2px;}
+  .admin-barra{display:flex; height:7px; border-radius:999px; background:rgba(41,68,90,.08); overflow:hidden; margin:-4px 0 6px;}
+  .admin-barra i{display:block; height:100%; transition:width .5s ease;}
+  .admin-barra i.conf{background:var(--blue);}
+  .admin-barra i.res{background:var(--beige);}
+  .admin-barra-legenda{font-size:11.5px; color:var(--ink-faint); margin:0 0 14px;}
+  .admin-barra-legenda span{color:var(--ink); font-weight:600;}
+  .admin-stat b{display:block; font-family:var(--font-display); font-weight:400; font-size:21px; color:var(--ink); font-variant-numeric:tabular-nums;}
+  .admin-stat span{font-size:9.5px; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-faint); line-height:1.25; display:block; margin-top:2px;}
   .admin-stat.ok b{color:var(--blue);}
   .admin-stat.wait b{color:var(--bear);}
 
@@ -807,6 +814,106 @@
   }
   .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
 
+
+  /* ============================================================
+     SORTEADOR
+  ============================================================ */
+  .sorteio{
+    position:fixed; inset:0; z-index:120; display:none;
+    overflow-y:auto; -webkit-overflow-scrolling:touch;
+    background:
+      radial-gradient(60% 34% at 50% 0%, rgba(120,150,173,.26), transparent 70%),
+      radial-gradient(50% 30% at 100% 100%, rgba(216,197,174,.35), transparent 70%),
+      var(--paper);
+  }
+  .sorteio.open{display:block;}
+  .sorteio-inner{
+    max-width:480px; margin:0 auto; min-height:100%;
+    padding:calc(14px + env(safe-area-inset-top)) 20px calc(22px + env(safe-area-inset-bottom));
+    display:flex; flex-direction:column; gap:12px; position:relative;
+  }
+  .sorteio-top{display:flex; justify-content:space-between; align-items:center;}
+  .sorteio-marca{display:flex; align-items:center; gap:10px;}
+  .sorteio-marca svg{width:44px; height:44px;}
+  .sorteio-marca small{display:block; font-size:10.5px; letter-spacing:.24em; text-transform:uppercase; color:var(--ink-faint);}
+  .sorteio-marca em{display:block; font-family:var(--font-script); font-style:normal; font-size:34px; line-height:.9; color:var(--ink);}
+  .sorteio-fechar{width:36px; height:36px; border-radius:50%; border:none; background:rgba(41,68,90,.06); color:var(--ink-soft); font-size:14px;}
+  .sorteio-modos{display:flex; gap:6px; background:rgba(41,68,90,.05); padding:4px; border-radius:12px;}
+  .sorteio-modos button{flex:1; border:none; background:transparent; border-radius:9px; padding:9px 6px; font-size:12.5px; font-weight:600; color:var(--ink-soft);}
+  .sorteio-modos button.active{background:var(--paper-2); color:var(--ink); box-shadow:0 1px 3px rgba(41,68,90,.12);}
+  .sorteio-modos button.active[data-modo="oficial"]{background:var(--ink); color:#fff;}
+  .faixa-teste{
+    display:none; text-align:center; font-size:11px; font-weight:700; letter-spacing:.18em; color:#8A6A4A;
+    padding:8px; border-radius:10px;
+    background:repeating-linear-gradient(-45deg, #F0E6D8 0 12px, #F7EFE3 12px 24px);
+  }
+  .sorteio.teste .faixa-teste{display:block;}
+
+  .sorteio-premio{
+    display:flex; gap:14px; align-items:center;
+    background:var(--paper-2); border:1px solid var(--line); border-radius:var(--r-lg);
+    padding:10px; box-shadow:var(--shadow-soft);
+  }
+  .sorteio-premio img{width:112px; height:70px; object-fit:cover; border-radius:12px; flex:none; background:var(--sky);}
+  .sorteio-medalha{display:inline-block; font-size:10.5px; font-weight:700; letter-spacing:.16em; color:var(--bear); margin-bottom:3px;}
+  .sorteio-premio b{display:block; font-family:var(--font-display); font-weight:400; font-size:19px; line-height:1.2; color:var(--ink);}
+
+  .sorteio-palco{
+    position:relative; text-align:center; padding:18px 0 10px;
+    background:var(--paper-2); border:1px solid var(--line); border-radius:var(--r-xl);
+    box-shadow:var(--shadow-soft); overflow:hidden; min-height:230px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+  }
+  .sorteio-numero{
+    font-family:var(--font-display); font-weight:300;
+    font-size:clamp(108px, 36vw, 160px); line-height:1; color:var(--ink);
+    font-variant-numeric:tabular-nums; letter-spacing:-.02em;
+  }
+  .sorteio-numero.girando{color:var(--blue);}
+  .sorteio-numero.final{animation:numFinal .7s cubic-bezier(.34,1.56,.64,1);}
+  @keyframes numFinal{0%{transform:scale(.7); opacity:.3;} 100%{transform:scale(1); opacity:1;}}
+  .sorteio-vencedor{font-family:var(--font-script); font-size:46px; line-height:1.1; color:var(--ink); min-height:52px;}
+  .sorteio-vencedor.mostrar{animation:reveal .6s cubic-bezier(.16,1,.3,1) both;}
+  .sorteio-confete{position:absolute; inset:0; pointer-events:none;}
+  .sorteio-confete i{
+    position:absolute; top:-12px; width:8px; height:12px; border-radius:2px; opacity:0;
+    animation:confete 2.2s ease-in forwards;
+  }
+  @keyframes confete{0%{opacity:1; transform:translateY(0) rotate(0);} 100%{opacity:0; transform:translateY(260px) rotate(540deg);}}
+
+  .sorteio-btn{padding:17px; font-size:15px; letter-spacing:.02em;}
+  .sorteio-info{text-align:center;}
+  .sorteio-info p{font-size:12.5px; color:var(--ink-soft); line-height:1.5;}
+  .sorteio-chips{display:flex; flex-wrap:wrap; gap:4px; justify-content:center; margin:8px 0;}
+  .sorteio-chips span{
+    font-size:11px; font-weight:600; font-variant-numeric:tabular-nums; color:var(--ink-soft);
+    background:var(--paper-2); border:1px solid var(--line); border-radius:7px; padding:3px 6px;
+  }
+  .sorteio-chips span.fora{text-decoration:line-through; opacity:.4;}
+  .sorteio-ja b{color:var(--ink);}
+  .sorteio-alerta{color:#8A6A4A !important; margin-top:6px;}
+
+  .sorteio-titulo{font-family:var(--font-display); font-weight:400; font-size:28px; text-align:center; color:var(--ink); margin:4px 0 2px;}
+  .sorteio-resultados{display:flex; flex-direction:column; gap:8px;}
+  .sorteio-res{
+    display:flex; align-items:center; gap:12px;
+    background:var(--paper-2); border:1px solid var(--line); border-radius:var(--r-md); padding:10px 12px;
+  }
+  .sorteio-res .num{
+    flex:none; width:54px; height:54px; border-radius:14px; background:var(--sky);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-display); font-size:26px; color:var(--ink); font-variant-numeric:tabular-nums;
+  }
+  .sorteio-res small{display:block; font-size:10px; font-weight:700; letter-spacing:.14em; color:var(--bear);}
+  .sorteio-res b{display:block; font-size:15px; color:var(--ink);}
+  .sorteio-res span{display:block; font-size:12px; color:var(--ink-faint);}
+  #vencedoresCanvas{width:100%; max-width:200px; border-radius:var(--r-md); box-shadow:var(--shadow-lift); border:1px solid var(--line); background:var(--paper-2);}
+
+  .sorteio-rodape{display:flex; justify-content:center; gap:18px; margin-top:auto; padding-top:8px;}
+  .sorteio-rodape button{background:none; border:none; font-size:12px; color:var(--ink-faint); text-decoration:underline; text-underline-offset:3px; padding:6px;}
+  .sorteio-dica{font-size:11.5px; color:var(--ink-faint); text-align:center;}
+  .sorteio.gravando .sorteio-rodape, .sorteio.gravando .sorteio-dica, .sorteio.gravando .sorteio-modos{visibility:hidden;}
+
   /* ---------- entrada de página ---------- */
   .reveal{opacity:0; transform:translateY(14px); animation:reveal .7s cubic-bezier(.16,1,.3,1) forwards;}
   .reveal:nth-child(1){animation-delay:.05s;}
@@ -879,7 +986,6 @@
     <svg class="urso-mini" viewBox="0 0 140 152" aria-hidden="true"><use href="#ursinho"/></svg>
     <span class="txt">Rifa do <em>Arthur</em></span>
   </div>
-  <button class="btn-topo" id="btnTopoNumeros">Escolher números</button>
 </div>
 
 <!-- ================= HERO ================= -->
@@ -897,7 +1003,7 @@
       <div>Tamanhos<b>P · M · G</b></div>
     </div>
     <button class="btn-hero reveal" id="btnHeroCta">ESCOLHER MEUS NÚMEROS <i class="seta"></i></button>
-    <p class="hero-progresso reveal"><b id="heroProgresso">0 de 50</b> números escolhidos</p>
+    <p class="hero-progresso reveal"><b id="heroProgresso">0 de 50</b> números escolhidos · <span id="heroPct">0%</span> da rifa preenchida</p>
   </div>
 </header>
 
@@ -1090,7 +1196,7 @@
 <!-- ================= CTA FIXA ================= -->
 <div class="cta-bar">
   <button class="btn btn-secondary" id="btnCopyLink">Compartilhar</button>
-  <button class="btn btn-primary" id="btnCtaNumeros">Escolher números</button>
+  <button class="btn btn-primary oculto" id="btnCtaNumeros">Escolher números</button>
 </div>
 
 <!-- ================= MODAL PARTICIPAÇÃO ================= -->
@@ -1195,12 +1301,15 @@
       <button class="modal-close" id="closeAdmin" aria-label="Fechar">✕</button>
     </div>
     <div class="admin-stats">
-      <div class="admin-stat"><b>50</b><span>Total</span></div>
       <div class="admin-stat"><b id="admEscolhidos">0</b><span>Escolhidos</span></div>
       <div class="admin-stat ok"><b id="admConf">0</b><span>Confirmados</span></div>
-      <div class="admin-stat wait"><b id="admRes">0</b><span>Aguardando entrega</span></div>
+      <div class="admin-stat wait"><b id="admRes">0</b><span>Aguardando</span></div>
+      <div class="admin-stat"><b id="admDisp">50</b><span>Disponíveis</span></div>
     </div>
+    <div class="admin-barra" aria-hidden="true"><i class="conf" id="admBarConf"></i><i class="res" id="admBarRes"></i></div>
+    <p class="admin-barra-legenda"><span id="admPct">0%</span> da rifa preenchida · <span id="admDeCinquenta">0 de 50</span> números</p>
     <p class="admin-pix-resumo" id="admResumoPix" style="display:none;"></p>
+    <button class="btn btn-primary btn-full" id="btnSorteador" style="margin-bottom:10px;">Sorteador dos prêmios</button>
     <button class="btn btn-bear btn-full" id="btnStory" style="margin-bottom:10px;">Gerar stories para o Instagram</button>
     <div class="admin-actions">
       <button class="btn btn-ghost" id="btnVerRelatorio">Relatório</button>
@@ -1263,6 +1372,66 @@
     <figcaption id="lightboxCap"></figcaption>
   </div>
 </figure>
+
+<!-- ================= SORTEADOR (tela cheia, pensada para gravar a tela) ================= -->
+<div class="sorteio" id="sorteio" aria-hidden="true">
+  <div class="sorteio-inner">
+    <div class="sorteio-top">
+      <div class="sorteio-marca">
+        <svg viewBox="0 0 140 152" aria-hidden="true"><use href="#ursinho"/></svg>
+        <div><small>Rifa do</small><em>Arthur</em></div>
+      </div>
+      <button class="sorteio-fechar" id="sorteioFechar" aria-label="Fechar sorteador">✕</button>
+    </div>
+
+    <div class="sorteio-modos" id="sorteioModos">
+      <button data-modo="teste">Teste</button>
+      <button data-modo="oficial">Sorteio oficial</button>
+    </div>
+    <div class="faixa-teste" id="faixaTeste">SORTEIO DE TESTE · NÃO VALE</div>
+
+    <!-- etapa de sorteio -->
+    <div id="sorteioEtapa">
+      <div class="sorteio-premio">
+        <img id="sorteioFoto" src="" alt="">
+        <div>
+          <span class="sorteio-medalha" id="sorteioMedalha">1º PRÊMIO</span>
+          <b id="sorteioPremioNome"></b>
+        </div>
+      </div>
+
+      <div class="sorteio-palco">
+        <div class="sorteio-numero" id="sorteioNumero">—</div>
+        <div class="sorteio-vencedor" id="sorteioVencedor"></div>
+        <div class="sorteio-confete" id="sorteioConfete" aria-hidden="true"></div>
+      </div>
+
+      <button class="btn btn-primary btn-full sorteio-btn" id="sorteioBtn">Sortear o 1º prêmio</button>
+
+      <div class="sorteio-info">
+        <p id="sorteioElegiveisTxt"></p>
+        <div class="sorteio-chips" id="sorteioChips"></div>
+        <p class="sorteio-ja" id="sorteioJa"></p>
+        <p class="sorteio-alerta" id="sorteioAlerta"></p>
+      </div>
+    </div>
+
+    <!-- resultado final -->
+    <div id="sorteioFinal" style="display:none;">
+      <h2 class="sorteio-titulo">Resultado do sorteio</h2>
+      <div class="sorteio-resultados" id="sorteioResultados"></div>
+      <div class="story-preview-wrap"><canvas id="vencedoresCanvas" width="1080" height="1920"></canvas></div>
+      <button class="btn btn-bear btn-full" id="btnStoryVencedores" style="margin-bottom:8px;">Baixar story dos vencedores</button>
+      <button class="btn btn-secondary btn-full" id="btnCompartilharResultado">Compartilhar resultado</button>
+    </div>
+
+    <div class="sorteio-rodape">
+      <button id="sorteioTelaCheia">Tela cheia</button>
+      <button id="sorteioRecomecar">Recomeçar sorteio</button>
+    </div>
+    <p class="sorteio-dica" id="sorteioDica">Dica: comece a gravar a tela antes de tocar em sortear.</p>
+  </div>
+</div>
 
 <div class="toast" id="toast"></div>
 <script>
@@ -1599,6 +1768,8 @@ function aoMudarEstado(){
   renderGrid();
   renderSelectionBar();
   if(document.getElementById('overlayAdmin').classList.contains('open')) renderAdmin();
+  const telaSorteio = document.getElementById('sorteio');
+  if(telaSorteio && telaSorteio.classList.contains('open') && !sorteando) renderSorteio();
 }
 let marcaEscolhida = Object.keys(CONFIG.PRECOS)[0];
 document.getElementById('hintOrganizador').textContent = CONFIG.NOME_ORGANIZADOR || 'organização';
@@ -1647,7 +1818,21 @@ function irParaNumeros(){
 }
 document.getElementById('btnHeroCta').addEventListener('click', irParaNumeros);
 document.getElementById('btnCtaNumeros').addEventListener('click', irParaNumeros);
-document.getElementById('btnTopoNumeros').addEventListener('click', irParaNumeros);
+
+/* evita botões repetidos: o "Escolher números" da barra de baixo só aparece
+   quando o botão principal (topo) e a grade de números estão fora da tela */
+(function(){
+  const btn = document.getElementById('btnCtaNumeros');
+  const hero = document.getElementById('btnHeroCta');
+  const grade = document.getElementById('numeros');
+  if(!('IntersectionObserver' in window)){ btn.classList.remove('oculto'); return; }
+  const visivel = {hero:true, grade:false};
+  const atualizar = ()=> btn.classList.toggle('oculto', visivel.hero || visivel.grade);
+  new IntersectionObserver(es=>{ es.forEach(e=>{ visivel[e.target===hero?'hero':'grade'] = e.isIntersecting; }); atualizar(); })
+    .observe(hero);
+  const obsGrade = new IntersectionObserver(es=>{ es.forEach(e=>{ visivel.grade = e.isIntersecting; }); atualizar(); }, {threshold:0.15});
+  obsGrade.observe(grade);
+})();
 
 /* ============================================================
    CONTAGEM REGRESSIVA DO SORTEIO
@@ -1700,6 +1885,7 @@ function destacarNumero(numero){
 }
 
 document.getElementById('btnSorte').addEventListener('click', ()=>{
+  if(inscricoesEncerradas()){ avisarEncerrado(); return; }
   const livres = numerosLivres();
   if(!livres.length){ mostrarToast('Não sobrou nenhum número livre por enquanto.'); return; }
   const escolhido = livres[Math.floor(Math.random()*livres.length)];
@@ -1712,7 +1898,7 @@ document.getElementById('btnSorte').addEventListener('click', ()=>{
 
 function aplicarLinkDireto(){
   const param = new URLSearchParams(window.location.search).get('n');
-  if(!param) return;
+  if(!param || inscricoesEncerradas()) return;
   const pedidos = param.split(/[,\s.;-]+/)
     .map(v=>parseInt(v,10))
     .filter(v=>Number.isInteger(v) && v>=1 && v<=50);
@@ -1779,6 +1965,7 @@ function renderProgresso(){
   document.getElementById('progressCount').textContent = `${escolhidos}/50`;
   document.getElementById('progressLivres').textContent = livres;
   document.getElementById('heroProgresso').textContent = `${escolhidos} de 50`;
+  document.getElementById('heroPct').textContent = `${Math.round(escolhidos/50*100)}%`;
   document.getElementById('progressFill').style.width = (escolhidos/50*100).toFixed(0)+'%';
 
   const por = contagemPorFaixa();
@@ -1790,9 +1977,18 @@ function renderProgresso(){
 /* ============================================================
    CLIQUE NO NÚMERO — seleção múltipla
 ============================================================ */
+/* depois da data do sorteio, o público não reserva mais (a área do organizador continua livre) */
+function inscricoesEncerradas(){
+  if(!CONFIG.DATA_SORTEIO) return false;
+  const alvo = new Date(CONFIG.DATA_SORTEIO);
+  return !isNaN(alvo) && new Date() >= alvo;
+}
+function avisarEncerrado(){ mostrarToast('As escolhas de números foram encerradas. Obrigada! 💙'); }
+
 function onClickNumero(numero){
   const item = estado.find(i=>i.numero===numero);
   if(modoAdmin){ abrirEdicaoAdmin(numero); return; }
+  if(inscricoesEncerradas()){ avisarEncerrado(); return; }
   if(item.status==='confirmado'){
     mostrarToast(`Número ${pad2(numero)} já está confirmado.`);
     return;
@@ -1909,22 +2105,24 @@ document.getElementById('btnCopiarPix').addEventListener('click', async ()=>{
   }catch(e){ prompt('Copie a chave Pix:', CONFIG.PIX_CHAVE); }
 });
 
-function mensagemWhatsApp(numeros, nome){
-  const linhas = numeros.map(n=>`${pad2(n)} — ${faixaDoNumero(n).label}`).join('\n');
+function mensagemWhatsApp(numeros, nome, telefone){
   const plural = numeros.length>1;
   const saudacao = CONFIG.SAUDACAO_PARTICIPANTE ? `Oi, ${CONFIG.SAUDACAO_PARTICIPANTE}!` : 'Oi!';
-  let fecho;
+  const linhas = numeros.map(n=>`${pad2(n)} — ${faixaDoNumero(n).label}`).join('\n');
+  let contrib;
   if(modoContribuicao==='pix'){
     const total = totalPix(numeros, marcaEscolhida);
-    fecho = `Prefiro contribuir por Pix, no valor ${plural ? 'dos pacotes' : 'do pacote'} de ${marcaEscolhida}: ${brl(total)}.\n`
-          + `Já envio o comprovante por aqui. 💙`;
+    contrib = `Pix no valor ${plural ? 'dos pacotes' : 'do pacote'} de ${marcaEscolhida}: *${brl(total)}*\n`
+            + `Já envio o comprovante por aqui.`;
   } else {
-    fecho = `Vou combinar a entrega ${plural ? 'dos pacotes' : 'do pacote'}.`;
+    contrib = `Vou entregar ${plural ? 'os pacotes' : 'o pacote'}. Vamos combinar a entrega?`;
   }
-  return `${saudacao} Quero participar da Rifa do ${CONFIG.NOME_BEBE}.\n\n`
-       + `${plural ? 'Escolhi os números:' : 'Escolhi o número:'}\n${linhas}\n\n`
-       + `Meu nome é ${nome}.\n\n`
-       + fecho;
+  return `*Rifa do ${CONFIG.NOME_BEBE}* 💙\n`
+       + `${saudacao} Quero participar da rifa.\n\n`
+       + `*${plural ? 'Meus números' : 'Meu número'}:*\n${linhas}\n\n`
+       + `*Nome:* ${nome}\n`
+       + (telefone ? `*WhatsApp:* ${telefone}\n` : '')
+       + `\n*Contribuição:*\n${contrib}`;
 }
 
 document.getElementById('btnConfirmarReserva').addEventListener('click', async ()=>{
@@ -1932,11 +2130,12 @@ document.getElementById('btnConfirmarReserva').addEventListener('click', async (
   const telefone = document.getElementById('inpTelefone').value.trim();
   if(!nome){ mostrarToast('Escreve seu nome pra gente identificar a reserva.'); return; }
   if(selecionados.size===0 || reservaEmAndamento) return;
+  if(inscricoesEncerradas() && !modoAdmin){ avisarEncerrado(); return; }
 
   const btn = document.getElementById('btnConfirmarReserva');
   const rotulo = btn.textContent;
   const numeros = [...selecionados].sort((a,b)=>a-b);
-  const mensagem = mensagemWhatsApp(numeros, nome);
+  const mensagem = mensagemWhatsApp(numeros, nome, telefone);
   const urlWhats = `https://wa.me/${CONFIG.WHATSAPP_ORGANIZADOR}?text=${encodeURIComponent(mensagem)}`;
 
   // abre a aba do WhatsApp já no clique (celulares bloqueiam janelas abertas depois de esperar o banco)
@@ -2074,6 +2273,11 @@ function renderAdmin(){
   document.getElementById('admEscolhidos').textContent = conf + res;
   document.getElementById('admConf').textContent = conf;
   document.getElementById('admRes').textContent = res;
+  document.getElementById('admDisp').textContent = 50 - conf - res;
+  document.getElementById('admBarConf').style.width = (conf/50*100)+'%';
+  document.getElementById('admBarRes').style.width = (res/50*100)+'%';
+  document.getElementById('admPct').textContent = Math.round((conf+res)/50*100)+'%';
+  document.getElementById('admDeCinquenta').textContent = `${conf+res} de 50`;
 
   const pendentesPix = estado.filter(i=>i.modo==='pix' && i.status==='reservado');
   const alvoPix = document.getElementById('admResumoPix');
@@ -2165,7 +2369,9 @@ function abrirEdicaoAdmin(numero){
 }
 
 document.getElementById('btnResetAll').addEventListener('click', async ()=>{
-  if(!confirm('Isso vai apagar TODAS as participações. Confirma?')) return;
+  const resposta = prompt('ATENÇÃO: isso apaga TODAS as reservas e confirmações reais da rifa e não tem como desfazer.\n\nPara confirmar, digite ZERAR:');
+  if(resposta === null) return;
+  if(resposta.trim().toUpperCase() !== 'ZERAR'){ mostrarToast('Nada foi apagado.'); return; }
   const r = await Persistencia.zerarTudo();
   if(!r.ok) return;
   renderGrid();
@@ -3005,6 +3211,357 @@ document.addEventListener('keydown', (e)=>{
     fecharLightbox();
   }
 });
+
+/* ============================================================
+   SORTEADOR DOS PRÊMIOS
+   - só números CONFIRMADOS participam (regra da rifa);
+   - o vencedor é escolhido de uma lista que já exclui os vencedores
+     anteriores, então um número nunca ganha dois prêmios;
+   - NÃO grava nada no Firebase: o resultado fica salvo só neste aparelho;
+   - modo TESTE e modo OFICIAL têm resultados separados.
+============================================================ */
+const SORTEIO_KEY = 'rifa_arthur_sorteio_v1';
+function sorteioVazio(){ return {modo:'teste', teste:{vencedores:[]}, oficial:{vencedores:[]}}; }
+function lerSorteio(){
+  try{
+    const s = JSON.parse(localStorage.getItem(SORTEIO_KEY));
+    if(s && s.teste && s.oficial && Array.isArray(s.teste.vencedores) && Array.isArray(s.oficial.vencedores)) return s;
+  }catch(e){}
+  return sorteioVazio();
+}
+function salvarSorteio(){ try{ localStorage.setItem(SORTEIO_KEY, JSON.stringify(sorteio)); }catch(e){} }
+
+let sorteio = lerSorteio();
+let sorteando = false;
+let mostrandoResultado = false;
+let travaTela = null;
+const elSorteio = document.getElementById('sorteio');
+
+function sorteioAtual(){ return sorteio[sorteio.modo]; }
+function primeiroNome(n){ return (n||'').trim().split(/\s+/)[0] || 'Participante'; }
+function nomePremio(p){ return p.detalhe ? `${p.nome} — ${p.detalhe}` : p.nome; }
+
+/* inteiro aleatório uniforme de 0 a n-1 (usa o gerador criptográfico do navegador) */
+function aleatorio(n){
+  if(window.crypto && crypto.getRandomValues){
+    const limite = Math.floor(0x100000000 / n) * n;
+    const buf = new Uint32Array(1);
+    do{ crypto.getRandomValues(buf); }while(buf[0] >= limite);
+    return buf[0] % n;
+  }
+  return Math.floor(Math.random() * n);
+}
+
+/* números que concorrem: confirmados, menos os que já ganharam neste modo */
+function participantesSorteio(){
+  const confirmados = estado.filter(i=>i.status==='confirmado');
+  const simulado = sorteio.modo==='teste' && confirmados.length===0;
+  const base = simulado
+    ? estado.map(i=>({numero:i.numero, nome:'Participante '+pad2(i.numero), telefone:''}))
+    : confirmados.map(i=>({numero:i.numero, nome:i.nome, telefone:i.telefone}));
+  const jaGanharam = new Set(sorteioAtual().vencedores.map(v=>v.numero));
+  return {base, elegiveis: base.filter(i=>!jaGanharam.has(i.numero)), jaGanharam, simulado};
+}
+
+function renderSorteio(){
+  const teste = sorteio.modo==='teste';
+  elSorteio.classList.toggle('teste', teste);
+  document.querySelectorAll('#sorteioModos button').forEach(b=> b.classList.toggle('active', b.dataset.modo===sorteio.modo));
+
+  const vs = sorteioAtual().vencedores;
+  const terminou = vs.length >= 3 && !mostrandoResultado;
+  document.getElementById('sorteioEtapa').style.display = terminou ? 'none' : 'block';
+  document.getElementById('sorteioFinal').style.display = terminou ? 'block' : 'none';
+  document.getElementById('sorteioDica').style.display = terminou ? 'none' : 'block';
+  if(terminou){ renderResultadoFinal(); return; }
+
+  const k = mostrandoResultado ? vs.length - 1 : vs.length;     // prêmio na tela (0, 1 ou 2)
+  const premio = PREMIOS[k];
+  const foto = document.getElementById('sorteioFoto');
+  foto.src = premio.foto; foto.alt = nomePremio(premio);
+  document.getElementById('sorteioMedalha').textContent = `${k+1}º PRÊMIO`;
+  document.getElementById('sorteioPremioNome').textContent = nomePremio(premio);
+
+  const numEl = document.getElementById('sorteioNumero');
+  const vencEl = document.getElementById('sorteioVencedor');
+  if(mostrandoResultado){
+    const v = vs[vs.length-1];
+    numEl.textContent = pad2(v.numero);
+    vencEl.textContent = primeiroNome(v.nome);
+  } else if(!sorteando){
+    numEl.textContent = '—'; numEl.classList.remove('final','girando');
+    vencEl.textContent = ''; vencEl.classList.remove('mostrar');
+  }
+
+  const {base, elegiveis, jaGanharam, simulado} = participantesSorteio();
+  document.getElementById('sorteioElegiveisTxt').innerHTML = simulado
+    ? 'Ainda não há números confirmados. <b>O teste usa os 50 números.</b>'
+    : `<b>${base.length} ${base.length===1?'número confirmado participa':'números confirmados participam'}</b> deste sorteio`;
+  document.getElementById('sorteioChips').innerHTML = base
+    .map(i=>`<span class="${jaGanharam.has(i.numero)?'fora':''}">${pad2(i.numero)}</span>`).join('');
+  document.getElementById('sorteioJa').innerHTML = vs.length
+    ? 'Já sorteados: ' + vs.map(v=>`<b>${pad2(v.numero)}</b>`).join(' · ') + ' (não concorrem de novo)'
+    : '';
+  const reservados = estado.filter(i=>i.status==='reservado').length;
+  document.getElementById('sorteioAlerta').textContent = (!simulado && reservados)
+    ? `${reservados} ${reservados===1?'número reservado ainda não foi confirmado e fica':'números reservados ainda não foram confirmados e ficam'} fora do sorteio.`
+    : '';
+
+  const btn = document.getElementById('sorteioBtn');
+  if(mostrandoResultado){
+    btn.textContent = k < 2 ? `Próximo: sortear o ${k+2}º prêmio` : 'Ver resultado final';
+    btn.disabled = false;
+  } else {
+    btn.textContent = `Sortear o ${k+1}º prêmio`;
+    btn.disabled = sorteando || elegiveis.length === 0;
+  }
+}
+
+function animarNumeros(pool, final){
+  return new Promise(res=>{
+    const el = document.getElementById('sorteioNumero');
+    el.classList.remove('final'); el.classList.add('girando');
+    let atraso = 45, ultimo = null;
+    const passo = ()=>{
+      if(atraso > 520){
+        el.textContent = pad2(final);
+        el.classList.remove('girando'); void el.offsetWidth; el.classList.add('final');
+        res(); return;
+      }
+      let n;
+      do{ n = pool[aleatorio(pool.length)]; }while(pool.length > 1 && n === ultimo);
+      ultimo = n; el.textContent = pad2(n);
+      atraso *= atraso < 120 ? 1.04 : 1.12;
+      setTimeout(passo, atraso);
+    };
+    passo();
+  });
+}
+
+function celebrar(){
+  const alvo = document.getElementById('sorteioConfete');
+  const cores = ['#7896AD','#A97852','#D8C5AE','#29445A','#C79B6E','#E8EFF3'];
+  alvo.innerHTML = '';
+  for(let i=0;i<28;i++){
+    const c = document.createElement('i');
+    c.style.left = (Math.random()*100) + '%';
+    c.style.background = cores[i % cores.length];
+    c.style.animationDelay = (Math.random()*0.5) + 's';
+    c.style.transform = `rotate(${Math.random()*360}deg)`;
+    alvo.appendChild(c);
+  }
+  setTimeout(()=>{ alvo.innerHTML = ''; }, 3200);
+}
+
+async function manterTelaLigada(){
+  try{ if('wakeLock' in navigator && !travaTela) travaTela = await navigator.wakeLock.request('screen'); }catch(e){}
+}
+
+async function sortearPremio(){
+  if(sorteando) return;                                  // impede dois sorteios ao mesmo tempo
+  const vs = sorteioAtual().vencedores;
+  if(vs.length >= 3) return;
+  const {elegiveis} = participantesSorteio();
+  if(!elegiveis.length){ mostrarToast('Não há números confirmados para sortear.'); return; }
+
+  sorteando = true;
+  const btn = document.getElementById('sorteioBtn');
+  btn.disabled = true; btn.textContent = 'Sorteando…';
+  elSorteio.classList.add('gravando');
+  manterTelaLigada();
+  document.getElementById('sorteioVencedor').textContent = '';
+
+  const vencedor = elegiveis[aleatorio(elegiveis.length)];     // escolhido só entre os elegíveis
+  await animarNumeros(elegiveis.map(i=>i.numero), vencedor.numero);
+
+  vs.push({
+    premio: vs.length + 1,
+    premioNome: nomePremio(PREMIOS[vs.length]),
+    numero: vencedor.numero,
+    nome: vencedor.nome || '',
+    telefone: vencedor.telefone || '',
+    data: new Date().toLocaleString('pt-BR')
+  });
+  salvarSorteio();
+
+  sorteando = false;
+  mostrandoResultado = true;
+  elSorteio.classList.remove('gravando');
+  renderSorteio();
+  const vencEl = document.getElementById('sorteioVencedor');
+  vencEl.classList.remove('mostrar'); void vencEl.offsetWidth; vencEl.classList.add('mostrar');
+  celebrar();
+}
+
+document.getElementById('sorteioBtn').addEventListener('click', ()=>{
+  if(mostrandoResultado){ mostrandoResultado = false; renderSorteio(); return; }
+  sortearPremio();
+});
+
+function renderResultadoFinal(){
+  const vs = sorteioAtual().vencedores;
+  document.getElementById('sorteioResultados').innerHTML = vs.map((v,i)=>`
+    <div class="sorteio-res">
+      <div class="num">${pad2(v.numero)}</div>
+      <div>
+        <small>${i+1}º PRÊMIO</small>
+        <b>${primeiroNome(v.nome)}</b>
+        <span>${nomePremio(PREMIOS[i])}</span>
+      </div>
+    </div>`).join('');
+  desenharStoryVencedores(document.getElementById('vencedoresCanvas'));
+}
+
+function textoResultado(){
+  const vs = sorteioAtual().vencedores;
+  const medalhas = ['🥇','🥈','🥉'];
+  return `*Resultado da Rifa do ${CONFIG.NOME_BEBE}* 💙` + (sorteio.modo==='teste' ? ' (TESTE)' : '') + `\n\n`
+    + vs.map((v,i)=>`${medalhas[i]} *${i+1}º prêmio:* ${nomePremio(PREMIOS[i])}\nNº ${pad2(v.numero)} — ${primeiroNome(v.nome)}`).join('\n\n')
+    + `\n\nObrigada a todos que participaram e ajudaram na chegada do ${CONFIG.NOME_BEBE}!`;
+}
+document.getElementById('btnCompartilharResultado').addEventListener('click', async ()=>{
+  const texto = textoResultado();
+  if(navigator.share){
+    try{ await navigator.share({title:`Resultado da Rifa do ${CONFIG.NOME_BEBE}`, text:texto}); return; }
+    catch(e){ if(e && e.name==='AbortError') return; }
+  }
+  window.open(`https://wa.me/?text=${encodeURIComponent(texto)}`, '_blank');
+});
+
+/* story 9:16 dos vencedores */
+async function desenharStoryVencedores(canvas){
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const vs = sorteioAtual().vencedores;
+  try{ await garantirFontes(); }catch(e){}
+  await prepararFotosPremios();
+  ctx.clearRect(0,0,W,H);
+  desenharFundo(ctx, W, H);
+  pillTopo(ctx, W, 'RIFA DO ARTHUR', 122);
+  desenharUrsoCanvas(ctx, W/2, 290, 0.95);
+
+  ctx.textAlign = 'center';
+  ctx.fillStyle = NAVY;
+  ctx.font = '300 74px Fraunces, Georgia, serif';
+  ctx.fillText('Resultado do sorteio', W/2, 450);
+  ctx.fillStyle = NAVY_SOFT;
+  ctx.font = '400 30px Inter, sans-serif';
+  ctx.fillText('Parabéns aos ganhadores!', W/2, 500);
+
+  const cardX = 80, cardW = W - 160, cardH = 280, gap = 28, fotoW = 384, fotoH = 240;
+  vs.forEach((v,i)=>{
+    const y = 560 + i*(cardH+gap);
+    const p = PREMIOS[i];
+    ctx.fillStyle = 'rgba(41,68,90,0.05)';
+    roundRect(ctx, cardX+4, y+8, cardW, cardH, 30); ctx.fill();
+    ctx.fillStyle = '#FFFDFC';
+    roundRect(ctx, cardX, y, cardW, cardH, 30); ctx.fill();
+    ctx.strokeStyle = 'rgba(41,68,90,0.12)'; ctx.lineWidth = 2;
+    roundRect(ctx, cardX, y, cardW, cardH, 30); ctx.stroke();
+    fotoArredondada(ctx, p.img, cardX+20, y+20, fotoW, fotoH, 20);
+
+    const tx = cardX + 20 + fotoW + 32;
+    const maxW = cardX + cardW - 28 - tx;
+    ctx.textAlign = 'left';
+    ctx.font = '400 26px Inter, sans-serif';
+    const linhasPremio = quebrarLinhas(ctx, nomePremio(p), maxW).slice(0,2);
+    const blocoH = 26 + 70 + 52 + linhasPremio.length*34;
+    let ty = y + cardH/2 - blocoH/2;
+
+    ctx.fillStyle = BEAR_DARK;
+    ctx.font = '600 20px Inter, sans-serif';
+    textoEsquerda(ctx, `${i+1}º PRÊMIO`, tx, ty + 18, 4);
+    ctx.fillStyle = NAVY;
+    ctx.font = '400 66px Fraunces, Georgia, serif';
+    ctx.fillText('Nº ' + pad2(v.numero), tx, ty + 26 + 62);
+    ctx.font = '400 50px "Alex Brush", cursive';
+    ctx.fillText(primeiroNome(v.nome), tx, ty + 26 + 70 + 44);
+    ctx.fillStyle = NAVY_SOFT;
+    ctx.font = '400 26px Inter, sans-serif';
+    linhasPremio.forEach((l,li)=> ctx.fillText(l, tx, ty + 26 + 70 + 52 + 30 + li*34));
+  });
+  ctx.textAlign = 'center';
+
+  ctx.fillStyle = NAVY;
+  ctx.font = '400 40px Fraunces, Georgia, serif';
+  ctx.fillText('Obrigada a todos que participaram!', W/2, 1560);
+  divisorCoracao(ctx, W/2, 1620, 150, 'rgba(169,120,82,0.6)');
+  rodapeStory(ctx, W, H);
+
+  if(sorteio.modo==='teste'){
+    ctx.save();
+    ctx.translate(W/2, H/2); ctx.rotate(-0.5);
+    ctx.fillStyle = 'rgba(169,120,82,0.16)';
+    ctx.font = '700 230px Inter, sans-serif';
+    ctx.fillText('TESTE', 0, 80);
+    ctx.restore();
+  }
+}
+document.getElementById('btnStoryVencedores').addEventListener('click', async ()=>{
+  const canvas = document.getElementById('vencedoresCanvas');
+  await desenharStoryVencedores(canvas);
+  const link = document.createElement('a');
+  link.download = sorteio.modo==='teste' ? 'story-resultado-TESTE.png' : 'story-resultado-rifa-arthur.png';
+  try{ link.href = canvas.toDataURL('image/png'); }
+  catch(e){ mostrarToast('Abra o site pelo link publicado para baixar esse story.'); return; }
+  link.click();
+  mostrarToast('Story baixado!');
+});
+
+/* modos */
+document.getElementById('sorteioModos').addEventListener('click', e=>{
+  const b = e.target.closest('button'); if(!b || sorteando) return;
+  const modo = b.dataset.modo;
+  if(modo === sorteio.modo) return;
+  if(modo==='oficial' && sorteio.oficial.vencedores.length===0 &&
+     !confirm('Entrar no SORTEIO OFICIAL?\n\nA partir daqui os resultados valem e não podem ser refeitos.')) return;
+  sorteio.modo = modo; salvarSorteio();
+  mostrandoResultado = false;
+  renderSorteio();
+});
+
+/* recomeçar: apaga SÓ o resultado do sorteio deste modo (a rifa não é tocada) */
+document.getElementById('sorteioRecomecar').addEventListener('click', ()=>{
+  if(sorteando) return;
+  if(sorteio.modo==='teste'){
+    if(!confirm('Apagar os resultados do TESTE e começar de novo?\n\nOs números e participantes da rifa não são alterados.')) return;
+  } else {
+    const r = prompt('Isso apaga o RESULTADO OFICIAL do sorteio (os números e participantes da rifa NÃO são alterados).\n\nPara confirmar, digite RECOMECAR:');
+    if(r===null) return;
+    if(r.normalize('NFD').replace(/[̀-ͯ]/g,'').trim().toUpperCase() !== 'RECOMECAR'){ mostrarToast('Resultado mantido.'); return; }
+  }
+  sorteio[sorteio.modo] = {vencedores:[]};
+  salvarSorteio();
+  mostrandoResultado = false;
+  renderSorteio();
+  mostrarToast('Sorteio reiniciado.');
+});
+
+/* tela cheia (Android); no iPhone use o app instalado na tela inicial */
+const btnTelaCheia = document.getElementById('sorteioTelaCheia');
+if(!document.fullscreenEnabled) btnTelaCheia.style.display = 'none';
+btnTelaCheia.addEventListener('click', ()=>{
+  if(document.fullscreenElement) document.exitFullscreen().catch(()=>{});
+  else elSorteio.requestFullscreen().catch(()=>{});
+});
+
+function abrirSorteio(){
+  mostrandoResultado = false;
+  elSorteio.classList.add('open');
+  elSorteio.setAttribute('aria-hidden','false');
+  document.body.style.overflow = 'hidden';
+  renderSorteio();
+}
+function fecharSorteio(){
+  if(sorteando) return;
+  elSorteio.classList.remove('open');
+  elSorteio.setAttribute('aria-hidden','true');
+  document.body.style.overflow = '';
+  if(document.fullscreenElement) document.exitFullscreen().catch(()=>{});
+  if(travaTela){ travaTela.release().catch(()=>{}); travaTela = null; }
+}
+document.getElementById('btnSorteador').addEventListener('click', abrirSorteio);
+document.getElementById('sorteioFechar').addEventListener('click', fecharSorteio);
 
 /* ============================================================
    INIT
