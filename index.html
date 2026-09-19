@@ -14,11 +14,11 @@
 <!-- PREVIEW DO LINK: suba o arquivo capa-rifa-arthur.jpg na MESMA PASTA deste HTML.
      Se o preview não aparecer no WhatsApp, troque as duas linhas abaixo pela URL completa,
      ex.: https://rifadoarthur.com.br/capa-rifa-arthur.jpg -->
-<meta property="og:image" content="content="https://js-bpo.github.io/rifa-arthur/capa-rifa-arthur.jpg"">
+<meta property="og:image" content="https://js-bpo.github.io/rifa-arthur/capa-rifa-arthur.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Rifa do Arthur — uma pequena ajuda para um grande começo">
-<meta name="twitter:image" content="capa-rifa-arthur.jpg">
+<meta name="twitter:image" content="https://js-bpo.github.io/rifa-arthur/capa-rifa-arthur.jpg">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23F8F3EB'/%3E%3Ccircle cx='28' cy='30' r='12' fill='%23C79B6E'/%3E%3Ccircle cx='72' cy='30' r='12' fill='%23C79B6E'/%3E%3Ccircle cx='50' cy='56' r='30' fill='%23C79B6E'/%3E%3Cellipse cx='50' cy='66' rx='15' ry='11' fill='%23EBD9C2'/%3E%3Ccircle cx='41' cy='51' r='3.4' fill='%2329445A'/%3E%3Ccircle cx='59' cy='51' r='3.4' fill='%2329445A'/%3E%3Cellipse cx='50' cy='62' rx='5' ry='3.6' fill='%2329445A'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -768,6 +768,7 @@
   .story-tab.active{background:var(--ink); border-color:var(--ink); color:#fff;}
   .story-tab.active b{color:rgba(255,255,255,.65);}
   .story-preview-wrap{display:flex; justify-content:center; margin:4px 0 16px; position:relative; min-height:120px;}
+  #overlayStory{z-index:110;}
   #storyCanvas,#sucessoCanvas{width:100%; max-width:230px; border-radius:var(--r-md); box-shadow:var(--shadow-lift); border:1px solid var(--line); background:var(--paper-2);}
   .btn-capa{
     width:100%; background:none; border:none;
@@ -1082,7 +1083,7 @@
 <!-- ================= CTA FIXA ================= -->
 <div class="cta-bar">
   <button class="btn btn-secondary" id="btnCopyLink">Compartilhar</button>
-  <button class="btn btn-primary" id="btnStory">Gerar story</button>
+  <button class="btn btn-primary" id="btnCtaNumeros">Escolher números</button>
 </div>
 
 <!-- ================= MODAL PARTICIPAÇÃO ================= -->
@@ -1193,6 +1194,7 @@
       <div class="admin-stat wait"><b id="admRes">0</b><span>Aguardando entrega</span></div>
     </div>
     <p class="admin-pix-resumo" id="admResumoPix" style="display:none;"></p>
+    <button class="btn btn-bear btn-full" id="btnStory" style="margin-bottom:10px;">Gerar stories para o Instagram</button>
     <div class="admin-actions">
       <button class="btn btn-ghost" id="btnVerRelatorio">Relatório</button>
       <button class="btn btn-ghost" id="btnExportCsv">CSV</button>
@@ -1637,6 +1639,7 @@ function irParaNumeros(){
   document.getElementById('numeros').scrollIntoView({behavior:'smooth', block:'start'});
 }
 document.getElementById('btnHeroCta').addEventListener('click', irParaNumeros);
+document.getElementById('btnCtaNumeros').addEventListener('click', irParaNumeros);
 document.getElementById('btnTopoNumeros').addEventListener('click', irParaNumeros);
 
 /* ============================================================
@@ -2448,14 +2451,15 @@ function pillTopo(ctx, W, texto, y){
 }
 
 /* CTA inferior */
+/* chamada para a figurinha de link do Instagram:
+   texto + seta; o espaço logo abaixo (≈ y+70 até y+200) fica livre para colar a figurinha */
 function ctaStory(ctx, W, y, texto){
-  const larg = 520;
-  ctx.fillStyle = NAVY;
-  roundRect(ctx, W/2-larg/2, y, larg, 96, 48); ctx.fill();
-  ctx.fillStyle = '#FFFDFC';
-  ctx.font = '600 30px Inter, sans-serif';
   ctx.textAlign='center';
-  textoEspacado(ctx, texto, W/2, y+58, 4);
+  ctx.fillStyle = NAVY;
+  ctx.font = '600 28px Inter, sans-serif';
+  textoEspacado(ctx, texto, W/2, y, 6);
+  ctx.strokeStyle = NAVY; ctx.lineWidth = 3; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  ctx.beginPath(); ctx.moveTo(W/2-15, y+28); ctx.lineTo(W/2, y+43); ctx.lineTo(W/2+15, y+28); ctx.stroke();
 }
 
 /* assinatura de rodapé */
@@ -2570,7 +2574,7 @@ function storyDivulgacao(ctx, W, H){
   ctx.font = '400 34px Fraunces, Georgia, serif';
   ctx.fillText(`${escolhidos} de 50 números já escolhidos`, W/2, 1520);
 
-  ctaStory(ctx, W, 1600, 'ACESSE O LINK');
+  ctaStory(ctx, W, 1590, 'TOQUE NO LINK PARA PARTICIPAR');
   rodapeStory(ctx, W, H);
 }
 
@@ -2578,71 +2582,128 @@ function storyDivulgacao(ctx, W, H){
    MODELO 2 — PRÊMIOS
 ------------------------------------------------------------ */
 const PREMIOS = [
-  'Estadia no Chalézinho na Rocha',
-  'Manicure e Pedicure — Tami Adesivos',
-  'Kit Boticário'
+  {nome:'Estadia no Chalézinho na Rocha', detalhe:'',              foto:'premio-chalezinho.jpg'},
+  {nome:'Manicure e Pedicure',            detalhe:'Tami Adesivos', foto:'premio-unhas.jpg'},
+  {nome:'Kit Boticário',                  detalhe:'',              foto:'premio-kit.jpg'}
 ];
+
+/* carrega as fotos dos prêmios uma vez (mesma pasta do site) */
+const fotosPremios = {};
+function carregarFotoPremio(src){
+  if(fotosPremios[src]) return fotosPremios[src];
+  fotosPremios[src] = new Promise(res=>{
+    const img = new Image();
+    img.onload = ()=> res(img);
+    img.onerror = ()=> res(null);
+    img.src = src;
+  });
+  return fotosPremios[src];
+}
+async function prepararFotosPremios(){
+  const imgs = await Promise.all(PREMIOS.map(p=> carregarFotoPremio(p.foto)));
+  PREMIOS.forEach((p,i)=> p.img = imgs[i]);
+}
+
+/* desenha a imagem preenchendo a área, sem distorcer, com cantos arredondados */
+function fotoArredondada(ctx, img, x, y, w, h, r){
+  ctx.save();
+  roundRect(ctx, x, y, w, h, r); ctx.clip();
+  if(img){
+    const esc = Math.max(w/img.width, h/img.height);
+    const iw = img.width*esc, ih = img.height*esc;
+    ctx.drawImage(img, x + (w-iw)/2, y + (h-ih)/2, iw, ih);
+  } else {
+    const g = ctx.createLinearGradient(x, y, x+w, y+h);
+    g.addColorStop(0, SKY); g.addColorStop(1, '#F0E6D8');
+    ctx.fillStyle = g; ctx.fillRect(x, y, w, h);
+  }
+  ctx.restore();
+  ctx.strokeStyle = 'rgba(41,68,90,0.10)'; ctx.lineWidth = 2;
+  roundRect(ctx, x, y, w, h, r); ctx.stroke();
+}
+
+function quebrarLinhas(ctx, texto, maxW){
+  const linhas = []; let linha = '';
+  texto.split(' ').forEach(p=>{
+    const teste = linha ? linha+' '+p : p;
+    if(ctx.measureText(teste).width > maxW && linha){ linhas.push(linha); linha = p; }
+    else linha = teste;
+  });
+  linhas.push(linha);
+  return linhas;
+}
 
 function storyPremios(ctx, W, H){
   pillTopo(ctx, W, 'RIFA DO ARTHUR', 122);
-  desenharUrsoCanvas(ctx, W/2, 330, 1.15);
+  desenharUrsoCanvas(ctx, W/2, 290, 0.95);
 
   ctx.textAlign='center';
   ctx.fillStyle = NAVY;
-  ctx.font = '300 76px Fraunces, Georgia, serif';
-  ctx.fillText('Prêmios da rifa', W/2, 520);
+  ctx.font = '300 74px Fraunces, Georgia, serif';
+  ctx.fillText('Prêmios da rifa', W/2, 450);
 
   ctx.fillStyle = NAVY_SOFT;
-  ctx.font = '400 32px Inter, sans-serif';
-  ctx.fillText('Preparados com carinho para quem participar', W/2, 578);
+  ctx.font = '400 30px Inter, sans-serif';
+  ctx.fillText('Preparados com carinho para quem participar', W/2, 500);
 
-  divisorCoracao(ctx, W/2, 640, 150, 'rgba(169,120,82,0.6)');
-
+  const cardX = 80, cardW = W - 160, cardH = 280, gap = 28;
+  const fotoW = 384, fotoH = 240;
   PREMIOS.forEach((p,i)=>{
-    const y = 730 + i*236;
+    const y = 560 + i*(cardH+gap);
+
+    ctx.fillStyle = 'rgba(41,68,90,0.05)';
+    roundRect(ctx, cardX+4, y+8, cardW, cardH, 30); ctx.fill();
     ctx.fillStyle = '#FFFDFC';
-    roundRect(ctx, 120, y, W-240, 196, 28); ctx.fill();
-    ctx.strokeStyle = 'rgba(41,68,90,0.12)'; ctx.lineWidth=2;
-    roundRect(ctx, 120, y, W-240, 196, 28); ctx.stroke();
+    roundRect(ctx, cardX, y, cardW, cardH, 30); ctx.fill();
+    ctx.strokeStyle = 'rgba(41,68,90,0.12)'; ctx.lineWidth = 2;
+    roundRect(ctx, cardX, y, cardW, cardH, 30); ctx.stroke();
 
-    // faixa de cor lateral
-    ctx.fillStyle = [BLUE, BEAR, NAVY][i];
-    roundRect(ctx, 120, y, 12, 196, 6); ctx.fill();
+    fotoArredondada(ctx, p.img, cardX+20, y+20, fotoW, fotoH, 20);
 
-    // numeral
-    ctx.beginPath(); ctx.arc(216, y+98, 38, 0, Math.PI*2);
-    ctx.fillStyle = 'rgba(216,197,174,0.22)'; ctx.fill();
-    ctx.strokeStyle = 'rgba(169,120,82,0.45)'; ctx.lineWidth=2;
-    ctx.beginPath(); ctx.arc(216, y+98, 38, 0, Math.PI*2); ctx.stroke();
+    // numeral sobre a foto
+    ctx.beginPath(); ctx.arc(cardX+56, y+56, 26, 0, Math.PI*2);
+    ctx.fillStyle = 'rgba(255,253,252,0.94)'; ctx.fill();
     ctx.fillStyle = BEAR_DARK;
-    ctx.font = '400 40px Fraunces, Georgia, serif';
-    ctx.textAlign='center';
-    ctx.fillText(String(i+1), 216, y+112);
+    ctx.font = '400 30px Fraunces, Georgia, serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(String(i+1), cardX+56, y+67);
 
-    // texto (quebra em duas linhas se precisar)
-    ctx.textAlign='left';
+    // texto
+    const tx = cardX + 20 + fotoW + 32;
+    const maxW = cardX + cardW - 28 - tx;
+    ctx.textAlign = 'left';
     ctx.fillStyle = NAVY;
     ctx.font = '500 38px Inter, sans-serif';
-    const maxW = W-240-190;
-    const palavras = p.split(' ');
-    let linha = '', linhas = [];
-    palavras.forEach(w=>{
-      const teste = linha ? linha+' '+w : w;
-      if(ctx.measureText(teste).width > maxW && linha){ linhas.push(linha); linha = w; }
-      else linha = teste;
-    });
-    linhas.push(linha);
-    const startY = y + 98 - (linhas.length-1)*24 + 12;
-    linhas.forEach((l,li)=> ctx.fillText(l, 286, startY + li*48));
-    ctx.textAlign='center';
+    const linhas = quebrarLinhas(ctx, p.nome, maxW);
+    const blocoH = 30 + linhas.length*48 + (p.detalhe ? 42 : 0);
+    let ty = y + cardH/2 - blocoH/2;
+    ctx.fillStyle = BLUE;
+    ctx.font = '600 20px Inter, sans-serif';
+    textoEsquerda(ctx, `${i+1}º PRÊMIO`, tx, ty + 18, 4);
+    ty += 30;
+    ctx.fillStyle = NAVY;
+    ctx.font = '500 38px Inter, sans-serif';
+    linhas.forEach((l,li)=> ctx.fillText(l, tx, ty + 40 + li*48));
+    if(p.detalhe){
+      ctx.fillStyle = NAVY_SOFT;
+      ctx.font = '400 30px Inter, sans-serif';
+      ctx.fillText(p.detalhe, tx, ty + 40 + linhas.length*48 + 4);
+    }
   });
+  ctx.textAlign = 'center';
 
   ctx.fillStyle = NAVY_SOFT;
   ctx.font = '400 32px Fraunces, Georgia, serif';
-  ctx.fillText('Todos os números confirmados participam do sorteio', W/2, 1530);
+  ctx.fillText('Todos os números confirmados participam do sorteio', W/2, 1516);
 
-  ctaStory(ctx, W, 1600, 'ACESSE O LINK');
+  ctaStory(ctx, W, 1590, 'TOQUE NO LINK PARA PARTICIPAR');
   rodapeStory(ctx, W, H);
+}
+
+/* texto com espaçamento entre letras, alinhado à esquerda */
+function textoEsquerda(ctx, txt, x, y, spacing){
+  let cur = x;
+  [...txt].forEach(c=>{ ctx.fillText(c, cur, y); cur += ctx.measureText(c).width + spacing; });
 }
 
 /* ------------------------------------------------------------
@@ -2702,9 +2763,9 @@ function storyNumeros(ctx, W, H){
   const gridEndY = gridStartY + rows*cellSize + (rows-1)*gap;
 
   legendaTamanhos(ctx, W, gridEndY + 58);
-  desenharUrsoCanvas(ctx, W/2, gridEndY + 148, 0.8);
+  desenharUrsoCanvas(ctx, W/2, gridEndY + 118, 0.55);
 
-  ctaStory(ctx, W, 1642, 'ESCOLHER MEU NÚMERO');
+  ctaStory(ctx, W, 1590, 'TOQUE NO LINK E ESCOLHA O SEU');
   rodapeStory(ctx, W, H);
 }
 
@@ -2790,7 +2851,7 @@ function storyParticipante(ctx, W, H, dados){
     ctx.fillText(`Ainda tem ${livres} ${livres>1?'números':'número'} livre${livres>1?'s':''}`, W/2, 1520);
   }
 
-  ctaStory(ctx, W, 1600, 'ESCOLHA O SEU');
+  ctaStory(ctx, W, 1590, 'TOQUE NO LINK E ESCOLHA O SEU');
   rodapeStory(ctx, W, H);
 }
 
@@ -2882,6 +2943,7 @@ async function desenharStory(){
   const W = canvas.width, H = canvas.height;
 
   await garantirFontes();
+  if(modeloStory==='premios') await prepararFotosPremios();
   ctx.clearRect(0,0,W,H);
   desenharFundo(ctx, W, H);
 
@@ -2918,7 +2980,8 @@ document.getElementById('btnBaixarStory').addEventListener('click', ()=>{
   const canvas = document.getElementById('storyCanvas');
   const link = document.createElement('a');
   link.download = 'story-rifa-arthur.png';
-  link.href = canvas.toDataURL('image/png');
+  try{ link.href = canvas.toDataURL('image/png'); }
+  catch(e){ mostrarToast('Abra o site pelo link publicado para baixar esse story.'); return; }
   link.click();
   mostrarToast('Story baixado! Já pode postar.');
 });
