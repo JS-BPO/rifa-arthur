@@ -1,0 +1,2941 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F8F3EB">
+<title>Rifa do Arthur | Uma pequena ajuda para um grande começo</title>
+<meta name="description" content="Escolha seus números, entregue os pacotes de fraldas correspondentes e participe da Rifa do Arthur.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Rifa do Arthur">
+<meta property="og:description" content="Escolha seus números, entregue os pacotes de fraldas correspondentes e participe da Rifa do Arthur.">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<!-- PREVIEW DO LINK: suba o arquivo capa-rifa-arthur.jpg na MESMA PASTA deste HTML.
+     Se o preview não aparecer no WhatsApp, troque as duas linhas abaixo pela URL completa,
+     ex.: https://rifadoarthur.com.br/capa-rifa-arthur.jpg -->
+<meta property="og:image" content="capa-rifa-arthur.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Rifa do Arthur — uma pequena ajuda para um grande começo">
+<meta name="twitter:image" content="capa-rifa-arthur.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23F8F3EB'/%3E%3Ccircle cx='28' cy='30' r='12' fill='%23C79B6E'/%3E%3Ccircle cx='72' cy='30' r='12' fill='%23C79B6E'/%3E%3Ccircle cx='50' cy='56' r='30' fill='%23C79B6E'/%3E%3Cellipse cx='50' cy='66' rx='15' ry='11' fill='%23EBD9C2'/%3E%3Ccircle cx='41' cy='51' r='3.4' fill='%2329445A'/%3E%3Ccircle cx='59' cy='51' r='3.4' fill='%2329445A'/%3E%3Cellipse cx='50' cy='62' rx='5' ry='3.6' fill='%2329445A'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     TOKENS — identidade Arthur
+  ============================================================ */
+  :root{
+    --paper:      #F8F3EB;   /* creme */
+    --paper-2:    #FFFDFC;   /* off-white */
+    --ink:        #29445A;   /* azul escuro */
+    --ink-soft:   #5D7488;
+    --ink-faint:  #8C9DAB;
+    --blue:       #7896AD;   /* azul Arthur */
+    --sky:        #E8EFF3;   /* azul claro */
+    --beige:      #D8C5AE;
+    --beige-soft: #F0E6D8;
+    --bear:       #A97852;   /* marrom do ursinho */
+    --bear-light: #C79B6E;
+    --bear-cream: #EBD9C2;
+    --line:       rgba(41,68,90,.13);
+    --line-soft:  rgba(41,68,90,.07);
+
+    --r-xs: 8px;
+    --r-sm: 12px;
+    --r-md: 16px;
+    --r-lg: 22px;
+    --r-xl: 28px;
+
+    --shadow-soft: 0 1px 2px rgba(41,68,90,.04), 0 10px 26px -16px rgba(41,68,90,.22);
+    --shadow-lift: 0 2px 4px rgba(41,68,90,.05), 0 22px 46px -22px rgba(41,68,90,.34);
+
+    --font-display:'Fraunces', Georgia, serif;
+    --font-script: 'Alex Brush', cursive;
+    --font-body:   'Inter', system-ui, -apple-system, sans-serif;
+
+    --wrap: 760px;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--font-body);
+    background:var(--paper);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    padding-bottom:88px;
+    position:relative;
+    overflow-x:hidden;
+    font-size:16px;
+    line-height:1.55;
+  }
+  body::after{
+    content:"";
+    position:fixed; inset:0;
+    pointer-events:none; z-index:3;
+    opacity:.045;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  img,svg{display:block; max-width:100%;}
+  button{font-family:inherit; cursor:pointer; color:inherit;}
+  :focus-visible{outline:2px solid var(--ink); outline-offset:3px; border-radius:4px;}
+
+  .wrap{max-width:var(--wrap); margin:0 auto; padding:0 20px; position:relative; z-index:1;}
+  .sr-only{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap;}
+
+  /* ============================================================
+     BARRA SUPERIOR
+  ============================================================ */
+  .topbar{
+    position:fixed; top:0; left:0; right:0; z-index:45;
+    display:flex; align-items:center; justify-content:space-between;
+    gap:12px; padding:11px 18px;
+    background:rgba(248,243,235,0);
+    border-bottom:1px solid transparent;
+    transform:translateY(-100%);
+    transition:transform .3s cubic-bezier(.4,0,.2,1), background .3s ease, border-color .3s ease;
+  }
+  .topbar.solid{
+    transform:translateY(0);
+    background:rgba(248,243,235,.86);
+    backdrop-filter:blur(16px) saturate(140%);
+    -webkit-backdrop-filter:blur(16px) saturate(140%);
+    border-bottom-color:var(--line-soft);
+  }
+  .topbar .marca{display:flex; align-items:center; gap:9px; min-width:0;}
+  .topbar .marca .urso-mini{width:30px; height:30px; flex:none;}
+  .topbar .marca .txt{font-size:12.5px; color:var(--ink-soft); line-height:1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .topbar .marca .txt em{
+    display:block; font-family:var(--font-script); font-style:normal;
+    font-size:23px; line-height:.95; color:var(--ink);
+  }
+  .topbar .btn-topo{
+    border:1px solid var(--line);
+    background:var(--paper-2);
+    border-radius:999px;
+    padding:9px 15px;
+    font-size:12.5px; font-weight:600; color:var(--ink);
+    white-space:nowrap;
+    transition:background .2s ease, border-color .2s ease;
+  }
+  .topbar .btn-topo:hover{background:#fff; border-color:rgba(41,68,90,.24);}
+
+  /* ============================================================
+     HERO
+  ============================================================ */
+  .hero{
+    position:relative;
+    padding:52px 20px 6px;
+    text-align:center;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute; inset:-34% -14% auto -14%;
+    height:130%;
+    background:
+      radial-gradient(58% 46% at 50% 14%, rgba(120,150,173,.30), transparent 72%),
+      radial-gradient(42% 34% at 84% 2%, rgba(216,197,174,.34), transparent 70%),
+      radial-gradient(38% 30% at 8% 20%, rgba(232,239,243,.9), transparent 72%);
+    pointer-events:none;
+  }
+  .hero-inner{position:relative; z-index:1; max-width:580px; margin:0 auto;}
+
+  .urso-hero{width:150px; height:150px; margin:0 auto 14px; filter:drop-shadow(0 14px 26px rgba(41,68,90,.16));}
+
+  .hero-eyebrow{
+    display:inline-flex; align-items:center; gap:9px;
+    font-size:11.5px; color:var(--ink-soft);
+    letter-spacing:.16em; text-transform:uppercase;
+    background:rgba(255,253,252,.72);
+    border:1px solid var(--line-soft);
+    padding:7px 16px; border-radius:999px;
+    margin-bottom:16px;
+  }
+  .hero-eyebrow i{width:5px; height:5px; border-radius:50%; background:var(--blue); display:block;}
+
+  .hero h1{
+    font-family:var(--font-script);
+    font-weight:400;
+    font-size:clamp(76px,20vw,118px);
+    line-height:.86;
+    color:var(--ink);
+    margin:0 0 4px;
+  }
+  .hero .rifa-do{
+    display:block;
+    font-family:var(--font-body);
+    font-size:12px; font-weight:600; letter-spacing:.34em; text-transform:uppercase;
+    color:var(--ink-faint); margin-bottom:6px; line-height:1.2;
+  }
+  .hero-rule{
+    display:flex; align-items:center; justify-content:center; gap:12px;
+    max-width:190px; margin:14px auto 20px; color:var(--beige);
+    font-size:13px;
+  }
+  .hero-rule i{flex:1; height:1px; background:linear-gradient(90deg, transparent, rgba(169,120,82,.5));}
+  .hero-rule i:last-child{background:linear-gradient(90deg, rgba(169,120,82,.5), transparent);}
+
+  .hero .headline{
+    font-family:var(--font-display);
+    font-weight:300;
+    font-size:clamp(21px,5.4vw,27px);
+    line-height:1.3;
+    color:var(--ink);
+    max-width:20ch; margin:0 auto 14px;
+  }
+  .hero .lead{
+    font-size:15.5px; line-height:1.65; color:var(--ink-soft);
+    max-width:40ch; margin:0 auto 24px;
+  }
+  .hero-facts{
+    display:flex; justify-content:center; align-items:stretch;
+    margin-bottom:26px;
+  }
+  .hero-facts div{padding:0 20px; font-size:11.5px; color:var(--ink-faint); letter-spacing:.08em; text-transform:uppercase;}
+  .hero-facts div + div{border-left:1px solid var(--line);}
+  .hero-facts b{
+    display:block; font-family:var(--font-display); font-weight:400;
+    font-size:19px; letter-spacing:0; text-transform:none;
+    color:var(--ink); margin-top:3px; font-variant-numeric:tabular-nums;
+  }
+
+  .btn-hero{
+    display:inline-flex; align-items:center; gap:11px;
+    background:var(--ink); color:var(--paper-2);
+    border:none; border-radius:999px;
+    padding:17px 32px;
+    font-size:14px; font-weight:600; letter-spacing:.04em;
+    box-shadow:var(--shadow-lift);
+    transition:transform .2s cubic-bezier(.4,0,.2,1), box-shadow .2s ease, background .2s ease;
+  }
+  .btn-hero:hover{background:#1E3548; transform:translateY(-2px);}
+  .btn-hero:active{transform:translateY(0) scale(.98);}
+  .btn-hero .seta{width:6px; height:6px; border-right:1.6px solid currentColor; border-bottom:1.6px solid currentColor; transform:rotate(45deg) translate(-1px,-1px);}
+
+  .hero-progresso{
+    margin-top:22px; font-size:13px; color:var(--ink-soft);
+    font-variant-numeric:tabular-nums;
+  }
+  .hero-progresso b{color:var(--ink); font-weight:600;}
+
+  /* ---------- painel de progresso ---------- */
+  .progress-panel{
+    max-width:var(--wrap); margin:40px auto 0;
+    background:var(--paper-2);
+    border:1px solid var(--line);
+    border-radius:var(--r-xl);
+    padding:24px 26px;
+    text-align:left;
+    box-shadow:var(--shadow-soft);
+  }
+  .progress-top{display:flex; justify-content:space-between; align-items:flex-end; gap:16px; margin-bottom:15px;}
+  .progress-num{display:flex; align-items:baseline; gap:9px;}
+  .progress-num strong{
+    font-family:var(--font-display); font-weight:400;
+    font-size:38px; line-height:.9; color:var(--ink);
+    font-variant-numeric:tabular-nums;
+  }
+  .progress-num em{font-style:normal; font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint); max-width:9ch; line-height:1.25;}
+  .progress-livres{text-align:right;}
+  .progress-livres b{display:block; font-family:var(--font-display); font-weight:400; font-size:26px; line-height:1; color:var(--blue); font-variant-numeric:tabular-nums;}
+  .progress-livres span{font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint);}
+  .progress-bar{height:7px; border-radius:999px; background:rgba(41,68,90,.08); overflow:hidden;}
+  .progress-fill{height:100%; background:linear-gradient(90deg,var(--ink),var(--blue)); border-radius:999px; transition:width .55s cubic-bezier(.4,0,.2,1);}
+  .progress-sizes{display:flex; margin-top:18px;}
+  .progress-sizes span{flex:1; font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint); padding-left:16px; border-left:1px solid var(--line);}
+  .progress-sizes span:first-child{padding-left:0; border-left:none;}
+  .progress-sizes b{display:block; font-size:16px; font-weight:600; letter-spacing:0; color:var(--ink); margin-top:4px; font-variant-numeric:tabular-nums;}
+
+  /* ============================================================
+     SEÇÕES
+  ============================================================ */
+  section{padding:54px 0 0;}
+  .section-head{margin-bottom:22px;}
+  .section-head h2{
+    font-family:var(--font-display);
+    font-weight:400;
+    font-size:clamp(25px,6vw,32px);
+    line-height:1.18;
+    letter-spacing:-.01em;
+    color:var(--ink);
+    margin-bottom:7px;
+  }
+  .section-head p{color:var(--ink-soft); font-size:15px; max-width:50ch;}
+
+  .panel{
+    background:var(--paper-2);
+    border:1px solid var(--line);
+    border-radius:var(--r-xl);
+    box-shadow:var(--shadow-soft);
+    overflow:hidden;
+  }
+
+  /* ---------- CONTAGEM REGRESSIVA ---------- */
+  .countdown{
+    max-width:var(--wrap); margin:12px auto 0;
+    background:var(--ink); color:var(--paper-2);
+    border-radius:var(--r-xl); padding:20px 22px 22px;
+    text-align:center; box-shadow:var(--shadow-lift);
+  }
+  .cd-label{font-size:11.5px; letter-spacing:.16em; text-transform:uppercase; color:rgba(255,255,255,.55); margin-bottom:12px;}
+  .cd-boxes{display:flex; justify-content:center; gap:10px;}
+  .cd-boxes div{
+    flex:1; max-width:92px; background:rgba(255,255,255,.08);
+    border-radius:14px; padding:11px 4px 10px;
+  }
+  .cd-boxes b{
+    display:block; font-family:var(--font-display); font-weight:400;
+    font-size:30px; line-height:1; color:var(--paper-2); font-variant-numeric:tabular-nums;
+  }
+  .cd-boxes span{display:block; font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.5); margin-top:5px;}
+  .cd-data{font-size:12.5px; color:rgba(255,255,255,.6); margin-top:13px;}
+  .cd-encerrado{font-family:var(--font-display); font-weight:400; font-size:22px; color:var(--paper-2);}
+
+  /* ---------- BOTÃO DA SORTE ---------- */
+  .btn-sorte{
+    width:100%; margin-top:14px;
+    border:1.5px dashed rgba(120,150,173,.55);
+    background:rgba(232,239,243,.45);
+    border-radius:14px; padding:13px;
+    font-size:13.5px; font-weight:600; color:var(--ink);
+    display:flex; align-items:center; justify-content:center; gap:9px;
+    transition:background .2s ease, border-color .2s ease, transform .15s ease;
+  }
+  .btn-sorte:hover{background:var(--sky); border-color:var(--blue);}
+  .btn-sorte:active{transform:scale(.985);}
+  .btn-sorte svg{width:17px; height:17px;}
+
+  .num-btn.destaque{animation:destacar 1.5s ease 2;}
+  @keyframes destacar{0%,100%{box-shadow:0 0 0 0 rgba(120,150,173,0);} 50%{box-shadow:0 0 0 8px rgba(120,150,173,.35);}}
+
+  /* ---------- COMO FUNCIONA ---------- */
+  .steps{display:grid; grid-template-columns:1fr; gap:12px;}
+  @media(min-width:620px){ .steps{grid-template-columns:repeat(2,1fr);} }
+  .step{
+    background:var(--paper-2);
+    border:1px solid var(--line);
+    border-radius:var(--r-lg);
+    padding:22px 22px 24px;
+    position:relative;
+    box-shadow:var(--shadow-soft);
+  }
+  .step .n{
+    font-family:var(--font-display); font-weight:300;
+    font-size:15px; letter-spacing:.1em;
+    color:var(--blue); display:block; margin-bottom:12px;
+  }
+  .step h3{font-size:13px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--ink); margin-bottom:7px;}
+  .step p{font-size:14.5px; color:var(--ink-soft); line-height:1.6;}
+  .step::after{
+    content:""; position:absolute; right:20px; top:20px;
+    width:26px; height:26px; border-radius:50%;
+    background:var(--sky); opacity:.7;
+  }
+
+  /* ---------- PRÊMIOS ---------- */
+  .prizes{display:grid; grid-template-columns:1fr; gap:12px;}
+  @media(min-width:620px){ .prizes{grid-template-columns:repeat(3,1fr);} }
+  .prize-card{
+    background:var(--paper-2);
+    border:1px solid var(--line);
+    border-radius:var(--r-lg);
+    overflow:hidden;
+    box-shadow:var(--shadow-soft);
+    display:flex; flex-direction:column;
+  }
+  /* espaço preparado para foto futura: basta trocar por <img class="prize-img"> */
+  .prize-media{position:relative; display:block; background:var(--paper);}
+  .prize-img{
+    width:100%; aspect-ratio:16/10; object-fit:cover; display:block;
+    border-bottom:1px solid var(--line-soft);
+    cursor:zoom-in;
+    transition:transform .5s cubic-bezier(.16,1,.3,1);
+  }
+  .prize-card:hover .prize-img{transform:scale(1.035);}
+  .prize-media{overflow:hidden;}
+  .prize-zoom{
+    position:absolute; right:10px; bottom:12px;
+    width:30px; height:30px; border-radius:50%;
+    background:rgba(255,253,252,.9); border:1px solid var(--line-soft);
+    display:flex; align-items:center; justify-content:center;
+    pointer-events:none; opacity:.85;
+  }
+  .prize-zoom svg{width:14px; height:14px;}
+  .lightbox{
+    position:fixed; inset:0; z-index:130;
+    background:rgba(23,42,58,.86);
+    display:none; align-items:center; justify-content:center;
+    padding:20px;
+    backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+  }
+  .lightbox.open{display:flex;}
+  .lightbox img{max-width:100%; max-height:82vh; border-radius:var(--r-lg); box-shadow:var(--shadow-lift);}
+  .lightbox figcaption{
+    color:rgba(255,255,255,.82); font-size:14px; text-align:center;
+    margin-top:14px; line-height:1.5;
+  }
+  .lightbox .fechar{
+    position:absolute; top:18px; right:18px;
+    width:40px; height:40px; border-radius:50%;
+    background:rgba(255,255,255,.14); border:none; color:#fff; font-size:16px;
+  }
+  .prize-ph{
+    aspect-ratio:16/10;
+    background:linear-gradient(135deg, var(--sky), var(--beige-soft));
+    display:flex; align-items:center; justify-content:center;
+    border-bottom:1px solid var(--line-soft);
+  }
+  .prize-ph svg{width:44px; height:44px; opacity:.55;}
+  .prize-body{padding:16px 18px 20px; display:flex; gap:12px; align-items:flex-start;}
+  .prize-rank{
+    flex:none; width:30px; height:30px; border-radius:50%;
+    border:1px solid rgba(169,120,82,.4);
+    background:rgba(216,197,174,.2);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-display); font-weight:400; font-size:14px;
+    color:var(--bear);
+  }
+  .prize-text b{display:block; font-size:15.5px; font-weight:600; color:var(--ink); line-height:1.3; margin-bottom:3px;}
+  .prize-text span{font-size:13.5px; color:var(--ink-soft);}
+
+  /* ---------- FAIXAS ---------- */
+  .sizes-grid{display:flex;}
+  .size-card{
+    flex:1; padding:24px 12px; text-align:center;
+    border-left:1px solid var(--line-soft);
+  }
+  .size-card:first-child{border-left:none;}
+  .size-letter{
+    font-family:var(--font-display); font-weight:300;
+    font-size:40px; line-height:1; margin-bottom:9px;
+  }
+  .size-card.p .size-letter{color:var(--blue);}
+  .size-card.m .size-letter{color:var(--bear);}
+  .size-card.g .size-letter{color:var(--ink);}
+  .size-card .qtd{font-size:13.5px; font-weight:600; color:var(--ink); font-variant-numeric:tabular-nums;}
+  .size-card small{display:block; color:var(--ink-faint); font-size:12px; margin-top:4px;}
+
+  /* ============================================================
+     GRID DE NÚMEROS
+  ============================================================ */
+  .numbers-panel{padding:20px 16px 24px;}
+  @media(min-width:520px){ .numbers-panel{padding:22px 22px 26px;} }
+  .legend{
+    display:flex; gap:16px; flex-wrap:wrap;
+    padding-bottom:15px; margin-bottom:18px;
+    border-bottom:1px solid var(--line-soft);
+    font-size:12px; color:var(--ink-faint);
+  }
+  .legend span{display:inline-flex; align-items:center; gap:7px;}
+  .dot{width:10px; height:10px; border-radius:3px; display:inline-block;}
+  .dot.disp{background:#fff; border:1.5px solid #BFCDD7;}
+  .dot.res{background:var(--beige-soft); border:1.5px solid var(--beige);}
+  .dot.conf{background:var(--sky); border:1.5px solid var(--blue);}
+
+  .numbers-grid{display:grid; grid-template-columns:repeat(5,1fr); gap:8px;}
+  @media(min-width:400px){ .numbers-grid{gap:9px;} }
+  @media(min-width:520px){ .numbers-grid{grid-template-columns:repeat(8,1fr);} }
+  @media(min-width:700px){ .numbers-grid{grid-template-columns:repeat(10,1fr); gap:10px;} }
+
+  .num-btn{
+    aspect-ratio:1/1;
+    min-height:52px;
+    border-radius:14px;
+    border:1.5px solid var(--line);
+    background:var(--paper-2);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:0;
+    font-weight:600; font-size:17px; color:var(--ink);
+    font-variant-numeric:tabular-nums;
+    letter-spacing:-.01em;
+    position:relative;
+    transition:transform .18s cubic-bezier(.34,1.4,.5,1), box-shadow .18s ease, border-color .18s ease, background .18s ease;
+  }
+  .num-btn small{
+    font-size:9px; font-weight:600; letter-spacing:.12em;
+    color:var(--ink-faint); margin-top:1px;
+  }
+  .num-btn.disp.p{border-color:rgba(120,150,173,.38);}
+  .num-btn.disp.p small{color:var(--blue);}
+  .num-btn.disp.m{border-color:rgba(169,120,82,.30);}
+  .num-btn.disp.m small{color:var(--bear);}
+  .num-btn.disp.g{border-color:rgba(41,68,90,.24);}
+  .num-btn.disp.g small{color:var(--ink-soft);}
+  .num-btn.disp:hover{transform:translateY(-3px); box-shadow:0 12px 22px -10px rgba(41,68,90,.4); border-color:var(--ink);}
+  .num-btn:active{transform:scale(.93);}
+
+  .num-btn.res{background:var(--beige-soft); border-color:rgba(169,120,82,.35); color:#8A6A4A;}
+  .num-btn.res small{color:#A98A68;}
+  .num-btn.conf{background:var(--sky); border-color:rgba(120,150,173,.55); color:#2E5570;}
+  .num-btn.conf small{color:#5D7F99;}
+  .num-btn.conf::after{content:"✓"; position:absolute; top:5px; right:7px; font-size:9px; color:var(--blue); font-weight:700;}
+
+  .num-btn.sel{
+    background:var(--ink); border-color:var(--ink); color:var(--paper-2);
+    box-shadow:0 12px 22px -10px rgba(41,68,90,.6);
+    animation:pop .32s cubic-bezier(.34,1.5,.5,1);
+  }
+  .num-btn.sel small{color:rgba(255,255,255,.72);}
+  .num-btn.sel::after{content:"✓"; position:absolute; top:5px; right:7px; font-size:9px; color:#fff; font-weight:700;}
+  @keyframes pop{0%{transform:scale(.9);} 55%{transform:scale(1.08) translateY(-3px);} 100%{transform:scale(1) translateY(-2px);}}
+  .num-btn.sel{transform:translateY(-2px);}
+
+  .grid-nota{font-size:12.5px; color:var(--ink-faint); margin-top:16px;}
+
+  /* ============================================================
+     BARRAS FIXAS
+  ============================================================ */
+  .selection-bar{
+    position:fixed; left:0; right:0; bottom:calc(68px + env(safe-area-inset-bottom));
+    background:var(--ink); color:var(--paper-2);
+    padding:12px 16px;
+    display:none; align-items:center; justify-content:space-between; gap:12px;
+    z-index:41;
+    box-shadow:0 -12px 34px -14px rgba(41,68,90,.55);
+  }
+  .selection-bar.show{display:flex; animation:slideBar .28s cubic-bezier(.4,0,.2,1);}
+  @keyframes slideBar{from{transform:translateY(110%);} to{transform:translateY(0);}}
+  .selection-bar .info{font-size:12px; line-height:1.4; color:rgba(255,255,255,.62); min-width:0;}
+  .selection-bar .info b{display:block; font-size:14.5px; font-weight:600; color:var(--paper-2); margin-bottom:1px;}
+  .selection-bar .info span{display:block; font-variant-numeric:tabular-nums; letter-spacing:.04em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .selection-bar .acoes{display:flex; gap:8px; flex:none;}
+  .selection-bar button{border:none; border-radius:11px; padding:12px 15px; font-weight:600; font-size:13px;}
+  .selection-bar .btn-clear{background:rgba(255,255,255,.13); color:#fff;}
+  .selection-bar .btn-go{background:var(--paper-2); color:var(--ink); letter-spacing:.03em;}
+
+  .cta-bar{
+    position:fixed; left:0; right:0; bottom:0; z-index:40;
+    background:rgba(248,243,235,.88);
+    backdrop-filter:blur(16px) saturate(140%); -webkit-backdrop-filter:blur(16px) saturate(140%);
+    border-top:1px solid var(--line-soft);
+    padding:10px 14px calc(10px + env(safe-area-inset-bottom));
+    display:flex; gap:9px;
+  }
+  .btn{
+    flex:1; display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:14px 14px; border-radius:12px; border:1px solid transparent;
+    font-weight:600; font-size:14px; font-family:var(--font-body);
+    transition:transform .15s ease, background .2s ease, border-color .2s ease;
+  }
+  .btn-primary{background:var(--ink); color:var(--paper-2);}
+  .btn-primary:hover{background:#1E3548;}
+  .btn-secondary{background:var(--paper-2); color:var(--ink); border-color:var(--line);}
+  .btn-secondary:hover{background:#fff; border-color:rgba(41,68,90,.24);}
+  .btn-ghost{background:transparent; color:var(--ink-soft); border-color:var(--line);}
+  .btn-ghost:hover{background:rgba(41,68,90,.03);}
+  .btn-bear{background:var(--bear); color:#fff;}
+  .btn-bear:hover{background:#956A48;}
+  .btn-full{width:100%;}
+  .btn:active{transform:scale(.98);}
+  .btn:disabled{opacity:.45; cursor:not-allowed;}
+
+  /* ============================================================
+     RODAPÉ
+  ============================================================ */
+  footer.rodape{
+    margin-top:60px;
+    background:var(--ink);
+    color:rgba(255,255,255,.62);
+    padding:42px 20px 38px;
+    text-align:center;
+  }
+  footer.rodape .urso-rodape{width:56px; height:56px; margin:0 auto 14px; opacity:.95;}
+  footer.rodape .assinatura{
+    font-family:var(--font-script);
+    font-size:40px; line-height:1; color:var(--paper-2);
+    margin-bottom:10px;
+  }
+  footer.rodape p{font-size:13.5px; line-height:1.65; margin-bottom:20px;}
+  .btn-whats-rodape{
+    display:inline-flex; align-items:center; gap:9px;
+    background:rgba(255,255,255,.09);
+    border:1px solid rgba(255,255,255,.22);
+    color:var(--paper-2);
+    border-radius:999px; padding:13px 24px;
+    font-size:14px; font-weight:600;
+    margin-bottom:18px;
+    transition:background .2s ease, border-color .2s ease, transform .15s ease;
+  }
+  .btn-whats-rodape:hover{background:rgba(255,255,255,.16); border-color:rgba(255,255,255,.4);}
+  .btn-whats-rodape:active{transform:scale(.98);}
+  .btn-whats-rodape svg{width:17px; height:17px; flex:none;}
+  .link-organizador{
+    background:none; border:none;
+    color:rgba(255,255,255,.4); font-size:12.5px;
+    text-decoration:underline; text-underline-offset:3px; padding:6px;
+  }
+  .link-organizador:hover{color:rgba(255,255,255,.78);}
+  .numbers-grid.carregando{opacity:.45; pointer-events:none; transition:opacity .3s ease;}
+  a.btn{text-decoration:none;}
+  .link-sair{
+    display:block; margin:12px auto 0; background:none; border:none;
+    font-size:12.5px; color:var(--ink-faint);
+    text-decoration:underline; text-underline-offset:3px; padding:6px;
+  }
+  .link-sair:hover{color:var(--ink);}
+
+  /* ============================================================
+     MODAIS
+  ============================================================ */
+  .overlay{
+    position:fixed; inset:0; background:rgba(23,42,58,.5);
+    display:none; align-items:flex-end; justify-content:center; z-index:100;
+    backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);
+  }
+  .overlay.open{display:flex;}
+  @media(min-width:560px){ .overlay{align-items:center; padding:20px;} }
+  .modal{
+    background:var(--paper-2); width:100%; max-width:470px;
+    border-radius:var(--r-xl) var(--r-xl) 0 0;
+    padding:24px 22px calc(22px + env(safe-area-inset-bottom));
+    max-height:88vh; overflow-y:auto;
+    box-shadow:0 -20px 60px -20px rgba(23,42,58,.5);
+    animation:slideUp .28s cubic-bezier(.4,0,.2,1);
+  }
+  .modal.wide{max-width:620px;}
+  @media(min-width:560px){ .modal{border-radius:var(--r-xl); padding-bottom:24px;} }
+  @keyframes slideUp{from{transform:translateY(20px); opacity:0;} to{transform:translateY(0); opacity:1;}}
+  .modal-head{display:flex; justify-content:space-between; align-items:flex-start; gap:16px; margin-bottom:16px;}
+  .modal-head h3{font-family:var(--font-display); font-weight:400; font-size:24px; line-height:1.2; color:var(--ink);}
+  .modal-head .sub{font-size:12.5px; color:var(--ink-faint); margin-top:3px;}
+  .modal-close{
+    flex:none; background:rgba(41,68,90,.05); border:none;
+    width:34px; height:34px; border-radius:50%;
+    font-size:14px; color:var(--ink-soft);
+  }
+  .modal-close:hover{background:rgba(41,68,90,.1);}
+
+  /* lista de números da participação */
+  .resumo-lista{
+    border:1px solid var(--line); border-radius:var(--r-md);
+    overflow:hidden; margin-bottom:18px;
+  }
+  .resumo-item{
+    display:flex; align-items:center; gap:12px;
+    padding:11px 14px; border-bottom:1px solid var(--line-soft);
+    font-size:14px;
+  }
+  .resumo-item:last-child{border-bottom:none;}
+  .resumo-item .n{
+    width:34px; height:34px; border-radius:10px; flex:none;
+    background:var(--sky); color:var(--ink);
+    display:flex; align-items:center; justify-content:center;
+    font-weight:600; font-size:14px; font-variant-numeric:tabular-nums;
+  }
+  .resumo-item .fr{color:var(--ink-soft);}
+  .resumo-total{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:11px 14px; background:rgba(232,239,243,.5);
+    font-size:12.5px; color:var(--ink-soft);
+  }
+  .resumo-total b{color:var(--ink); font-weight:600;}
+
+  .field{margin-bottom:14px;}
+  .field label{display:block; font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:7px;}
+  .field input,.field select{
+    width:100%; padding:13px 14px; border-radius:var(--r-sm);
+    border:1.5px solid var(--line); background:#fff;
+    font-size:16px; font-family:var(--font-body); color:var(--ink);
+    transition:border-color .2s ease;
+  }
+  .field input::placeholder{color:var(--ink-faint);}
+  .field input:focus,.field select:focus{outline:none; border-color:var(--ink);}
+  .hint{font-size:12.5px; color:var(--ink-faint); margin-top:12px; line-height:1.6;}
+  .hint b{color:var(--ink-soft); font-weight:600;}
+
+  /* ---------- CONTRIBUIÇÃO / PIX ---------- */
+  .contrib{margin-bottom:18px;}
+  .contrib-label{font-size:12px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:9px;}
+  .contrib-opts{display:grid; grid-template-columns:1fr 1fr; gap:8px;}
+  .contrib-opt{
+    border:1.5px solid var(--line); background:var(--paper-2);
+    border-radius:var(--r-md); padding:12px 12px 13px; text-align:left;
+    transition:border-color .2s ease, background .2s ease;
+  }
+  .contrib-opt b{display:block; font-size:13.5px; font-weight:600; color:var(--ink); line-height:1.25; margin-bottom:3px;}
+  .contrib-opt span{font-size:11.5px; color:var(--ink-faint); line-height:1.35; display:block;}
+  .contrib-opt.active{border-color:var(--ink); background:var(--sky);}
+  .contrib-opt.active span{color:var(--ink-soft);}
+
+  .pix-box{display:none; margin-top:12px; border:1px solid var(--line); border-radius:var(--r-md); overflow:hidden;}
+  .pix-box.show{display:block; animation:slideUp .25s cubic-bezier(.4,0,.2,1);}
+  .pix-marcas{display:flex; gap:8px; padding:12px 14px 0;}
+  .pix-marca{
+    flex:1; border:1.5px solid var(--line); background:var(--paper-2);
+    border-radius:10px; padding:10px 6px; font-size:13px; font-weight:600; color:var(--ink-soft);
+    transition:all .2s ease;
+  }
+  .pix-marca.active{background:var(--ink); border-color:var(--ink); color:#fff;}
+  .pix-linhas{padding:12px 14px 0;}
+  .pix-linha{display:flex; justify-content:space-between; font-size:13.5px; color:var(--ink-soft); padding:5px 0;}
+  .pix-linha b{color:var(--ink); font-weight:600; font-variant-numeric:tabular-nums;}
+  .pix-total{
+    display:flex; justify-content:space-between; align-items:center;
+    margin:10px 14px 0; padding:11px 0 12px; border-top:1px solid var(--line-soft);
+    font-size:13px; color:var(--ink-soft); letter-spacing:.06em; text-transform:uppercase;
+  }
+  .pix-total b{font-family:var(--font-display); font-weight:400; font-size:26px; letter-spacing:0; text-transform:none; color:var(--ink); font-variant-numeric:tabular-nums;}
+  .pix-chave{
+    display:flex; align-items:center; gap:10px;
+    margin:0 14px 12px; padding:11px 13px;
+    background:var(--sky); border-radius:12px;
+  }
+  .pix-chave div{min-width:0; flex:1;}
+  .pix-chave span{display:block; font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint);}
+  .pix-chave b{display:block; font-size:13px; font-weight:600; color:var(--ink); word-break:break-all; line-height:1.35; margin-top:2px;}
+  .pix-copiar{
+    flex:none; border:none; background:var(--ink); color:var(--paper-2);
+    border-radius:9px; padding:10px 14px; font-size:12.5px; font-weight:600;
+  }
+  .pix-copiar:active{transform:scale(.96);}
+  .pix-nota{font-size:11.5px; color:var(--ink-faint); line-height:1.55; padding:0 14px 13px;}
+
+  .pix-callout{
+    margin-top:12px; display:flex; gap:13px; align-items:flex-start;
+    background:var(--paper-2); border:1px solid var(--line);
+    border-radius:var(--r-lg); padding:18px 20px; box-shadow:var(--shadow-soft);
+  }
+  .pix-callout .ico{
+    flex:none; width:38px; height:38px; border-radius:12px; background:var(--sky);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .pix-callout .ico svg{width:19px; height:19px;}
+  .pix-callout b{display:block; font-size:14.5px; font-weight:600; color:var(--ink); margin-bottom:3px;}
+  .pix-callout span{font-size:14px; color:var(--ink-soft); line-height:1.55;}
+
+  /* ---------- ADMIN ---------- */
+  .admin-stats{display:grid; grid-template-columns:repeat(4,1fr); border:1px solid var(--line); border-radius:var(--r-md); margin:0 0 14px; overflow:hidden;}
+  .admin-stat{padding:13px 6px; text-align:center; border-left:1px solid var(--line-soft);}
+  .admin-stat:first-child{border-left:none;}
+  .admin-stat b{display:block; font-family:var(--font-display); font-weight:400; font-size:23px; color:var(--ink); font-variant-numeric:tabular-nums;}
+  .admin-stat span{font-size:10px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint); line-height:1.25; display:block; margin-top:2px;}
+  .admin-stat.ok b{color:var(--blue);}
+  .admin-stat.wait b{color:var(--bear);}
+
+  .admin-pix-resumo{
+    font-size:12.5px; color:var(--ink-soft);
+    background:var(--sky); border-radius:10px;
+    padding:9px 13px; margin:0 0 12px;
+  }
+  .admin-pix-resumo b{color:var(--ink); font-weight:600; font-variant-numeric:tabular-nums;}
+  .admin-tabela{border:1px solid var(--line); border-radius:var(--r-md); overflow:hidden; margin-bottom:14px; max-height:320px; overflow-y:auto;}
+  .admin-thead{
+    display:grid; grid-template-columns:44px 1fr 78px;
+    gap:8px; padding:9px 12px; background:rgba(232,239,243,.6);
+    font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-faint);
+    position:sticky; top:0; z-index:1;
+  }
+  .admin-row{display:grid; grid-template-columns:44px 1fr 78px; gap:8px; align-items:center; padding:11px 12px; border-top:1px solid var(--line-soft); font-size:13.5px;}
+  .admin-row .n{
+    width:36px; height:36px; border-radius:10px;
+    background:var(--sky); color:var(--ink);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    font-weight:600; font-size:13px; flex:none; font-variant-numeric:tabular-nums; line-height:1;
+  }
+  .admin-row .n i{font-style:normal; font-size:8px; letter-spacing:.1em; color:var(--ink-faint); margin-top:1px;}
+  .admin-row .info{min-width:0;}
+  .admin-row .info b{display:block; font-size:13.5px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .admin-row .info span{font-size:11.5px; color:var(--ink-faint); display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .status-pill{font-size:10px; font-weight:600; padding:5px 8px; border-radius:999px; text-align:center; white-space:nowrap;}
+  .status-pill.res{background:var(--beige-soft); color:#8A6A4A;}
+  .status-pill.conf{background:var(--sky); color:#2E5570;}
+  .admin-row-acoes{grid-column:1/-1; display:flex; gap:7px; margin-top:9px;}
+  .mini-btn{
+    flex:1; border:1px solid var(--line); background:#fff; border-radius:9px;
+    padding:8px 6px; font-size:11.5px; font-weight:600; color:var(--ink-soft);
+    transition:background .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .mini-btn:hover{background:var(--sky); color:var(--ink); border-color:rgba(120,150,173,.5);}
+  .mini-btn.danger:hover{background:#FBEDEB; color:#A8443F; border-color:rgba(168,68,63,.35);}
+  .admin-actions{display:flex; gap:8px; margin-bottom:14px;}
+  .admin-actions .btn{font-size:12.5px; padding:10px 6px;}
+  .empty-note{padding:24px; text-align:center; font-size:13.5px; color:var(--ink-faint);}
+
+  /* ---------- STORY ---------- */
+  .story-tabs{display:flex; gap:7px; margin-bottom:14px;}
+  .story-tab{
+    flex:1; border:1px solid var(--line); background:var(--paper-2);
+    border-radius:11px; padding:10px 6px;
+    font-size:11.5px; font-weight:600; color:var(--ink-soft);
+    transition:all .2s ease; line-height:1.3;
+  }
+  .story-tab b{display:block; font-family:var(--font-display); font-weight:400; font-size:15px; color:var(--ink-faint); margin-bottom:2px;}
+  .story-tab.active{background:var(--ink); border-color:var(--ink); color:#fff;}
+  .story-tab.active b{color:rgba(255,255,255,.65);}
+  .story-preview-wrap{display:flex; justify-content:center; margin:4px 0 16px; position:relative; min-height:120px;}
+  #storyCanvas,#sucessoCanvas{width:100%; max-width:230px; border-radius:var(--r-md); box-shadow:var(--shadow-lift); border:1px solid var(--line); background:var(--paper-2);}
+  .btn-capa{
+    width:100%; background:none; border:none;
+    font-size:12.5px; font-weight:600; color:var(--ink-soft);
+    text-decoration:underline; text-underline-offset:3px;
+    padding:10px; margin-bottom:4px;
+  }
+  .btn-capa:hover{color:var(--ink);}
+  .story-loading{position:absolute; inset:0; display:none; align-items:center; justify-content:center; font-size:12.5px; color:var(--ink-faint);}
+  .story-loading.on{display:flex;}
+
+  #relatorioTexto{
+    width:100%; min-height:250px;
+    border:1.5px solid var(--line); border-radius:var(--r-sm);
+    padding:14px; font-family:var(--font-body); font-size:12.5px; line-height:1.7;
+    background:#fff; color:var(--ink); resize:vertical; margin-bottom:14px;
+  }
+  #relatorioTexto:focus{outline:none; border-color:var(--ink);}
+
+  .toast{
+    position:fixed; left:50%; bottom:100px; transform:translateX(-50%) translateY(16px);
+    background:var(--ink); color:var(--paper-2);
+    padding:12px 20px; border-radius:999px;
+    font-size:13.5px; font-weight:500;
+    opacity:0; transition:opacity .25s ease, transform .25s cubic-bezier(.4,0,.2,1);
+    z-index:200; pointer-events:none;
+    max-width:calc(100vw - 40px); text-align:center;
+    box-shadow:var(--shadow-lift);
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+  /* ---------- entrada de página ---------- */
+  .reveal{opacity:0; transform:translateY(14px); animation:reveal .7s cubic-bezier(.16,1,.3,1) forwards;}
+  .reveal:nth-child(1){animation-delay:.05s;}
+  .reveal:nth-child(2){animation-delay:.12s;}
+  .reveal:nth-child(3){animation-delay:.19s;}
+  .reveal:nth-child(4){animation-delay:.26s;}
+  .reveal:nth-child(5){animation-delay:.33s;}
+  .reveal:nth-child(6){animation-delay:.40s;}
+  .reveal:nth-child(7){animation-delay:.47s;}
+  .reveal:nth-child(8){animation-delay:.54s;}
+  @keyframes reveal{to{opacity:1; transform:translateY(0);}}
+
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation-duration:.01ms !important; transition-duration:.01ms !important;}
+    .reveal{opacity:1; transform:none;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= URSINHO — personagem único, reutilizado ================= -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="ursPelo" x1="0" y1="0" x2=".45" y2="1">
+      <stop offset="0" stop-color="#D3A87D"/><stop offset="1" stop-color="#A97852"/>
+    </linearGradient>
+    <linearGradient id="ursFocinho" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F5EADA"/><stop offset="1" stop-color="#E4CFB5"/>
+    </linearGradient>
+    <linearGradient id="ursLaco" x1="0" y1="0" x2=".3" y2="1">
+      <stop offset="0" stop-color="#8FA8BC"/><stop offset="1" stop-color="#6B8AA3"/>
+    </linearGradient>
+    <radialGradient id="ursBrilho" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#FFFDFC" stop-opacity=".34"/>
+      <stop offset="1" stop-color="#FFFDFC" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <symbol id="ursinho" viewBox="0 0 140 152">
+    <g>
+      <circle cx="34" cy="38" r="17" fill="url(#ursPelo)"/>
+      <circle cx="106" cy="38" r="17" fill="url(#ursPelo)"/>
+      <ellipse cx="34" cy="39" rx="8" ry="8" fill="#E9D7BF"/>
+      <ellipse cx="106" cy="39" rx="8" ry="8" fill="#E9D7BF"/>
+      <ellipse cx="70" cy="74" rx="45" ry="42" fill="url(#ursPelo)"/>
+      <ellipse cx="58" cy="54" rx="34" ry="26" fill="url(#ursBrilho)"/>
+      <ellipse cx="70" cy="90" rx="22" ry="15.5" fill="url(#ursFocinho)"/>
+      <ellipse cx="43" cy="84" rx="7.5" ry="4.5" fill="#C08F63" opacity=".28"/>
+      <ellipse cx="97" cy="84" rx="7.5" ry="4.5" fill="#C08F63" opacity=".28"/>
+      <ellipse cx="55" cy="70" rx="4.4" ry="4.8" fill="#29445A"/>
+      <ellipse cx="85" cy="70" rx="4.4" ry="4.8" fill="#29445A"/>
+      <circle cx="56.4" cy="68.2" r="1.3" fill="#FFFDFC" opacity=".9"/>
+      <circle cx="86.4" cy="68.2" r="1.3" fill="#FFFDFC" opacity=".9"/>
+      <path d="M70 77.5c4.6 0 7 1.7 7 4 0 2.8-3.6 5.2-7 6.8-3.4-1.6-7-4-7-6.8 0-2.3 2.4-4 7-4z" fill="#29445A"/>
+      <path d="M70 89.5c0 3.6-2.6 5.6-5.6 5.6M70 89.5c0 3.6 2.6 5.6 5.6 5.6" stroke="#29445A" stroke-width="1.9" fill="none" stroke-linecap="round" opacity=".85"/>
+      <path d="M64 130l-11 18 10-1.6 5.5-12.6z" fill="#5C7B94"/>
+      <path d="M76 130l11 18-10-1.6-5.5-12.6z" fill="#5C7B94"/>
+      <path d="M66 126c-13-15-31-13-31 0s18 15 31 0z" fill="url(#ursLaco)"/>
+      <path d="M74 126c13-15 31-13 31 0s-18 15-31 0z" fill="url(#ursLaco)"/>
+      <path d="M66 126c-9-10-20-11-26-6 7-2 17 0 26 6z" fill="#FFFDFC" opacity=".2"/>
+      <path d="M74 126c9-10 20-11 26-6-7-2-17 0-26 6z" fill="#FFFDFC" opacity=".2"/>
+      <ellipse cx="70" cy="126" rx="7" ry="8" fill="#5C7B94"/>
+    </g>
+  </symbol>
+</svg>
+
+<!-- ================= BARRA SUPERIOR ================= -->
+<div class="topbar" id="topbar">
+  <div class="marca">
+    <svg class="urso-mini" viewBox="0 0 140 152" aria-hidden="true"><use href="#ursinho"/></svg>
+    <span class="txt">Rifa do <em>Arthur</em></span>
+  </div>
+  <button class="btn-topo" id="btnTopoNumeros">Escolher números</button>
+</div>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <div class="hero-inner">
+    <svg class="urso-hero reveal" viewBox="0 0 140 152" aria-hidden="true"><use href="#ursinho"/></svg>
+
+    <p class="hero-eyebrow reveal"><i></i>Um número, um pacote</p>
+    <h1 class="reveal"><span class="rifa-do">Rifa do</span>Arthur</h1>
+    <div class="hero-rule reveal"><i></i>♡<i></i></div>
+    <p class="headline reveal">Uma pequena ajuda para um grande começo.</p>
+    <p class="lead reveal">Escolha seus números, entregue as fraldas correspondentes e participe do sorteio de prêmios especiais.</p>
+    <div class="hero-facts reveal">
+      <div>Números<b>50</b></div>
+      <div>Tamanhos<b>P · M · G</b></div>
+    </div>
+    <button class="btn-hero reveal" id="btnHeroCta">ESCOLHER MEUS NÚMEROS <i class="seta"></i></button>
+    <p class="hero-progresso reveal"><b id="heroProgresso">0 de 50</b> números escolhidos</p>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="progress-panel">
+    <div class="progress-top">
+      <div class="progress-num">
+        <strong id="progressCount">0/50</strong>
+        <em>números escolhidos</em>
+      </div>
+      <div class="progress-livres">
+        <b id="progressLivres">50</b>
+        <span>disponíveis</span>
+      </div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <div class="progress-sizes">
+      <span>Pacote P<b id="sizeCountP">0/10</b></span>
+      <span>Pacote M<b id="sizeCountM">0/20</b></span>
+      <span>Pacote G<b id="sizeCountG">0/20</b></span>
+    </div>
+  </div>
+
+  <div class="countdown" id="countdown" style="display:none;">
+    <div class="cd-label" id="cdLabel">Sorteio em</div>
+    <div class="cd-boxes" id="cdBoxes">
+      <div><b id="cdD">00</b><span>dias</span></div>
+      <div><b id="cdH">00</b><span>horas</span></div>
+      <div><b id="cdM">00</b><span>min</span></div>
+      <div><b id="cdS">00</b><span>seg</span></div>
+    </div>
+    <div class="cd-data" id="cdData"></div>
+  </div>
+
+  <!-- ================= COMO FUNCIONA ================= -->
+  <section id="como-funciona">
+    <div class="section-head">
+      <h2>Como funciona</h2>
+      <p>Cada número escolhido representa um pacote de fraldas para o enxoval do Arthur.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <span class="n">01</span>
+        <h3>Escolha seus números</h3>
+        <p>Selecione um ou mais números disponíveis.</p>
+      </div>
+      <div class="step">
+        <span class="n">02</span>
+        <h3>Confira o tamanho</h3>
+        <p>Cada número corresponde a um pacote de um tamanho específico.</p>
+      </div>
+      <div class="step">
+        <span class="n">03</span>
+        <h3>Entregue as fraldas</h3>
+        <p>Após a entrega, seus números são confirmados.</p>
+      </div>
+      <div class="step">
+        <span class="n">04</span>
+        <h3>Concorra aos prêmios</h3>
+        <p>Todos os números confirmados participam do sorteio.</p>
+      </div>
+    </div>
+    <div class="pix-callout" id="calloutPix">
+      <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#29445A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20M6 15h4"/></svg></div>
+      <div>
+        <b>Não consegue entregar pessoalmente?</b>
+        <span>Na hora de confirmar seus números você pode contribuir por Pix, e a <span id="calloutNome">organização</span> compra o pacote do tamanho escolhido.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= NÚMEROS ================= -->
+  <section id="numeros">
+    <div class="section-head">
+      <h2>Escolha seus números</h2>
+      <p>Cada número corresponde a um pacote de fraldas.</p>
+    </div>
+    <div class="panel numbers-panel">
+      <div class="legend">
+        <span><i class="dot disp"></i> Disponível</span>
+        <span><i class="dot res"></i> Reservado</span>
+        <span><i class="dot conf"></i> Confirmado</span>
+      </div>
+      <div class="numbers-grid" id="numbersGrid"></div>
+      <p class="grid-nota">A letra abaixo do número indica o tamanho do pacote de fraldas.</p>
+      <button class="btn-sorte" id="btnSorte">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1.2" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.2" fill="currentColor"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg>
+        Escolhe um número pra mim
+      </button>
+    </div>
+  </section>
+
+  <!-- ================= FAIXAS ================= -->
+  <section id="faixas">
+    <div class="section-head">
+      <h2>Cada número, um pacote de fraldas</h2>
+      <p>Depois que o pacote for entregue, seu número é confirmado para o sorteio.</p>
+    </div>
+    <div class="panel sizes-grid">
+      <div class="size-card p">
+        <div class="size-letter">P</div>
+        <div class="qtd">Nº 01 a 10</div>
+        <small>10 pacotes P</small>
+      </div>
+      <div class="size-card m">
+        <div class="size-letter">M</div>
+        <div class="qtd">Nº 11 a 30</div>
+        <small>20 pacotes M</small>
+      </div>
+      <div class="size-card g">
+        <div class="size-letter">G</div>
+        <div class="qtd">Nº 31 a 50</div>
+        <small>20 pacotes G</small>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PRÊMIOS ================= -->
+  <section id="premios">
+    <div class="section-head">
+      <h2>Prêmios preparados com carinho</h2>
+      <p>Todos os números confirmados participam do sorteio.</p>
+    </div>
+    <div class="prizes">
+      <!-- As imagens ficam na MESMA PASTA deste HTML. Para trocar, basta substituir o arquivo. -->
+      <div class="prize-card">
+        <div class="prize-media">
+          <img class="prize-img" src="premio-chalezinho.jpg" alt="Estadia no Chalézinho na Rocha" loading="lazy"
+               data-legenda="Estadia no Chalézinho na Rocha"
+               onerror="this.style.display='none'; this.parentNode.querySelector('.prize-ph').style.display='flex'; this.parentNode.querySelector('.prize-zoom').style.display='none';">
+          <div class="prize-ph" style="display:none;"><svg viewBox="0 0 48 48" fill="none" stroke="#29445A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 40V22l18-13 18 13v18"/><path d="M18 40V28h12v12"/></svg></div>
+          <span class="prize-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="#29445A" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6"/></svg></span>
+        </div>
+        <div class="prize-body">
+          <div class="prize-rank">1</div>
+          <div class="prize-text"><b>Estadia no Chalézinho na Rocha</b></div>
+        </div>
+      </div>
+      <div class="prize-card">
+        <div class="prize-media">
+          <img class="prize-img" src="premio-unhas.jpg" alt="Manicure e pedicure com a Tami Adesivos" loading="lazy"
+               data-legenda="Manicure e Pedicure — Tami Adesivos"
+               onerror="this.style.display='none'; this.parentNode.querySelector('.prize-ph').style.display='flex'; this.parentNode.querySelector('.prize-zoom').style.display='none';">
+          <div class="prize-ph" style="display:none;"><svg viewBox="0 0 48 48" fill="none" stroke="#29445A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 34c-3-2-4-6-4-11V11a4 4 0 0 1 8 0v9"/><path d="M21 20v-4a4 4 0 0 1 8 0v4"/><path d="M29 21v-2a4 4 0 0 1 7 2v9c0 8-5 13-12 13s-11-4-11-9"/></svg></div>
+          <span class="prize-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="#29445A" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6"/></svg></span>
+        </div>
+        <div class="prize-body">
+          <div class="prize-rank">2</div>
+          <div class="prize-text"><b>Manicure e Pedicure</b><span>Tami Adesivos</span></div>
+        </div>
+      </div>
+      <div class="prize-card">
+        <div class="prize-media">
+          <img class="prize-img" src="premio-kit.jpg" alt="Kit Boticário" loading="lazy"
+               data-legenda="Kit Boticário"
+               onerror="this.style.display='none'; this.parentNode.querySelector('.prize-ph').style.display='flex'; this.parentNode.querySelector('.prize-zoom').style.display='none';">
+          <div class="prize-ph" style="display:none;"><svg viewBox="0 0 48 48" fill="none" stroke="#29445A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="20" width="32" height="20" rx="2"/><path d="M6 14h36v6H6zM24 14v26"/><path d="M24 14s-2-8-7-8a4 4 0 0 0 0 8zM24 14s2-8 7-8a4 4 0 0 1 0 8z"/></svg></div>
+          <span class="prize-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="#29445A" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6"/></svg></span>
+        </div>
+        <div class="prize-body">
+          <div class="prize-rank">3</div>
+          <div class="prize-text"><b>Kit Boticário</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer class="rodape">
+  <svg class="urso-rodape" viewBox="0 0 140 152" aria-hidden="true"><use href="#ursinho"/></svg>
+  <div class="assinatura">Arthur</div>
+  <p>Feito com carinho para a chegada do nosso menino.<br>Dúvida sobre a entrega das fraldas?</p>
+  <button class="btn-whats-rodape" id="btnFalarOrganizadora">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.05L2 22l5.1-1.33A10 10 0 1 0 12 2zm0 18.1a8.1 8.1 0 0 1-4.13-1.13l-.3-.18-3.03.79.81-2.95-.2-.31A8.1 8.1 0 1 1 12 20.1zm4.44-6.06c-.24-.12-1.44-.71-1.66-.79-.22-.08-.39-.12-.55.12-.16.24-.63.79-.77.95-.14.16-.28.18-.52.06a6.63 6.63 0 0 1-3.3-2.88c-.25-.43.25-.4.71-1.32.08-.16.04-.3-.02-.42-.06-.12-.55-1.33-.76-1.82-.2-.47-.4-.4-.55-.41h-.47c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.7 2.6 4.12 3.64 1.53.66 2.13.72 2.9.6.46-.07 1.44-.59 1.64-1.16.2-.57.2-1.05.14-1.16-.06-.1-.22-.16-.46-.28z"/></svg>
+    Falar com a mamãe
+  </button>
+  <br>
+  <button class="link-organizador" id="btnAdminOpen">Área do organizador</button>
+</footer>
+
+<!-- ================= BARRA DE SELEÇÃO ================= -->
+<div class="selection-bar" id="selectionBar">
+  <div class="info"><b id="selCount">0 números selecionados</b><span id="selDetalhe"></span></div>
+  <div class="acoes">
+    <button class="btn-clear" id="btnLimparSelecao">Limpar</button>
+    <button class="btn-go" id="btnContinuarSelecao">CONTINUAR</button>
+  </div>
+</div>
+
+<!-- ================= CTA FIXA ================= -->
+<div class="cta-bar">
+  <button class="btn btn-secondary" id="btnCopyLink">Compartilhar</button>
+  <button class="btn btn-primary" id="btnStory">Gerar story</button>
+</div>
+
+<!-- ================= MODAL PARTICIPAÇÃO ================= -->
+<div class="overlay" id="overlayReserva">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <h3>Sua participação</h3>
+        <p class="sub" id="reservaSub">Confira os números escolhidos</p>
+      </div>
+      <button class="modal-close" id="closeReserva" aria-label="Fechar">✕</button>
+    </div>
+    <div class="resumo-lista" id="reservaLista"></div>
+    <div class="contrib">
+      <div class="contrib-label">Como você prefere contribuir?</div>
+      <div class="contrib-opts" id="contribOpts">
+        <button class="contrib-opt active" data-modo="entrega">
+          <b>Entrego o pacote</b><span>Combino a entrega no WhatsApp</span>
+        </button>
+        <button class="contrib-opt" data-modo="pix">
+          <b>Envio por Pix</b><span>O pacote é comprado pra mim</span>
+        </button>
+      </div>
+      <div class="pix-box" id="pixBox">
+        <div class="pix-marcas" id="pixMarcas"></div>
+        <div class="pix-linhas" id="pixLinhas"></div>
+        <div class="pix-total"><span>Total</span><b id="pixTotal">R$ 0,00</b></div>
+        <div class="pix-chave">
+          <div><span id="pixTipo">Chave Pix</span><b id="pixChave"></b></div>
+          <button class="pix-copiar" id="btnCopiarPix">Copiar</button>
+        </div>
+        <p class="pix-nota">Valores de referência de um pacote de fraldas de cada tamanho. Se preferir outro valor ou outra marca, é só combinar no WhatsApp.</p>
+      </div>
+    </div>
+    <div class="field">
+      <label for="inpNome">Nome</label>
+      <input type="text" id="inpNome" placeholder="Como podemos te chamar?" autocomplete="name">
+    </div>
+    <div class="field">
+      <label for="inpTelefone">WhatsApp</label>
+      <input type="tel" id="inpTelefone" placeholder="(48) 99999-9999" autocomplete="tel">
+    </div>
+    <button class="btn btn-primary btn-full" id="btnConfirmarReserva">CONFIRMAR PELO WHATSAPP</button>
+    <p class="hint" id="hintReserva">Seus números ficam <b>reservados</b> até a entrega das fraldas. Depois da entrega, a <b id="hintOrganizador">organização</b> confirma cada número para o sorteio.</p>
+  </div>
+</div>
+
+<!-- ================= MODAL STORY ================= -->
+<div class="overlay" id="overlayStory">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <h3>Story para Instagram</h3>
+        <p class="sub">1080 × 1920 · escolha o modelo</p>
+      </div>
+      <button class="modal-close" id="closeStory" aria-label="Fechar">✕</button>
+    </div>
+    <div class="story-tabs" id="storyTabs">
+      <button class="story-tab active" data-modelo="divulgacao"><b>01</b>Divulgação</button>
+      <button class="story-tab" data-modelo="premios"><b>02</b>Prêmios</button>
+      <button class="story-tab" data-modelo="numeros"><b>03</b>Disponíveis</button>
+    </div>
+    <div class="story-preview-wrap">
+      <canvas id="storyCanvas" width="1080" height="1920"></canvas>
+      <div class="story-loading" id="storyLoading">gerando…</div>
+    </div>
+    <button class="btn btn-bear btn-full" id="btnBaixarStory" style="margin-bottom:6px;">Baixar imagem (PNG)</button>
+    <button class="btn-capa" id="btnBaixarCapa">Baixar a capa do link (1200 × 630)</button>
+    <p class="hint">Baixe a imagem, poste no story e anexe o link da rifa na figurinha de link. Use “Compartilhar” na tela principal para copiar o endereço.</p>
+  </div>
+</div>
+
+<!-- ================= MODAL SUCESSO / STORY DO PARTICIPANTE ================= -->
+<div class="overlay" id="overlaySucesso">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <h3>Deu certo! 💙</h3>
+        <p class="sub" id="sucessoSub"></p>
+      </div>
+      <button class="modal-close" id="closeSucesso" aria-label="Fechar">✕</button>
+    </div>
+    <div class="story-preview-wrap">
+      <canvas id="sucessoCanvas" width="1080" height="1920"></canvas>
+      <div class="story-loading" id="sucessoLoading">gerando…</div>
+    </div>
+    <a class="btn btn-primary btn-full" id="btnWhatsSucesso" href="#" target="_blank" rel="noopener" style="margin-bottom:8px;">Enviar mensagem no WhatsApp</a>
+    <button class="btn btn-bear btn-full" id="btnBaixarSucesso" style="margin-bottom:8px;">Baixar pro meu story</button>
+    <button class="btn btn-secondary btn-full" id="btnCompartilharSucesso">Compartilhar a rifa</button>
+    <p class="hint">Posta no seu story e marca a mamãe do Arthur — assim mais gente descobre a rifa e o enxoval fecha mais rápido.</p>
+  </div>
+</div>
+
+<!-- ================= MODAL ADMIN ================= -->
+<div class="overlay" id="overlayAdmin">
+  <div class="modal wide">
+    <div class="modal-head">
+      <div>
+        <h3>Área do organizador</h3>
+        <p class="sub">Controle das reservas e entregas</p>
+      </div>
+      <button class="modal-close" id="closeAdmin" aria-label="Fechar">✕</button>
+    </div>
+    <div class="admin-stats">
+      <div class="admin-stat"><b>50</b><span>Total</span></div>
+      <div class="admin-stat"><b id="admEscolhidos">0</b><span>Escolhidos</span></div>
+      <div class="admin-stat ok"><b id="admConf">0</b><span>Confirmados</span></div>
+      <div class="admin-stat wait"><b id="admRes">0</b><span>Aguardando entrega</span></div>
+    </div>
+    <p class="admin-pix-resumo" id="admResumoPix" style="display:none;"></p>
+    <div class="admin-actions">
+      <button class="btn btn-ghost" id="btnVerRelatorio">Relatório</button>
+      <button class="btn btn-ghost" id="btnExportCsv">CSV</button>
+      <button class="btn btn-ghost" id="btnResetAll" style="color:#A8443F;">Zerar tudo</button>
+    </div>
+    <div class="admin-tabela">
+      <div class="admin-thead"><span>Nº</span><span>Participante · Pacote · Data</span><span>Status</span></div>
+      <div id="admList"></div>
+    </div>
+    <p class="hint">Toque em um número na grade da página para lançar uma participação manualmente. Nas linhas abaixo você confirma a entrega, libera o número ou chama a pessoa no WhatsApp.</p>
+    <button class="link-sair" id="btnSairAdmin">Sair da área do organizador</button>
+  </div>
+</div>
+
+<!-- ================= MODAL LOGIN (organizador) ================= -->
+<div class="overlay" id="overlayLogin">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <h3>Área do organizador</h3>
+        <p class="sub" id="loginSub">Digite a senha para entrar</p>
+      </div>
+      <button class="modal-close" id="closeLogin" aria-label="Fechar">✕</button>
+    </div>
+    <div class="field" id="campoEmailAdmin">
+      <label for="inpEmailAdmin">E-mail</label>
+      <input type="email" id="inpEmailAdmin" autocomplete="username" placeholder="email@exemplo.com">
+    </div>
+    <div class="field">
+      <label for="inpSenhaAdmin">Senha</label>
+      <input type="password" id="inpSenhaAdmin" autocomplete="current-password">
+    </div>
+    <button class="btn btn-primary btn-full" id="btnEntrarAdmin">Entrar</button>
+  </div>
+</div>
+
+<!-- ================= MODAL RELATÓRIO ================= -->
+<div class="overlay" id="overlayRelatorio">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <h3>Relatório da rifa</h3>
+        <p class="sub">Quem escolheu número e o que falta entregar</p>
+      </div>
+      <button class="modal-close" id="closeRelatorio" aria-label="Fechar">✕</button>
+    </div>
+    <textarea id="relatorioTexto" readonly></textarea>
+    <div style="display:flex; gap:8px;">
+      <button class="btn btn-secondary" id="btnCopiarRelatorio">Copiar texto</button>
+      <button class="btn btn-primary" id="btnCompartilharRelatorio">Enviar no WhatsApp</button>
+    </div>
+  </div>
+</div>
+
+<figure class="lightbox" id="lightbox">
+  <button class="fechar" id="closeLightbox" aria-label="Fechar">✕</button>
+  <div>
+    <img id="lightboxImg" src="" alt="">
+    <figcaption id="lightboxCap"></figcaption>
+  </div>
+</figure>
+
+<div class="toast" id="toast"></div>
+<script>
+/* ============================================================
+   CONFIGURAÇÃO — edite apenas esta seção para personalizar
+============================================================ */
+const CONFIG = {
+  NOME_BEBE: "Arthur",
+  NOME_ORGANIZADOR: "mamãe do Arthur",  // usado nos textos da página
+  SAUDACAO_PARTICIPANTE: "mamãe do Arthur", // como o participante chama no WhatsApp
+  WHATSAPP_ORGANIZADOR: "5548991530561", // DDI+DDD+numero, só dígitos
+  SENHA_ADMIN: "arthur2026",             // senha usada só enquanto o Firebase NÃO estiver conectado
+
+  // FIREBASE CONFIG — preencher quando conectar o projeto.
+  // Cole aqui o objeto "firebaseConfig" copiado do console do Firebase, por exemplo:
+  // FIREBASE: { apiKey: "...", authDomain: "...", projectId: "...", storageBucket: "...", messagingSenderId: "...", appId: "..." },
+  // Enquanto estiver null, a rifa funciona só neste aparelho (localStorage).
+  FIREBASE: null,
+  // E-mail da conta criada em Firebase > Authentication para a área do organizador.
+  EMAIL_ADMIN: "",
+  LINK_PUBLICO: "",                      // <-- cole aqui a URL final depois de hospedar
+  // Data e hora do sorteio. Formato: "AAAA-MM-DDTHH:MM" (ex.: "2026-10-25T20:00").
+  // Deixe vazio ("") para esconder a contagem regressiva.
+  DATA_SORTEIO: "",
+
+  // --- PIX (para quem não consegue entregar as fraldas) ---
+  PIX_ATIVO: true,
+  PIX_TIPO: "Chave Pix (e-mail)",
+  PIX_CHAVE: "ameliadosreisdesousajorge@gmail.com",
+  // valores de REFERÊNCIA de um pacote de fraldas, por marca e tamanho.
+  // >>> confira nos mercados da sua região e ajuste antes de publicar <<<
+  PRECOS: {
+    "Pampers": { P: 80, M: 90, G: 95 },
+    "Huggies": { P: 60, M: 70, G: 75 }
+  },
+  STORAGE_KEY: "rifa_arthur_v2",
+  STORAGE_KEY_LEGADO: "charifa_arthur_v1"
+};
+
+/* ============================================================
+   FAIXAS DE NÚMEROS — 01–10 P · 11–30 M · 31–50 G
+============================================================ */
+function faixaDoNumero(n){
+  if(n<=10)  return {sigla:'P', label:'Pacote P', cor:'#7896AD', corClara:'#EDF2F6', total:10};
+  if(n<=30)  return {sigla:'M', label:'Pacote M', cor:'#A97852', corClara:'#F6EFE7', total:20};
+  return       {sigla:'G', label:'Pacote G', cor:'#29445A', corClara:'#E8EFF3', total:20};
+}
+function pad2(n){ return String(n).padStart(2,'0'); }
+function listaFormatada(nums){ return nums.map(pad2).join(' · '); }
+
+/* ============================================================
+   PERSISTÊNCIA — camada única (localStorage hoje, Firestore depois)
+
+   Todo acesso a dados passa por Persistencia.*  Para migrar,
+   basta reescrever os quatro métodos abaixo — nenhuma outra
+   parte da aplicação precisa mudar.
+
+   // FIREBASE CONFIG — preencher quando conectar o projeto
+   // const firebaseConfig = { ... };
+   // const app = initializeApp(firebaseConfig);
+   // const db  = getFirestore(app);
+============================================================ */
+function estadoPadrao(){
+  const arr = [];
+  for(let i=1;i<=50;i++){
+    arr.push({ numero:i, status:'disponivel', nome:'', telefone:'', dataReserva:'', modo:'', marca:'' });
+  }
+  return arr;
+}
+
+/* normaliza dados antigos: 'vendido' passou a se chamar 'confirmado' */
+function normalizar(lista){
+  return lista.map(i=>({
+    numero: i.numero,
+    status: i.status==='vendido' ? 'confirmado' : (i.status || 'disponivel'),
+    nome: i.nome || '',
+    telefone: i.telefone || '',
+    dataReserva: i.dataReserva || '',
+    modo: i.modo || '',
+    marca: i.marca || ''
+  }));
+}
+
+const Persistencia = {
+  modo: 'local',        // 'local' | 'firestore'
+  usuario: null,        // organizador logado (Firestore)
+  publicos: {},         // numeros/{NN}  -> status, dataReserva, modo, marca
+  privados: {},         // reservas/{NN} -> nome, telefone (só o organizador lê)
+  _pararPrivados: null,
+  _importar: (url)=> import(url),
+
+  carregarEstado(){
+    if(CONFIG.FIREBASE) return estadoPadrao();   // com Firebase, a fonte é o Firestore
+    try{
+      let raw = localStorage.getItem(CONFIG.STORAGE_KEY);
+      if(!raw) raw = localStorage.getItem(CONFIG.STORAGE_KEY_LEGADO); // migra a base antiga
+      if(!raw) return estadoPadrao();
+      const parsed = JSON.parse(raw);
+      if(!Array.isArray(parsed) || parsed.length!==50) return estadoPadrao();
+      return normalizar(parsed);
+    }catch(e){ return estadoPadrao(); }
+  },
+
+  salvarEstado(lista){
+    if(this.modo==='firestore') return;
+    try{ localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(lista)); }
+    catch(e){ console.warn('Não foi possível salvar localmente.', e); }
+  },
+
+  /* ---------- conexão com o Firestore (só roda se CONFIG.FIREBASE estiver preenchido) ---------- */
+  async iniciar(){
+    if(!CONFIG.FIREBASE) return;
+    const grid = document.getElementById('numbersGrid');
+    grid.classList.add('carregando');
+    try{
+      const base = 'https://www.gstatic.com/firebasejs/10.12.2/';
+      const [appMod, fs, au] = await Promise.all([
+        this._importar(base+'firebase-app.js'),
+        this._importar(base+'firebase-firestore.js'),
+        this._importar(base+'firebase-auth.js')
+      ]);
+      const app = appMod.initializeApp(CONFIG.FIREBASE);
+      this.fs = fs; this.au = au;
+      this.db = fs.getFirestore(app);
+      this.auth = au.getAuth(app);
+      this.modo = 'firestore';
+
+      fs.onSnapshot(fs.collection(this.db, 'numeros'), snap=>{
+        const mapa = {};
+        snap.forEach(d=>{ mapa[d.id] = d.data(); });
+        this.publicos = mapa;
+        this.aplicar();
+        grid.classList.remove('carregando');
+      }, err=>{
+        console.error('Firestore (numeros):', err);
+        grid.classList.remove('carregando');
+        mostrarToast('Não consegui carregar os números. Atualize a página.');
+      });
+
+      au.onAuthStateChanged(this.auth, user=>{
+        if(user && CONFIG.EMAIL_ADMIN && user.email!==CONFIG.EMAIL_ADMIN){
+          au.signOut(this.auth);
+          mostrarToast('Essa conta não tem acesso à área do organizador.');
+          return;
+        }
+        this.usuario = user || null;
+        if(this._pararPrivados){ this._pararPrivados(); this._pararPrivados = null; }
+        if(user){
+          this._pararPrivados = fs.onSnapshot(fs.collection(this.db, 'reservas'), snap=>{
+            const mapa = {};
+            snap.forEach(d=>{ mapa[d.id] = d.data(); });
+            this.privados = mapa;
+            this.aplicar();
+          }, err=> console.error('Firestore (reservas):', err));
+        } else {
+          this.privados = {};
+          this.aplicar();
+        }
+      });
+    }catch(e){
+      console.error('Firebase indisponível, usando modo local.', e);
+      this.modo = 'local';
+      grid.classList.remove('carregando');
+      mostrarToast('Não consegui conectar ao banco de dados. Atualize a página.');
+    }
+  },
+
+  /* junta os dados públicos e privados no array "estado" usado pela página */
+  aplicar(){
+    estado.forEach(item=>{
+      const id = pad2(item.numero);
+      const pub = this.publicos[id] || {};
+      const pri = this.privados[id] || {};
+      item.status      = pub.status || 'disponivel';
+      item.dataReserva = pub.dataReserva || '';
+      item.modo        = pub.modo || '';
+      item.marca       = pub.marca || '';
+      item.nome        = pri.nome || '';
+      item.telefone    = pri.telefone || '';
+    });
+    aoMudarEstado();
+  },
+
+  /* PONTO ÚNICO DE RESERVA.
+     Retorna {ok:true} ou {ok:false, ocupados:[...]} (ou {ok:false, erro:true}).
+     No Firestore usa runTransaction: lê os números pedidos, aborta se algum
+     já estiver ocupado e só então grava — duas pessoas nunca ficam com o mesmo número. */
+  async reservarNumeros(lista, numeros, dados){
+    const agora = new Date().toLocaleString('pt-BR');
+    const modo  = dados.modo || 'entrega';
+    const marca = dados.marca || '';
+
+    if(this.modo!=='firestore'){
+      const ocupados = numeros.filter(n=>{
+        const item = lista.find(i=>i.numero===n);
+        return !item || item.status!=='disponivel';
+      });
+      if(ocupados.length) return {ok:false, ocupados};
+      numeros.forEach(n=>{
+        const item = lista.find(i=>i.numero===n);
+        item.status = 'reservado';
+        item.nome = dados.nome;
+        item.telefone = dados.telefone;
+        item.dataReserva = agora;
+        item.modo = modo;
+        item.marca = marca;
+      });
+      this.salvarEstado(lista);
+      return {ok:true};
+    }
+
+    const {fs, db} = this;
+    const refs = numeros.map(n=> fs.doc(db, 'numeros', pad2(n)));
+    try{
+      await fs.runTransaction(db, async tx=>{
+        const snaps = await Promise.all(refs.map(r=> tx.get(r)));
+        const ocupados = numeros.filter((n,i)=> snaps[i].exists() && snaps[i].data().status!=='disponivel');
+        if(ocupados.length){ const e = new Error('ocupado'); e.ocupados = ocupados; throw e; }
+        numeros.forEach((n,i)=>{
+          tx.set(refs[i], {status:'reservado', dataReserva:agora, modo, marca});
+          tx.set(fs.doc(db, 'reservas', pad2(n)), {
+            nome: dados.nome, telefone: dados.telefone || '',
+            dataReserva: agora, modo, marca,
+            criadoEm: fs.serverTimestamp()
+          });
+        });
+      });
+      return {ok:true};
+    }catch(e){
+      if(e && e.ocupados) return {ok:false, ocupados:e.ocupados};
+      console.error('Erro ao reservar:', e);
+      return {ok:false, erro:true};
+    }
+  },
+
+  async atualizarNumero(lista, numero, patch){
+    if(this.modo!=='firestore'){
+      const item = lista.find(i=>i.numero===numero);
+      if(!item) return {ok:false};
+      Object.assign(item, patch);
+      this.salvarEstado(lista);
+      return {ok:true};
+    }
+    const {fs, db} = this;
+    const id = pad2(numero);
+    try{
+      if(patch.status==='disponivel'){
+        const b = fs.writeBatch(db);
+        b.set(fs.doc(db, 'numeros', id), {status:'disponivel', dataReserva:'', modo:'', marca:''});
+        b.delete(fs.doc(db, 'reservas', id));
+        await b.commit();
+      } else {
+        const pub = {};
+        ['status','dataReserva','modo','marca'].forEach(k=>{ if(k in patch) pub[k] = patch[k]; });
+        await fs.setDoc(fs.doc(db, 'numeros', id), pub, {merge:true});
+      }
+      return {ok:true};
+    }catch(e){
+      console.error('Erro ao atualizar:', e);
+      mostrarToast('Não consegui salvar. Confira se você está conectada como organizadora.');
+      return {ok:false};
+    }
+  },
+
+  async zerarTudo(){
+    if(this.modo!=='firestore'){
+      estado = estadoPadrao();
+      this.salvarEstado(estado);
+      return {ok:true};
+    }
+    const {fs, db} = this;
+    try{
+      const b = fs.writeBatch(db);
+      for(let n=1;n<=50;n++){
+        b.set(fs.doc(db, 'numeros', pad2(n)), {status:'disponivel', dataReserva:'', modo:'', marca:''});
+        b.delete(fs.doc(db, 'reservas', pad2(n)));
+      }
+      await b.commit();
+      return {ok:true};
+    }catch(e){
+      console.error(e);
+      mostrarToast('Não consegui zerar a rifa.');
+      return {ok:false};
+    }
+  },
+
+  /* ---------- login do organizador ---------- */
+  async entrar(email, senha){
+    if(this.modo!=='firestore'){
+      return senha===CONFIG.SENHA_ADMIN ? {ok:true} : {ok:false, msg:'Senha incorreta.'};
+    }
+    try{
+      await this.au.signInWithEmailAndPassword(this.auth, email, senha);
+      return {ok:true};
+    }catch(e){
+      console.error(e);
+      return {ok:false, msg:'E-mail ou senha incorretos.'};
+    }
+  },
+  async sair(){
+    if(this.modo==='firestore'){ try{ await this.au.signOut(this.auth); }catch(e){} }
+  },
+  logado(){ return this.modo!=='firestore' || !!this.usuario; }
+};
+
+/* atalhos mantidos por compatibilidade com o restante do código */
+function carregarEstado(){ return Persistencia.carregarEstado(); }
+function salvarEstado(){ Persistencia.salvarEstado(estado); }
+
+let estado = carregarEstado();
+let selecionados = new Set();
+let modoAdmin = false;
+let modoContribuicao = 'entrega';
+let ultimaReserva = null;
+let reservaEmAndamento = false;
+
+/* chamada sempre que os dados mudam no Firestore (outra pessoa reservou, admin confirmou…) */
+function aoMudarEstado(){
+  const perdidos = [...selecionados].filter(n=>{
+    const it = estado.find(i=>i.numero===n);
+    return !it || it.status!=='disponivel';
+  });
+  if(perdidos.length && !reservaEmAndamento){
+    perdidos.forEach(n=>selecionados.delete(n));
+    mostrarToast(`O ${listaFormatada(perdidos)} acabou de ser escolhido por outra pessoa.`);
+  }
+  renderGrid();
+  renderSelectionBar();
+  if(document.getElementById('overlayAdmin').classList.contains('open')) renderAdmin();
+}
+let marcaEscolhida = Object.keys(CONFIG.PRECOS)[0];
+document.getElementById('hintOrganizador').textContent = CONFIG.NOME_ORGANIZADOR || 'organização';
+document.getElementById('calloutNome').textContent = CONFIG.NOME_ORGANIZADOR || 'organização';
+if(!CONFIG.PIX_ATIVO) document.getElementById('calloutPix').style.display = 'none';
+
+function brl(v){ return v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'}); }
+function contagemTamanhos(numeros){
+  const por = {P:0,M:0,G:0};
+  numeros.forEach(n=> por[faixaDoNumero(n).sigla]++);
+  return por;
+}
+function totalPix(numeros, marca){
+  const tab = CONFIG.PRECOS[marca] || {};
+  const por = contagemTamanhos(numeros);
+  return ['P','M','G'].reduce((s,t)=> s + (por[t]||0)*(tab[t]||0), 0);
+}
+function valorDoNumero(item){
+  if(item.modo!=='pix') return 0;
+  const tab = CONFIG.PRECOS[item.marca] || {};
+  return tab[faixaDoNumero(item.numero).sigla] || 0;
+}
+
+/* ============================================================
+   TOAST
+============================================================ */
+let toastTimer=null;
+function mostrarToast(msg){
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>el.classList.remove('show'), 2600);
+}
+
+/* ============================================================
+   BARRA SUPERIOR + CTA DO HERO
+============================================================ */
+const topbar = document.getElementById('topbar');
+window.addEventListener('scroll', ()=>{
+  topbar.classList.toggle('solid', window.scrollY > 220);
+}, {passive:true});
+
+function irParaNumeros(){
+  document.getElementById('numeros').scrollIntoView({behavior:'smooth', block:'start'});
+}
+document.getElementById('btnHeroCta').addEventListener('click', irParaNumeros);
+document.getElementById('btnTopoNumeros').addEventListener('click', irParaNumeros);
+
+/* ============================================================
+   CONTAGEM REGRESSIVA DO SORTEIO
+============================================================ */
+function iniciarContagem(){
+  const box = document.getElementById('countdown');
+  if(!CONFIG.DATA_SORTEIO) return;
+  const alvo = new Date(CONFIG.DATA_SORTEIO);
+  if(isNaN(alvo)){ console.warn('DATA_SORTEIO inválida:', CONFIG.DATA_SORTEIO); return; }
+  box.style.display = 'block';
+  document.getElementById('cdData').textContent =
+    'Sorteio em ' + alvo.toLocaleDateString('pt-BR', {day:'2-digit', month:'long'}) +
+    ', às ' + alvo.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
+
+  function tick(){
+    const resta = alvo - new Date();
+    if(resta <= 0){
+      document.getElementById('cdLabel').textContent = '';
+      document.getElementById('cdBoxes').innerHTML =
+        '<div style="max-width:none; background:none;"><span class="cd-encerrado">As escolhas foram encerradas 💙</span></div>';
+      clearInterval(timer);
+      return;
+    }
+    const d = Math.floor(resta/86400000);
+    const h = Math.floor(resta/3600000)%24;
+    const m = Math.floor(resta/60000)%60;
+    const sg = Math.floor(resta/1000)%60;
+    document.getElementById('cdD').textContent = String(d).padStart(2,'0');
+    document.getElementById('cdH').textContent = String(h).padStart(2,'0');
+    document.getElementById('cdM').textContent = String(m).padStart(2,'0');
+    document.getElementById('cdS').textContent = String(sg).padStart(2,'0');
+  }
+  tick();
+  const timer = setInterval(tick, 1000);
+}
+
+/* ============================================================
+   ESCOLHA ALEATÓRIA + LINK DIRETO (?n=07 ou ?n=07,18,24)
+============================================================ */
+function numerosLivres(){
+  return estado.filter(i=>i.status==='disponivel' && !selecionados.has(i.numero)).map(i=>i.numero);
+}
+
+function destacarNumero(numero){
+  const btn = document.getElementById('numbersGrid').children[numero-1];
+  if(!btn) return;
+  btn.classList.add('destaque');
+  if(btn.scrollIntoView) btn.scrollIntoView({behavior:'smooth', block:'center'});
+  setTimeout(()=>btn.classList.remove('destaque'), 3200);
+}
+
+document.getElementById('btnSorte').addEventListener('click', ()=>{
+  const livres = numerosLivres();
+  if(!livres.length){ mostrarToast('Não sobrou nenhum número livre por enquanto.'); return; }
+  const escolhido = livres[Math.floor(Math.random()*livres.length)];
+  selecionados.add(escolhido);
+  renderGrid();
+  renderSelectionBar();
+  destacarNumero(escolhido);
+  mostrarToast(`O ${pad2(escolhido)} é seu! ${faixaDoNumero(escolhido).label}.`);
+});
+
+function aplicarLinkDireto(){
+  const param = new URLSearchParams(window.location.search).get('n');
+  if(!param) return;
+  const pedidos = param.split(/[,\s.;-]+/)
+    .map(v=>parseInt(v,10))
+    .filter(v=>Number.isInteger(v) && v>=1 && v<=50);
+  if(!pedidos.length) return;
+
+  const ocupados = [];
+  pedidos.forEach(n=>{
+    const item = estado.find(i=>i.numero===n);
+    if(item && item.status==='disponivel') selecionados.add(n);
+    else ocupados.push(n);
+  });
+  renderGrid();
+  renderSelectionBar();
+  setTimeout(()=>{
+    if(selecionados.size){
+      destacarNumero([...selecionados][0]);
+      mostrarToast(selecionados.size>1
+        ? `Números ${listaFormatada([...selecionados].sort((a,b)=>a-b))} prontos pra você.`
+        : `O número ${pad2([...selecionados][0])} está livre — é seu se quiser.`);
+    } else if(ocupados.length){
+      document.getElementById('numeros').scrollIntoView({behavior:'smooth'});
+      mostrarToast(`O ${listaFormatada(ocupados)} já foi escolhido. Dá uma olhada nos que sobraram.`);
+    }
+  }, 600);
+}
+
+/* ============================================================
+   RENDER — grade pública
+============================================================ */
+function renderGrid(){
+  const grid = document.getElementById('numbersGrid');
+  grid.innerHTML = '';
+  estado.forEach(item=>{
+    const faixa = faixaDoNumero(item.numero);
+    const isSel = selecionados.has(item.numero);
+    let classe;
+    if(item.status==='confirmado')     classe = 'conf';
+    else if(item.status==='reservado') classe = 'res';
+    else classe = isSel ? 'disp sel' : 'disp ' + faixa.sigla.toLowerCase();
+    const btn = document.createElement('button');
+    btn.className = 'num-btn ' + classe;
+    btn.innerHTML = `${pad2(item.numero)}<small>${faixa.sigla}</small>`;
+    const rotulo = item.status==='confirmado' ? 'confirmado'
+                 : item.status==='reservado'  ? 'aguardando entrega' : 'disponível';
+    btn.setAttribute('aria-label', `Número ${pad2(item.numero)}, ${faixa.label}, ${rotulo}`);
+    btn.setAttribute('aria-pressed', isSel ? 'true' : 'false');
+    btn.addEventListener('click', ()=> onClickNumero(item.numero));
+    grid.appendChild(btn);
+  });
+  renderProgresso();
+}
+
+function contagemPorFaixa(){
+  const por = {P:{ocupados:0,total:10}, M:{ocupados:0,total:20}, G:{ocupados:0,total:20}};
+  estado.forEach(i=>{
+    if(i.status!=='disponivel') por[faixaDoNumero(i.numero).sigla].ocupados++;
+  });
+  return por;
+}
+
+function renderProgresso(){
+  const escolhidos = estado.filter(i=>i.status!=='disponivel').length;
+  const livres = 50 - escolhidos;
+  document.getElementById('progressCount').textContent = `${escolhidos}/50`;
+  document.getElementById('progressLivres').textContent = livres;
+  document.getElementById('heroProgresso').textContent = `${escolhidos} de 50`;
+  document.getElementById('progressFill').style.width = (escolhidos/50*100).toFixed(0)+'%';
+
+  const por = contagemPorFaixa();
+  document.getElementById('sizeCountP').textContent = `${por.P.ocupados}/${por.P.total}`;
+  document.getElementById('sizeCountM').textContent = `${por.M.ocupados}/${por.M.total}`;
+  document.getElementById('sizeCountG').textContent = `${por.G.ocupados}/${por.G.total}`;
+}
+
+/* ============================================================
+   CLIQUE NO NÚMERO — seleção múltipla
+============================================================ */
+function onClickNumero(numero){
+  const item = estado.find(i=>i.numero===numero);
+  if(modoAdmin){ abrirEdicaoAdmin(numero); return; }
+  if(item.status==='confirmado'){
+    mostrarToast(`Número ${pad2(numero)} já está confirmado.`);
+    return;
+  }
+  if(item.status==='reservado'){
+    mostrarToast(`Número ${pad2(numero)} está reservado, aguardando entrega.`);
+    return;
+  }
+  if(selecionados.has(numero)) selecionados.delete(numero);
+  else selecionados.add(numero);
+  renderGrid();
+  renderSelectionBar();
+}
+
+function resumoFaixas(numeros){
+  const por = {};
+  numeros.forEach(n=>{ const f=faixaDoNumero(n).sigla; por[f]=(por[f]||0)+1; });
+  return Object.entries(por).map(([sigla,q])=>`${q}x Pacote ${sigla}`).join(' · ');
+}
+
+function renderSelectionBar(){
+  const bar = document.getElementById('selectionBar');
+  const qtd = selecionados.size;
+  if(qtd===0){ bar.classList.remove('show'); return; }
+  bar.classList.add('show');
+  const numeros = [...selecionados].sort((a,b)=>a-b);
+  document.getElementById('selCount').textContent = `${qtd} número${qtd>1?'s':''} selecionado${qtd>1?'s':''}`;
+  document.getElementById('selDetalhe').textContent = listaFormatada(numeros);
+}
+
+document.getElementById('btnLimparSelecao').addEventListener('click', ()=>{
+  selecionados.clear();
+  renderGrid();
+  renderSelectionBar();
+});
+document.getElementById('btnContinuarSelecao').addEventListener('click', ()=> abrirModalReserva());
+
+/* ============================================================
+   MODAL PARTICIPAÇÃO — 1 ou vários números
+============================================================ */
+function abrirModalReserva(){
+  if(selecionados.size===0) return;
+  const numeros = [...selecionados].sort((a,b)=>a-b);
+
+  const lista = document.getElementById('reservaLista');
+  lista.innerHTML = numeros.map(n=>{
+    const f = faixaDoNumero(n);
+    return `<div class="resumo-item"><span class="n">${pad2(n)}</span><span class="fr">${f.label}</span></div>`;
+  }).join('') + `<div class="resumo-total"><span>${numeros.length} número${numeros.length>1?'s':''}</span><b>${resumoFaixas(numeros)}</b></div>`;
+
+  document.getElementById('reservaSub').textContent =
+    numeros.length===1 ? 'Confira o número escolhido' : 'Confira os números escolhidos';
+  document.getElementById('inpNome').value='';
+  document.getElementById('inpTelefone').value='';
+  modoContribuicao = 'entrega';
+  aplicarModoContribuicao();
+  document.getElementById('overlayReserva').classList.add('open');
+  setTimeout(()=>document.getElementById('inpNome').focus(), 200);
+}
+document.getElementById('closeReserva').addEventListener('click', ()=> document.getElementById('overlayReserva').classList.remove('open'));
+
+/* ---------- contribuição: entrega x Pix ---------- */
+(function montarMarcas(){
+  const cont = document.getElementById('pixMarcas');
+  cont.innerHTML = Object.keys(CONFIG.PRECOS).map((m,i)=>
+    `<button class="pix-marca${i===0?' active':''}" data-marca="${m}">${m}</button>`).join('');
+})();
+document.getElementById('pixTipo').textContent = CONFIG.PIX_TIPO;
+document.getElementById('pixChave').textContent = CONFIG.PIX_CHAVE;
+
+function aplicarModoContribuicao(){
+  document.querySelectorAll('#contribOpts .contrib-opt').forEach(b=>{
+    b.classList.toggle('active', b.dataset.modo===modoContribuicao);
+  });
+  const box = document.getElementById('pixBox');
+  box.classList.toggle('show', modoContribuicao==='pix' && CONFIG.PIX_ATIVO);
+  document.getElementById('hintReserva').innerHTML = modoContribuicao==='pix'
+    ? `Seus números ficam <b>reservados</b> até o Pix ser enviado. Assim que a <b>${CONFIG.NOME_ORGANIZADOR}</b> receber o comprovante, cada número é confirmado para o sorteio.`
+    : `Seus números ficam <b>reservados</b> até a entrega dos pacotes. Depois da entrega, a <b>${CONFIG.NOME_ORGANIZADOR}</b> confirma cada número para o sorteio.`;
+  if(modoContribuicao==='pix') renderPix();
+}
+
+function renderPix(){
+  const numeros = [...selecionados].sort((a,b)=>a-b);
+  const tab = CONFIG.PRECOS[marcaEscolhida] || {};
+  const por = contagemTamanhos(numeros);
+  const linhas = ['P','M','G'].filter(t=>por[t]>0).map(t=>
+    `<div class="pix-linha"><span>${por[t]}x Pacote ${t} · ${brl(tab[t]||0)} cada</span><b>${brl((por[t])*(tab[t]||0))}</b></div>`
+  ).join('');
+  document.getElementById('pixLinhas').innerHTML = linhas;
+  document.getElementById('pixTotal').textContent = brl(totalPix(numeros, marcaEscolhida));
+  document.querySelectorAll('#pixMarcas .pix-marca').forEach(b=>{
+    b.classList.toggle('active', b.dataset.marca===marcaEscolhida);
+  });
+}
+
+document.getElementById('contribOpts').addEventListener('click', (e)=>{
+  const b = e.target.closest('.contrib-opt');
+  if(!b) return;
+  if(b.dataset.modo==='pix' && !CONFIG.PIX_ATIVO) return;
+  modoContribuicao = b.dataset.modo;
+  aplicarModoContribuicao();
+});
+document.getElementById('pixMarcas').addEventListener('click', (e)=>{
+  const b = e.target.closest('.pix-marca');
+  if(!b) return;
+  marcaEscolhida = b.dataset.marca;
+  renderPix();
+});
+document.getElementById('btnCopiarPix').addEventListener('click', async ()=>{
+  try{
+    await navigator.clipboard.writeText(CONFIG.PIX_CHAVE);
+    mostrarToast('Chave Pix copiada!');
+  }catch(e){ prompt('Copie a chave Pix:', CONFIG.PIX_CHAVE); }
+});
+
+function mensagemWhatsApp(numeros, nome){
+  const linhas = numeros.map(n=>`${pad2(n)} — ${faixaDoNumero(n).label}`).join('\n');
+  const plural = numeros.length>1;
+  const saudacao = CONFIG.SAUDACAO_PARTICIPANTE ? `Oi, ${CONFIG.SAUDACAO_PARTICIPANTE}!` : 'Oi!';
+  let fecho;
+  if(modoContribuicao==='pix'){
+    const total = totalPix(numeros, marcaEscolhida);
+    fecho = `Prefiro contribuir por Pix, no valor ${plural ? 'dos pacotes' : 'do pacote'} de ${marcaEscolhida}: ${brl(total)}.\n`
+          + `Já envio o comprovante por aqui. 💙`;
+  } else {
+    fecho = `Vou combinar a entrega ${plural ? 'dos pacotes' : 'do pacote'}.`;
+  }
+  return `${saudacao} Quero participar da Rifa do ${CONFIG.NOME_BEBE}.\n\n`
+       + `${plural ? 'Escolhi os números:' : 'Escolhi o número:'}\n${linhas}\n\n`
+       + `Meu nome é ${nome}.\n\n`
+       + fecho;
+}
+
+document.getElementById('btnConfirmarReserva').addEventListener('click', async ()=>{
+  const nome = document.getElementById('inpNome').value.trim();
+  const telefone = document.getElementById('inpTelefone').value.trim();
+  if(!nome){ mostrarToast('Escreve seu nome pra gente identificar a reserva.'); return; }
+  if(selecionados.size===0 || reservaEmAndamento) return;
+
+  const btn = document.getElementById('btnConfirmarReserva');
+  const rotulo = btn.textContent;
+  const numeros = [...selecionados].sort((a,b)=>a-b);
+  const mensagem = mensagemWhatsApp(numeros, nome);
+  const urlWhats = `https://wa.me/${CONFIG.WHATSAPP_ORGANIZADOR}?text=${encodeURIComponent(mensagem)}`;
+
+  // abre a aba do WhatsApp já no clique (celulares bloqueiam janelas abertas depois de esperar o banco)
+  let janela = null;
+  if(Persistencia.modo==='firestore'){ try{ janela = window.open('', '_blank'); }catch(e){} }
+
+  reservaEmAndamento = true;
+  btn.disabled = true; btn.textContent = 'RESERVANDO…';
+  const r = await Persistencia.reservarNumeros(estado, numeros, {
+    nome, telefone,
+    modo: modoContribuicao,
+    marca: modoContribuicao==='pix' ? marcaEscolhida : ''
+  });
+  reservaEmAndamento = false;
+  btn.disabled = false; btn.textContent = rotulo;
+
+  if(!r.ok){
+    if(janela) try{ janela.close(); }catch(e){}
+    if(r.ocupados){
+      mostrarToast(`Número ${listaFormatada(r.ocupados)} acabou de ser escolhido. Escolha outro.`);
+      r.ocupados.forEach(n=>selecionados.delete(n));
+      if(!selecionados.size) document.getElementById('overlayReserva').classList.remove('open');
+      else abrirModalReserva();
+    } else {
+      mostrarToast('Não consegui registrar agora. Confira a internet e tente de novo.');
+    }
+    renderGrid(); renderSelectionBar();
+    return;
+  }
+
+  ultimaReserva = {nome, numeros};
+  selecionados.clear();
+  renderGrid();
+  renderSelectionBar();
+  document.getElementById('overlayReserva').classList.remove('open');
+
+  document.getElementById('btnWhatsSucesso').href = urlWhats;
+  if(janela) janela.location.href = urlWhats;
+  else window.open(urlWhats, '_blank');
+  abrirSucesso(numeros, nome);
+});
+
+/* ============================================================
+   COMPARTILHAR — Web Share API no celular, cópia no desktop
+============================================================ */
+async function compartilharRifa(){
+  const link = (CONFIG.LINK_PUBLICO || window.location.href).split('?')[0];
+  const texto = `Rifa do ${CONFIG.NOME_BEBE} — uma pequena ajuda para um grande começo. Escolha seus números:`;
+  if(navigator.share){
+    try{
+      await navigator.share({title:`Rifa do ${CONFIG.NOME_BEBE}`, text:texto, url:link});
+      return;
+    }catch(e){ if(e && e.name==='AbortError') return; }
+  }
+  try{
+    await navigator.clipboard.writeText(link);
+    mostrarToast('Link copiado! Cole na bio ou no story.');
+  }catch(e){
+    prompt('Copie o link abaixo:', link);
+  }
+}
+document.getElementById('btnCopyLink').addEventListener('click', compartilharRifa);
+document.getElementById('btnCompartilharSucesso').addEventListener('click', compartilharRifa);
+
+/* ============================================================
+   FOTOS DOS PRÊMIOS — ampliar
+============================================================ */
+const lightbox = document.getElementById('lightbox');
+document.querySelectorAll('.prize-img').forEach(img=>{
+  img.addEventListener('click', ()=>{
+    document.getElementById('lightboxImg').src = img.src;
+    document.getElementById('lightboxImg').alt = img.alt;
+    document.getElementById('lightboxCap').textContent = img.dataset.legenda || img.alt || '';
+    lightbox.classList.add('open');
+  });
+});
+function fecharLightbox(){ lightbox.classList.remove('open'); }
+document.getElementById('closeLightbox').addEventListener('click', fecharLightbox);
+lightbox.addEventListener('click', (e)=>{ if(e.target===lightbox) fecharLightbox(); });
+
+/* ============================================================
+   FALAR COM A ORGANIZADORA (rodapé)
+============================================================ */
+document.getElementById('btnFalarOrganizadora').addEventListener('click', ()=>{
+  const texto = `Oi, ${CONFIG.SAUDACAO_PARTICIPANTE}! Tenho uma dúvida sobre a Rifa do ${CONFIG.NOME_BEBE}.`;
+  window.open(`https://wa.me/${CONFIG.WHATSAPP_ORGANIZADOR}?text=${encodeURIComponent(texto)}`, '_blank');
+});
+
+/* ============================================================
+   ADMIN
+============================================================ */
+function abrirAdmin(){
+  modoAdmin = true;
+  document.getElementById('overlayAdmin').classList.add('open');
+  renderAdmin();
+}
+document.getElementById('btnAdminOpen').addEventListener('click', ()=>{
+  if(modoAdmin && Persistencia.logado()){ abrirAdmin(); return; }
+  const firestore = Persistencia.modo==='firestore';
+  document.getElementById('campoEmailAdmin').style.display = firestore ? 'block' : 'none';
+  document.getElementById('loginSub').textContent = firestore ? 'Entre com o e-mail e a senha do organizador' : 'Digite a senha para entrar';
+  if(firestore && CONFIG.EMAIL_ADMIN) document.getElementById('inpEmailAdmin').value = CONFIG.EMAIL_ADMIN;
+  document.getElementById('inpSenhaAdmin').value = '';
+  document.getElementById('overlayLogin').classList.add('open');
+  setTimeout(()=> document.getElementById(firestore && !CONFIG.EMAIL_ADMIN ? 'inpEmailAdmin' : 'inpSenhaAdmin').focus(), 200);
+});
+async function tentarLogin(){
+  const email = document.getElementById('inpEmailAdmin').value.trim();
+  const senha = document.getElementById('inpSenhaAdmin').value;
+  if(!senha){ mostrarToast('Digite a senha.'); return; }
+  const btn = document.getElementById('btnEntrarAdmin');
+  btn.disabled = true;
+  const r = await Persistencia.entrar(email, senha);
+  btn.disabled = false;
+  if(!r.ok){ mostrarToast(r.msg); return; }
+  document.getElementById('overlayLogin').classList.remove('open');
+  abrirAdmin();
+}
+document.getElementById('btnEntrarAdmin').addEventListener('click', tentarLogin);
+document.getElementById('inpSenhaAdmin').addEventListener('keydown', e=>{ if(e.key==='Enter') tentarLogin(); });
+document.getElementById('closeLogin').addEventListener('click', ()=> document.getElementById('overlayLogin').classList.remove('open'));
+document.getElementById('btnSairAdmin').addEventListener('click', async ()=>{
+  await Persistencia.sair();
+  modoAdmin = false;
+  document.getElementById('overlayAdmin').classList.remove('open');
+  mostrarToast('Você saiu da área do organizador.');
+});
+document.getElementById('closeAdmin').addEventListener('click', ()=>{
+  document.getElementById('overlayAdmin').classList.remove('open');
+});
+
+function renderAdmin(){
+  const conf = estado.filter(i=>i.status==='confirmado').length;
+  const res  = estado.filter(i=>i.status==='reservado').length;
+  document.getElementById('admEscolhidos').textContent = conf + res;
+  document.getElementById('admConf').textContent = conf;
+  document.getElementById('admRes').textContent = res;
+
+  const pendentesPix = estado.filter(i=>i.modo==='pix' && i.status==='reservado');
+  const alvoPix = document.getElementById('admResumoPix');
+  const somaPix = pendentesPix.reduce((s,i)=> s + valorDoNumero(i), 0);
+  alvoPix.innerHTML = pendentesPix.length
+    ? `<b>${brl(somaPix)}</b> em Pix a receber · ${pendentesPix.length} número${pendentesPix.length>1?'s':''}`
+    : '';
+  alvoPix.style.display = pendentesPix.length ? 'block' : 'none';
+
+  const lista = estado.filter(i=>i.status!=='disponivel').sort((a,b)=>a.numero-b.numero);
+  const cont = document.getElementById('admList');
+  if(lista.length===0){
+    cont.innerHTML = '<div class="empty-note">Nenhum número escolhido ainda.</div>';
+    return;
+  }
+  cont.innerHTML = '';
+  lista.forEach(item=>{
+    const faixa = faixaDoNumero(item.numero);
+    const row = document.createElement('div');
+    row.className = 'admin-row';
+    const confirmado = item.status==='confirmado';
+    const ehPix = item.modo==='pix';
+    const forma = ehPix ? `Pix ${item.marca} · ${brl(valorDoNumero(item))}` : 'Entrega';
+    row.innerHTML = `
+      <div class="n">${pad2(item.numero)}<i>${faixa.sigla}</i></div>
+      <div class="info">
+        <b>${item.nome || 'Sem nome'}</b>
+        <span>${faixa.label} · ${forma} · ${item.telefone || 'sem WhatsApp'}</span>
+        <span>${item.dataReserva || '—'}</span>
+      </div>
+      <span class="status-pill ${confirmado?'conf':'res'}">${confirmado?'Confirmado':(ehPix?'Aguardando Pix':'Aguardando')}</span>
+      <div class="admin-row-acoes">
+        <button class="mini-btn" data-acao="confirmar">${confirmado ? (ehPix?'Reabrir Pix':'Reabrir entrega') : (ehPix?'Confirmar Pix':'Confirmar entrega')}</button>
+        <button class="mini-btn" data-acao="whats">WhatsApp</button>
+        <button class="mini-btn danger" data-acao="liberar">Liberar</button>
+      </div>
+    `;
+    row.querySelectorAll('.mini-btn').forEach(b=>{
+      b.addEventListener('click', ()=> acaoAdmin(item.numero, b.dataset.acao));
+    });
+    cont.appendChild(row);
+  });
+}
+
+function acaoAdmin(numero, acao){
+  const item = estado.find(i=>i.numero===numero);
+  if(acao==='confirmar'){
+    const novo = item.status==='confirmado' ? 'reservado' : 'confirmado';
+    Persistencia.atualizarNumero(estado, numero, {status: novo});
+    mostrarToast(novo==='confirmado' ? `Número ${pad2(numero)} confirmado.` : `Número ${pad2(numero)} voltou a aguardar entrega.`);
+  }
+  else if(acao==='liberar'){
+    if(!confirm(`Liberar o número ${pad2(numero)}? Ele volta a ficar disponível.`)) return;
+    Persistencia.atualizarNumero(estado, numero, {status:'disponivel', nome:'', telefone:'', dataReserva:'', modo:'', marca:''});
+    mostrarToast(`Número ${pad2(numero)} liberado.`);
+  }
+  else if(acao==='whats'){
+    const fone = (item.telefone||'').replace(/\D/g,'');
+    const texto = item.modo==='pix'
+      ? `Oi, ${item.nome || ''}! Passando pra confirmar o Pix de ${brl(valorDoNumero(item))} referente ao número ${pad2(numero)} (${faixaDoNumero(numero).label}) da Rifa do ${CONFIG.NOME_BEBE}. Chave: ${CONFIG.PIX_CHAVE}`
+      : `Oi, ${item.nome || ''}! Passando pra combinar a entrega do ${faixaDoNumero(numero).label} do número ${pad2(numero)} da Rifa do ${CONFIG.NOME_BEBE}.`;
+    if(!fone){ mostrarToast('Essa participação não tem WhatsApp cadastrado.'); return; }
+    const dd = fone.length<=11 ? '55'+fone : fone;
+    window.open(`https://wa.me/${dd}?text=${encodeURIComponent(texto)}`, '_blank');
+    return;
+  }
+  renderGrid();
+  renderAdmin();
+}
+
+/* lançamento manual pela grade, com o admin aberto */
+function abrirEdicaoAdmin(numero){
+  const item = estado.find(i=>i.numero===numero);
+  const faixa = faixaDoNumero(numero);
+  if(item.status==='disponivel'){
+    const nome = prompt(`Número ${pad2(numero)} (${faixa.label}) está disponível.\nDigite o nome do participante para reservar:`);
+    if(!nome || !nome.trim()) return;
+    Persistencia.reservarNumeros(estado, [numero], {nome:nome.trim(), telefone:''});
+  } else if(item.status==='reservado'){
+    const acao = confirm(`Número ${pad2(numero)} — ${item.nome}\n\nOK = Confirmar entrega da fralda\nCancelar = Liberar número`);
+    if(acao) Persistencia.atualizarNumero(estado, numero, {status:'confirmado'});
+    else Persistencia.atualizarNumero(estado, numero, {status:'disponivel', nome:'', telefone:'', dataReserva:'', modo:'', marca:''});
+  } else {
+    const liberar = confirm(`Número ${pad2(numero)} — ${item.nome} (confirmado).\n\nOK = Liberar este número\nCancelar = manter`);
+    if(liberar) Persistencia.atualizarNumero(estado, numero, {status:'disponivel', nome:'', telefone:'', dataReserva:'', modo:'', marca:''});
+  }
+  renderGrid();
+  renderAdmin();
+}
+
+document.getElementById('btnResetAll').addEventListener('click', async ()=>{
+  if(!confirm('Isso vai apagar TODAS as participações. Confirma?')) return;
+  const r = await Persistencia.zerarTudo();
+  if(!r.ok) return;
+  renderGrid();
+  renderAdmin();
+  mostrarToast('Rifa reiniciada.');
+});
+
+/* ============================================================
+   RELATÓRIO
+============================================================ */
+function rotuloStatus(s){ return s==='confirmado' ? 'Confirmado' : 'Reservado'; }
+
+function gerarTextoRelatorio(){
+  const escolhidos = estado.filter(i=>i.status!=='disponivel').sort((a,b)=>a.numero-b.numero);
+  const por = contagemPorFaixa();
+
+  let texto = `*Relatório — Rifa do ${CONFIG.NOME_BEBE}*\n`;
+  texto += `Gerado em ${new Date().toLocaleString('pt-BR')}\n`;
+  texto += `Total: ${escolhidos.length}/50 números escolhidos (P: ${por.P.ocupados}/10 · M: ${por.M.ocupados}/20 · G: ${por.G.ocupados}/20)\n`;
+  texto += `Cada número corresponde a um pacote de fraldas do tamanho indicado.\n`;
+  const pixPend = escolhidos.filter(i=>i.modo==='pix' && i.status==='reservado');
+  if(pixPend.length){
+    const soma = pixPend.reduce((s,i)=> s + valorDoNumero(i), 0);
+    texto += `Pix a receber: ${brl(soma)} (${pixPend.length} número${pixPend.length>1?'s':''}).\n`;
+  }
+  texto += `\n————————————————\n`;
+
+  if(escolhidos.length===0){
+    texto += '\nNenhum número escolhido ainda.\n';
+  } else {
+    escolhidos.forEach(i=>{
+      const faixa = faixaDoNumero(i.numero);
+      texto += `\nNº ${pad2(i.numero)} — ${faixa.label} — ${i.nome || 'sem nome'}`;
+      if(i.telefone) texto += ` · ${i.telefone}`;
+      const forma = i.modo==='pix' ? `Pix ${i.marca} · ${brl(valorDoNumero(i))}` : 'Entrega das fraldas';
+      texto += `\n${forma} · ${rotuloStatus(i.status)}${i.dataReserva ? ' · '+i.dataReserva : ''}\n`;
+    });
+  }
+  return texto;
+}
+
+function abrirRelatorio(){
+  document.getElementById('relatorioTexto').value = gerarTextoRelatorio();
+  document.getElementById('overlayRelatorio').classList.add('open');
+}
+document.getElementById('btnVerRelatorio').addEventListener('click', abrirRelatorio);
+document.getElementById('closeRelatorio').addEventListener('click', ()=>{
+  document.getElementById('overlayRelatorio').classList.remove('open');
+});
+document.getElementById('btnCopiarRelatorio').addEventListener('click', async ()=>{
+  const texto = document.getElementById('relatorioTexto').value;
+  try{
+    await navigator.clipboard.writeText(texto);
+    mostrarToast('Relatório copiado!');
+  }catch(e){
+    document.getElementById('relatorioTexto').select();
+    mostrarToast('Selecione e copie manualmente (Ctrl/Cmd+C).');
+  }
+});
+document.getElementById('btnCompartilharRelatorio').addEventListener('click', ()=>{
+  const texto = document.getElementById('relatorioTexto').value;
+  window.open(`https://wa.me/?text=${encodeURIComponent(texto)}`, '_blank');
+});
+
+document.getElementById('btnExportCsv').addEventListener('click', ()=>{
+  let csv = 'Numero;Tamanho;Participante;WhatsApp;Forma;Marca;Valor;Status;Data\n';
+  estado.forEach(i=>{
+    const faixa = faixaDoNumero(i.numero);
+    const st = i.status==='disponivel' ? 'Disponível' : rotuloStatus(i.status);
+    const forma = i.modo==='pix' ? 'Pix' : (i.modo==='entrega' ? 'Entrega' : '');
+    const valor = i.modo==='pix' ? String(valorDoNumero(i)).replace('.',',') : '';
+    csv += `${pad2(i.numero)};${faixa.sigla};${i.nome};${i.telefone};${forma};${i.marca};${valor};${st};${i.dataReserva}\n`;
+  });
+  const blob = new Blob(['\ufeff'+csv], {type:'text/csv;charset=utf-8;'});
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = `rifa-${CONFIG.NOME_BEBE.toLowerCase()}.csv`;
+  link.click();
+});
+
+/* ============================================================
+   GERADOR DE STORY (Canvas 1080×1920) — 3 modelos
+   Mesma identidade da página: papel creme, azul Arthur,
+   script no nome, serifa nos títulos, ursinho de laço.
+============================================================ */
+const NAVY      = '#29445A';
+const NAVY_SOFT = 'rgba(41,68,90,0.68)';
+const BLUE      = '#7896AD';
+const BEIGE     = '#D8C5AE';
+const BEAR      = '#C79B6E';
+const BEAR_DARK = '#A97852';
+const BEAR_CREAM= '#EBD9C2';
+const SKY       = '#E8EFF3';
+
+let modeloStory = 'divulgacao';
+
+async function garantirFontes(){
+  await Promise.all([
+    document.fonts.load('400 220px "Alex Brush"'),
+    document.fonts.load('300 60px "Fraunces"'),
+    document.fonts.load('400 60px "Fraunces"'),
+    document.fonts.load('500 60px "Fraunces"'),
+    document.fonts.load('400 30px "Inter"'),
+    document.fonts.load('500 30px "Inter"'),
+    document.fonts.load('600 30px "Inter"'),
+  ]);
+  await document.fonts.ready;
+}
+
+function roundRect(ctx,x,y,w,h,r){
+  ctx.beginPath();
+  ctx.moveTo(x+r,y);
+  ctx.arcTo(x+w,y,x+w,y+h,r);
+  ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r);
+  ctx.arcTo(x,y,x+w,y,r);
+  ctx.closePath();
+}
+
+function blob(ctx,x,y,r,color,alpha){
+  const g = ctx.createRadialGradient(x,y,0,x,y,r);
+  g.addColorStop(0, color.replace('ALPHA', alpha));
+  g.addColorStop(1, color.replace('ALPHA', 0));
+  ctx.fillStyle = g;
+  ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill();
+}
+
+/* texto com espaçamento entre letras (canvas não tem letter-spacing confiável) */
+function textoEspacado(ctx, txt, cx, y, spacing){
+  const chars = [...txt];
+  const larg = chars.reduce((s,c)=> s + ctx.measureText(c).width + spacing, 0) - spacing;
+  let x = cx - larg/2;
+  const align = ctx.textAlign;
+  ctx.textAlign = 'left';
+  chars.forEach(c=>{
+    ctx.fillText(c, x, y);
+    x += ctx.measureText(c).width + spacing;
+  });
+  ctx.textAlign = align;
+}
+
+function divisorCoracao(ctx, cx, y, largura, cor){
+  ctx.strokeStyle = cor;
+  ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(cx-largura, y); ctx.lineTo(cx-24, y); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(cx+24, y); ctx.lineTo(cx+largura, y); ctx.stroke();
+  ctx.textAlign='center';
+  ctx.font = '400 26px Inter, sans-serif';
+  ctx.fillStyle = cor;
+  ctx.fillText('♡', cx, y+9);
+}
+
+function desenharFlor(ctx, x, y, scale, flipX, flipY){
+  ctx.save();
+  ctx.translate(x,y);
+  ctx.scale(scale*(flipX?-1:1), scale*(flipY?-1:1));
+  ctx.strokeStyle=BEIGE; ctx.lineWidth=2; ctx.globalAlpha=0.75;
+  ctx.beginPath(); ctx.moveTo(4,86); ctx.quadraticCurveTo(30,60,70,40); ctx.stroke();
+  const blooms=[[70,40,6],[58,50,5],[45,58,5.5],[30,68,5],[16,78,4.5]];
+  blooms.forEach(([bx,by,br])=>{
+    ctx.beginPath(); ctx.arc(bx,by,br,0,Math.PI*2);
+    ctx.fillStyle='#FFFDFC'; ctx.fill();
+    ctx.strokeStyle=BEIGE; ctx.lineWidth=1; ctx.stroke();
+  });
+  ctx.fillStyle=BEAR;
+  [[70,40,2],[45,58,1.8],[16,78,1.6]].forEach(([bx,by,br])=>{
+    ctx.beginPath(); ctx.arc(bx,by,br,0,Math.PI*2); ctx.fill();
+  });
+  ctx.restore();
+}
+
+/* ursinho — mesmo personagem do site (cabeça + gravata borboleta) */
+function desenharUrsoCanvas(ctx, cx, cy, scale){
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.scale(scale, scale);
+
+  const pelo = ctx.createLinearGradient(-45,-42,20,42);
+  pelo.addColorStop(0,'#D3A87D'); pelo.addColorStop(1,'#A97852');
+  const focinho = ctx.createLinearGradient(0,0,0,32);
+  focinho.addColorStop(0,'#F5EADA'); focinho.addColorStop(1,'#E4CFB5');
+  const laco = ctx.createLinearGradient(-35,44,10,62);
+  laco.addColorStop(0,'#8FA8BC'); laco.addColorStop(1,'#6B8AA3');
+
+  // orelhas
+  ctx.fillStyle = pelo;
+  ctx.beginPath(); ctx.arc(-36,-36,17,0,Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.arc(36,-36,17,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle = '#E9D7BF';
+  ctx.beginPath(); ctx.arc(-36,-35,8,0,Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.arc(36,-35,8,0,Math.PI*2); ctx.fill();
+
+  // cabeça
+  ctx.fillStyle = pelo;
+  ctx.beginPath(); ctx.ellipse(0,0,45,42,0,0,Math.PI*2); ctx.fill();
+
+  // brilho suave
+  const brilho = ctx.createRadialGradient(-12,-20,2,-12,-20,32);
+  brilho.addColorStop(0,'rgba(255,253,252,0.34)');
+  brilho.addColorStop(1,'rgba(255,253,252,0)');
+  ctx.fillStyle = brilho;
+  ctx.beginPath(); ctx.ellipse(-12,-20,34,26,0,0,Math.PI*2); ctx.fill();
+
+  // focinho + bochechas
+  ctx.fillStyle = focinho;
+  ctx.beginPath(); ctx.ellipse(0,16,22,15.5,0,0,Math.PI*2); ctx.fill();
+  ctx.globalAlpha=.28; ctx.fillStyle='#C08F63';
+  ctx.beginPath(); ctx.ellipse(-27,10,7.5,4.5,0,0,Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(27,10,7.5,4.5,0,0,Math.PI*2); ctx.fill();
+  ctx.globalAlpha=1;
+
+  // olhos
+  ctx.fillStyle=NAVY;
+  ctx.beginPath(); ctx.ellipse(-15,-4,4.4,4.8,0,0,Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.ellipse(15,-4,4.4,4.8,0,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle='rgba(255,253,252,0.9)';
+  ctx.beginPath(); ctx.arc(-13.6,-5.8,1.3,0,Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.arc(16.4,-5.8,1.3,0,Math.PI*2); ctx.fill();
+
+  // focinho: nariz + boca
+  ctx.fillStyle=NAVY;
+  ctx.beginPath();
+  ctx.moveTo(0,3.5);
+  ctx.bezierCurveTo(4.6,3.5,7,5.2,7,7.5);
+  ctx.bezierCurveTo(7,10.3,3.4,12.7,0,14.3);
+  ctx.bezierCurveTo(-3.4,12.7,-7,10.3,-7,7.5);
+  ctx.bezierCurveTo(-7,5.2,-4.6,3.5,0,3.5);
+  ctx.closePath(); ctx.fill();
+  ctx.strokeStyle='rgba(41,68,90,0.85)'; ctx.lineWidth=1.9; ctx.lineCap='round';
+  ctx.beginPath(); ctx.moveTo(0,15.5); ctx.bezierCurveTo(0,19.1,-2.6,21.1,-5.6,21.1); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(0,15.5); ctx.bezierCurveTo(0,19.1,2.6,21.1,5.6,21.1); ctx.stroke();
+
+  // gravata borboleta
+  ctx.fillStyle='#5C7B94';
+  ctx.beginPath(); ctx.moveTo(-6,56); ctx.lineTo(-17,74); ctx.lineTo(-7,72.4); ctx.lineTo(-1.5,59.8); ctx.closePath(); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(6,56); ctx.lineTo(17,74); ctx.lineTo(7,72.4); ctx.lineTo(1.5,59.8); ctx.closePath(); ctx.fill();
+  ctx.fillStyle=laco;
+  ctx.beginPath(); ctx.moveTo(-4,52);
+  ctx.bezierCurveTo(-17,37,-35,39,-35,52);
+  ctx.bezierCurveTo(-35,65,-17,67,-4,52);
+  ctx.closePath(); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(4,52);
+  ctx.bezierCurveTo(17,37,35,39,35,52);
+  ctx.bezierCurveTo(35,65,17,67,4,52);
+  ctx.closePath(); ctx.fill();
+  ctx.fillStyle='rgba(255,253,252,0.2)';
+  ctx.beginPath(); ctx.moveTo(-4,52); ctx.bezierCurveTo(-13,42,-24,41,-30,46); ctx.bezierCurveTo(-23,44,-13,46,-4,52); ctx.closePath(); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(4,52); ctx.bezierCurveTo(13,42,24,41,30,46); ctx.bezierCurveTo(23,44,13,46,4,52); ctx.closePath(); ctx.fill();
+  ctx.fillStyle='#5C7B94';
+  ctx.beginPath(); ctx.ellipse(0,52,7,8,0,0,Math.PI*2); ctx.fill();
+
+  ctx.restore();
+}
+
+/* fundo comum aos 3 modelos */
+function desenharFundo(ctx, W, H){
+  const fundo = ctx.createLinearGradient(0,0,0,H);
+  fundo.addColorStop(0,'#FFFDFC');
+  fundo.addColorStop(.55,'#F8F3EB');
+  fundo.addColorStop(1,'#F1E9DD');
+  ctx.fillStyle = fundo;
+  ctx.fillRect(0,0,W,H);
+
+  blob(ctx, W*0.92, H*0.05, 340, 'rgba(120,150,173,ALPHA)', 0.34);
+  blob(ctx, -40,     H*0.24, 260, 'rgba(232,239,243,ALPHA)', 0.95);
+  blob(ctx, W*0.08,  H*0.99, 320, 'rgba(216,197,174,ALPHA)', 0.30);
+  blob(ctx, W*1.02,  H*0.72, 280, 'rgba(120,150,173,ALPHA)', 0.20);
+
+  // moldura editorial fina
+  ctx.strokeStyle = 'rgba(41,68,90,0.13)';
+  ctx.lineWidth = 2;
+  roundRect(ctx, 46, 46, W-92, H-92, 34);
+  ctx.stroke();
+
+  desenharFlor(ctx, 92, H-96, 0.9, false, true);
+  desenharFlor(ctx, W-92, 130, 0.75, true, false);
+}
+
+/* pill de topo */
+function pillTopo(ctx, W, texto, y){
+  ctx.font = '500 26px Inter, sans-serif';
+  const larg = ctx.measureText(texto).width + 90;
+  ctx.fillStyle = 'rgba(255,253,252,0.9)';
+  roundRect(ctx, W/2-larg/2, y, larg, 62, 31); ctx.fill();
+  ctx.strokeStyle = 'rgba(41,68,90,0.16)'; ctx.lineWidth=1.5;
+  roundRect(ctx, W/2-larg/2, y, larg, 62, 31); ctx.stroke();
+  ctx.fillStyle = NAVY;
+  ctx.textAlign='center';
+  textoEspacado(ctx, texto, W/2, y+40, 2.5);
+}
+
+/* CTA inferior */
+function ctaStory(ctx, W, y, texto){
+  const larg = 520;
+  ctx.fillStyle = NAVY;
+  roundRect(ctx, W/2-larg/2, y, larg, 96, 48); ctx.fill();
+  ctx.fillStyle = '#FFFDFC';
+  ctx.font = '600 30px Inter, sans-serif';
+  ctx.textAlign='center';
+  textoEspacado(ctx, texto, W/2, y+58, 4);
+}
+
+/* assinatura de rodapé */
+function rodapeStory(ctx, W, H){
+  ctx.textAlign='center';
+  ctx.fillStyle = 'rgba(41,68,90,0.5)';
+  ctx.font = '400 26px Inter, sans-serif';
+  ctx.fillText('Cada número é um pacote de fraldas para o enxoval do Arthur', W/2, H-116);
+}
+
+/* grade dos 50 números — sempre com o estado atual */
+function desenharGradeNumeros(ctx, startX, startY, cols, rows, cellSize, gap){
+  ctx.textAlign='center';
+  estado.forEach(item=>{
+    const idx = item.numero-1;
+    const col = idx % cols, row = Math.floor(idx/cols);
+    const x = startX + col*(cellSize+gap);
+    const y = startY + row*(cellSize+gap);
+    const faixa = faixaDoNumero(item.numero);
+
+    let fill, stroke, textColor;
+    if(item.status==='confirmado'){ fill=SKY;       stroke=BLUE;      textColor='#2E5570'; }
+    else if(item.status==='reservado'){ fill='#F0E6D8'; stroke=BEIGE;  textColor='#8A6A4A'; }
+    else { fill='#FFFDFC'; stroke=faixa.cor; textColor=NAVY; }
+
+    roundRect(ctx, x, y, cellSize, cellSize, 14);
+    ctx.fillStyle = fill; ctx.fill();
+    ctx.strokeStyle = stroke; ctx.lineWidth = 2; ctx.stroke();
+
+    ctx.fillStyle = textColor;
+    ctx.font = '600 22px Inter, sans-serif';
+    ctx.fillText(pad2(item.numero), x+cellSize/2, y+cellSize/2+8);
+
+    if(item.status==='confirmado'){
+      ctx.fillStyle = BLUE;
+      ctx.font = '700 13px Inter, sans-serif';
+      ctx.fillText('✓', x+cellSize-11, y+16);
+    }
+  });
+}
+
+function legendaTamanhos(ctx, W, y){
+  const itens = [
+    {cor:'#7896AD', txt:'Pacote P'},
+    {cor:'#A97852', txt:'Pacote M'},
+    {cor:'#29445A', txt:'Pacote G'},
+    {cor:'#D8C5AE', txt:'Reservado'},
+    {cor:'#7896AD', txt:'Confirmado'}
+  ];
+  ctx.font = '500 24px Inter, sans-serif';
+  let total = 0;
+  const larguras = itens.map(it=>{ const w = ctx.measureText(it.txt).width + 36; total += w; return w; });
+  let x = W/2 - total/2;
+  itens.forEach((it,i)=>{
+    ctx.beginPath(); ctx.arc(x+12, y-8, 8, 0, Math.PI*2);
+    ctx.fillStyle = it.cor; ctx.fill();
+    ctx.textAlign='left';
+    ctx.fillStyle = NAVY_SOFT;
+    ctx.fillText(it.txt, x+28, y);
+    x += larguras[i];
+  });
+  ctx.textAlign='center';
+}
+
+/* ------------------------------------------------------------
+   MODELO 1 — DIVULGAÇÃO
+------------------------------------------------------------ */
+function storyDivulgacao(ctx, W, H){
+  pillTopo(ctx, W, 'UM NÚMERO, UM PACOTE', 122);
+  desenharUrsoCanvas(ctx, W/2, 356, 1.7);
+
+  ctx.textAlign='center';
+  ctx.fillStyle = NAVY_SOFT;
+  ctx.font = '600 30px Inter, sans-serif';
+  textoEspacado(ctx, 'RIFA DO', W/2, 530, 12);
+
+  ctx.fillStyle = NAVY;
+  ctx.font = '400 210px "Alex Brush", cursive';
+  ctx.fillText(CONFIG.NOME_BEBE, W/2, 700);
+
+  divisorCoracao(ctx, W/2, 760, 150, 'rgba(169,120,82,0.6)');
+
+  ctx.fillStyle = NAVY;
+  ctx.font = '300 60px Fraunces, Georgia, serif';
+  ctx.fillText('Uma pequena ajuda', W/2, 880);
+  ctx.fillText('para um grande começo.', W/2, 954);
+
+  const passos = ['Escolha seu número.', 'Entregue o pacote.', 'Concorra aos prêmios.'];
+  passos.forEach((t,i)=>{
+    const y = 1120 + i*104;
+    ctx.fillStyle = 'rgba(255,253,252,0.75)';
+    roundRect(ctx, 150, y-52, W-300, 84, 42); ctx.fill();
+    ctx.strokeStyle='rgba(41,68,90,0.10)'; ctx.lineWidth=1.5;
+    roundRect(ctx, 150, y-52, W-300, 84, 42); ctx.stroke();
+
+    ctx.beginPath(); ctx.arc(212, y-10, 20, 0, Math.PI*2);
+    ctx.fillStyle = i===2 ? BLUE : SKY; ctx.fill();
+    ctx.fillStyle = i===2 ? '#FFFDFC' : NAVY;
+    ctx.font = '600 20px Inter, sans-serif';
+    ctx.textAlign='center';
+    ctx.fillText(String(i+1), 212, y-3);
+
+    ctx.textAlign='left';
+    ctx.fillStyle = NAVY;
+    ctx.font = '500 36px Inter, sans-serif';
+    ctx.fillText(t, 254, y+2);
+    ctx.textAlign='center';
+  });
+
+  const escolhidos = estado.filter(i=>i.status!=='disponivel').length;
+  ctx.fillStyle = NAVY_SOFT;
+  ctx.font = '400 34px Fraunces, Georgia, serif';
+  ctx.fillText(`${escolhidos} de 50 números já escolhidos`, W/2, 1520);
+
+  ctaStory(ctx, W, 1600, 'ACESSE O LINK');
+  rodapeStory(ctx, W, H);
+}
+
+/* ------------------------------------------------------------
+   MODELO 2 — PRÊMIOS
+------------------------------------------------------------ */
+const PREMIOS = [
+  'Estadia no Chalézinho na Rocha',
+  'Manicure e Pedicure — Tami Adesivos',
+  'Kit Boticário'
+];
+
+function storyPremios(ctx, W, H){
+  pillTopo(ctx, W, 'RIFA DO ARTHUR', 122);
+  desenharUrsoCanvas(ctx, W/2, 330, 1.15);
+
+  ctx.textAlign='center';
+  ctx.fillStyle = NAVY;
+  ctx.font = '300 76px Fraunces, Georgia, serif';
+  ctx.fillText('Prêmios da rifa', W/2, 520);
+
+  ctx.fillStyle = NAVY_SOFT;
+  ctx.font = '400 32px Inter, sans-serif';
+  ctx.fillText('Preparados com carinho para quem participar', W/2, 578);
+
+  divisorCoracao(ctx, W/2, 640, 150, 'rgba(169,120,82,0.6)');
+
+  PREMIOS.forEach((p,i)=>{
+    const y = 730 + i*236;
+    ctx.fillStyle = '#FFFDFC';
+    roundRect(ctx, 120, y, W-240, 196, 28); ctx.fill();
+    ctx.strokeStyle = 'rgba(41,68,90,0.12)'; ctx.lineWidth=2;
+    roundRect(ctx, 120, y, W-240, 196, 28); ctx.stroke();
+
+    // faixa de cor lateral
+    ctx.fillStyle = [BLUE, BEAR, NAVY][i];
+    roundRect(ctx, 120, y, 12, 196, 6); ctx.fill();
+
+    // numeral
+    ctx.beginPath(); ctx.arc(216, y+98, 38, 0, Math.PI*2);
+    ctx.fillStyle = 'rgba(216,197,174,0.22)'; ctx.fill();
+    ctx.strokeStyle = 'rgba(169,120,82,0.45)'; ctx.lineWidth=2;
+    ctx.beginPath(); ctx.arc(216, y+98, 38, 0, Math.PI*2); ctx.stroke();
+    ctx.fillStyle = BEAR_DARK;
+    ctx.font = '400 40px Fraunces, Georgia, serif';
+    ctx.textAlign='center';
+    ctx.fillText(String(i+1), 216, y+112);
+
+    // texto (quebra em duas linhas se precisar)
+    ctx.textAlign='left';
+    ctx.fillStyle = NAVY;
+    ctx.font = '500 38px Inter, sans-serif';
+    const maxW = W-240-190;
+    const palavras = p.split(' ');
+    let linha = '', linhas = [];
+    palavras.forEach(w=>{
+      const teste = linha ? linha+' '+w : w;
+      if(ctx.measureText(teste).width > maxW && linha){ linhas.push(linha); linha = w; }
+      else linha = teste;
+    });
+    linhas.push(linha);
+    const startY = y + 98 - (linhas.length-1)*24 + 12;
+    linhas.forEach((l,li)=> ctx.fillText(l, 286, startY + li*48));
+    ctx.textAlign='center';
+  });
+
+  ctx.fillStyle = NAVY_SOFT;
+  ctx.font = '400 32px Fraunces, Georgia, serif';
+  ctx.fillText('Todos os números confirmados participam do sorteio', W/2, 1530);
+
+  ctaStory(ctx, W, 1600, 'ACESSE O LINK');
+  rodapeStory(ctx, W, H);
+}
+
+/* ------------------------------------------------------------
+   MODELO 3 — NÚMEROS DISPONÍVEIS
+------------------------------------------------------------ */
+function storyNumeros(ctx, W, H){
+  pillTopo(ctx, W, 'RIFA DO ARTHUR', 122);
+
+  const escolhidos = estado.filter(i=>i.status!=='disponivel').length;
+  const livres = 50 - escolhidos;
+  const por = contagemPorFaixa();
+
+  ctx.textAlign='center';
+  ctx.fillStyle = NAVY;
+  ctx.font = '300 62px Fraunces, Georgia, serif';
+  ctx.fillText('Ainda temos números', W/2, 292);
+  ctx.fillText('disponíveis', W/2, 366);
+
+  // número grande
+  ctx.fillStyle = BLUE;
+  ctx.font = '300 240px Fraunces, Georgia, serif';
+  ctx.fillText(String(livres), W/2, 592);
+  ctx.fillStyle = NAVY_SOFT;
+  ctx.font = '600 30px Inter, sans-serif';
+  textoEspacado(ctx, 'NÚMEROS LIVRES DE 50', W/2, 646, 8);
+
+  // tamanhos
+  const cards = [
+    {s:'P', ocup:por.P.ocupados, total:10, cor:BLUE},
+    {s:'M', ocup:por.M.ocupados, total:20, cor:BEAR},
+    {s:'G', ocup:por.G.ocupados, total:20, cor:NAVY}
+  ];
+  const cardW = 260, gapC = 30;
+  const startX = W/2 - (cardW*3 + gapC*2)/2;
+  cards.forEach((c,i)=>{
+    const x = startX + i*(cardW+gapC), y = 706;
+    ctx.fillStyle = '#FFFDFC';
+    roundRect(ctx, x, y, cardW, 176, 24); ctx.fill();
+    ctx.strokeStyle = 'rgba(41,68,90,0.12)'; ctx.lineWidth=2;
+    roundRect(ctx, x, y, cardW, 176, 24); ctx.stroke();
+
+    ctx.fillStyle = c.cor;
+    ctx.font = '300 64px Fraunces, Georgia, serif';
+    ctx.fillText(c.s, x+cardW/2, y+80);
+    ctx.fillStyle = NAVY;
+    ctx.font = '600 32px Inter, sans-serif';
+    ctx.fillText(`${c.total - c.ocup} livres`, x+cardW/2, y+130);
+  });
+
+  // grade dos 50
+  const cols=10, rows=5, gap=12;
+  const gridW = W - 200;
+  const cellSize = (gridW - (cols-1)*gap)/cols;
+  const gridStartX = (W-gridW)/2;
+  const gridStartY = 950;
+  desenharGradeNumeros(ctx, gridStartX, gridStartY, cols, rows, cellSize, gap);
+  const gridEndY = gridStartY + rows*cellSize + (rows-1)*gap;
+
+  legendaTamanhos(ctx, W, gridEndY + 58);
+  desenharUrsoCanvas(ctx, W/2, gridEndY + 148, 0.8);
+
+  ctaStory(ctx, W, 1642, 'ESCOLHER MEU NÚMERO');
+  rodapeStory(ctx, W, H);
+}
+
+
+/* ------------------------------------------------------------
+   STORY DO PARTICIPANTE — "eu já escolhi o meu"
+------------------------------------------------------------ */
+function cartoesNumeros(ctx, numeros, W, topo){
+  const porLinha = 4, cardW = 150, cardH = 168, gap = 22;
+  let mostrar = numeros.slice(0, 8), extra = 0;
+  if(numeros.length > 8){ mostrar = numeros.slice(0,7); extra = numeros.length - 7; }
+  const itens = mostrar.map(n=>({n, sigla: faixaDoNumero(n).sigla}));
+  if(extra) itens.push({extra});
+
+  const linhas = [];
+  for(let i=0;i<itens.length;i+=porLinha) linhas.push(itens.slice(i,i+porLinha));
+
+  linhas.forEach((linha, li)=>{
+    const larg = linha.length*cardW + (linha.length-1)*gap;
+    let x = W/2 - larg/2;
+    const y = topo + li*(cardH+gap);
+    linha.forEach(item=>{
+      roundRect(ctx, x, y, cardW, cardH, 26);
+      ctx.fillStyle = '#FFFDFC'; ctx.fill();
+      ctx.strokeStyle = BLUE; ctx.lineWidth = 3; ctx.stroke();
+      ctx.textAlign = 'center';
+      if(item.extra){
+        ctx.fillStyle = BLUE;
+        ctx.font = '300 54px Fraunces, Georgia, serif';
+        ctx.fillText('+'+item.extra, x+cardW/2, y+100);
+      } else {
+        ctx.fillStyle = NAVY;
+        ctx.font = '600 62px Inter, sans-serif';
+        ctx.fillText(pad2(item.n), x+cardW/2, y+92);
+        ctx.fillStyle = NAVY_SOFT;
+        ctx.font = '600 19px Inter, sans-serif';
+        textoEspacado(ctx, 'PACOTE '+item.sigla, x+cardW/2, y+130, 1.5);
+      }
+      x += cardW + gap;
+    });
+  });
+  return topo + linhas.length*cardH + (linhas.length-1)*gap;
+}
+
+function storyParticipante(ctx, W, H, dados){
+  pillTopo(ctx, W, 'RIFA DO ARTHUR', 122);
+  desenharUrsoCanvas(ctx, W/2, 320, 1.25);
+
+  ctx.textAlign='center';
+  ctx.fillStyle = NAVY_SOFT;
+  ctx.font = '600 30px Inter, sans-serif';
+  textoEspacado(ctx, 'EU JÁ ESCOLHI O MEU', W/2, 494, 12);
+
+  let y = cartoesNumeros(ctx, dados.numeros, W, 540);
+  if(dados.numeros.length <= 4) y += 70;   // respiro quando só há uma linha de cartões
+
+  const primeiro = (dados.nome||'').trim().split(' ')[0];
+  if(primeiro){
+    y += 96;
+    ctx.fillStyle = NAVY;
+    ctx.font = '400 82px "Alex Brush", cursive';
+    ctx.fillText(primeiro, W/2, y);
+  }
+
+  y += 66;
+  divisorCoracao(ctx, W/2, y, 150, 'rgba(169,120,82,0.6)');
+
+  y += 100;
+  ctx.fillStyle = NAVY;
+  ctx.font = '300 56px Fraunces, Georgia, serif';
+  ctx.fillText('Uma pequena ajuda', W/2, y);
+  ctx.fillText('para um grande começo.', W/2, y+70);
+
+  y += 150;
+  ctx.fillStyle = NAVY_SOFT;
+  ctx.font = '400 34px Inter, sans-serif';
+  ctx.fillText('Escolha o seu e concorra aos prêmios.', W/2, y);
+
+  const livres = 50 - estado.filter(i=>i.status!=='disponivel').length;
+  if(livres > 0){
+    ctx.fillStyle = NAVY;
+    ctx.font = '400 38px Fraunces, Georgia, serif';
+    ctx.fillText(`Ainda tem ${livres} ${livres>1?'números':'número'} livre${livres>1?'s':''}`, W/2, 1520);
+  }
+
+  ctaStory(ctx, W, 1600, 'ESCOLHA O SEU');
+  rodapeStory(ctx, W, H);
+}
+
+async function abrirSucesso(numeros, nome){
+  document.getElementById('sucessoSub').textContent =
+    numeros.length>1
+      ? `Números ${listaFormatada(numeros)} reservados no seu nome`
+      : `Número ${pad2(numeros[0])} reservado no seu nome`;
+  document.getElementById('overlaySucesso').classList.add('open');
+  const load = document.getElementById('sucessoLoading');
+  load.classList.add('on');
+  try{
+    const canvas = document.getElementById('sucessoCanvas');
+    const ctx = canvas.getContext('2d');
+    await garantirFontes();
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    desenharFundo(ctx, canvas.width, canvas.height);
+    storyParticipante(ctx, canvas.width, canvas.height, {nome, numeros});
+  }catch(err){ console.error(err); }
+  finally{ load.classList.remove('on'); }
+}
+
+document.getElementById('closeSucesso').addEventListener('click', ()=>{
+  document.getElementById('overlaySucesso').classList.remove('open');
+});
+document.getElementById('btnBaixarSucesso').addEventListener('click', ()=>{
+  const link = document.createElement('a');
+  link.download = 'rifa-arthur-meu-numero.png';
+  link.href = document.getElementById('sucessoCanvas').toDataURL('image/png');
+  link.click();
+  mostrarToast('Imagem salva! Agora é só postar no story.');
+});
+
+/* ------------------------------------------------------------
+   CAPA DO LINK (1200 × 630) — preview no WhatsApp e no Instagram
+------------------------------------------------------------ */
+function desenharCapa(ctx, W, H){
+  desenharFundo(ctx, W, H);
+  desenharUrsoCanvas(ctx, 300, 292, 2.05);
+
+  const x = 540, maxW = W - x - 96;          // área de texto sempre dentro da moldura
+  const caber = (txt, peso, tam, fam)=>{
+    let t = tam;
+    do{ ctx.font = `${peso} ${t}px ${fam}`; if(ctx.measureText(txt).width <= maxW) break; t--; }while(t > 12);
+  };
+  ctx.textAlign='left';
+
+  ctx.fillStyle = NAVY_SOFT;
+  ctx.font = '600 24px Inter, sans-serif';
+  let cur = x;
+  [...'RIFA DO'].forEach(c=>{ ctx.fillText(c, cur, 186); cur += ctx.measureText(c).width + 9; });
+
+  ctx.fillStyle = NAVY;
+  caber('Arthur', 400, 156, '"Alex Brush", cursive');
+  ctx.fillText('Arthur', x - 6, 318);
+
+  ctx.strokeStyle = 'rgba(169,120,82,0.55)'; ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(x, 366); ctx.lineTo(x + 280, 366); ctx.stroke();
+
+  ctx.fillStyle = NAVY;
+  caber('para um grande começo.', 300, 40, 'Fraunces, Georgia, serif');
+  ctx.fillText('Uma pequena ajuda', x, 428);
+  ctx.fillText('para um grande começo.', x, 478);
+
+  ctx.fillStyle = NAVY_SOFT;
+  caber('Um número, um pacote de fraldas · prêmios especiais', 400, 21, 'Inter, sans-serif');
+  ctx.fillText('Um número, um pacote de fraldas · prêmios especiais', x, 536);
+  ctx.textAlign='center';
+}
+
+document.getElementById('btnBaixarCapa').addEventListener('click', async ()=>{
+  await garantirFontes();
+  const c = document.createElement('canvas');
+  c.width = 1200; c.height = 630;
+  desenharCapa(c.getContext('2d'), 1200, 630);
+  const link = document.createElement('a');
+  link.download = 'capa-rifa-arthur.jpg';
+  link.href = c.toDataURL('image/jpeg', 0.88);
+  link.click();
+  mostrarToast('Capa baixada! Suba na mesma pasta do site.');
+});
+
+/* ------------------------------------------------------------
+   ORQUESTRAÇÃO
+------------------------------------------------------------ */
+async function desenharStory(){
+  const canvas = document.getElementById('storyCanvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+
+  await garantirFontes();
+  ctx.clearRect(0,0,W,H);
+  desenharFundo(ctx, W, H);
+
+  if(modeloStory==='premios')      storyPremios(ctx, W, H);
+  else if(modeloStory==='numeros') storyNumeros(ctx, W, H);
+  else                             storyDivulgacao(ctx, W, H);
+}
+
+async function atualizarStory(){
+  const load = document.getElementById('storyLoading');
+  load.classList.add('on');
+  try{ await desenharStory(); }
+  catch(err){ console.error('Erro ao gerar story:', err); mostrarToast('Não consegui gerar a imagem. Tenta de novo.'); }
+  finally{ load.classList.remove('on'); }
+}
+
+document.getElementById('storyTabs').addEventListener('click', (e)=>{
+  const tab = e.target.closest('.story-tab');
+  if(!tab) return;
+  document.querySelectorAll('.story-tab').forEach(t=>t.classList.remove('active'));
+  tab.classList.add('active');
+  modeloStory = tab.dataset.modelo;
+  atualizarStory();
+});
+
+document.getElementById('btnStory').addEventListener('click', ()=>{
+  document.getElementById('overlayStory').classList.add('open');
+  atualizarStory();
+});
+document.getElementById('closeStory').addEventListener('click', ()=>{
+  document.getElementById('overlayStory').classList.remove('open');
+});
+document.getElementById('btnBaixarStory').addEventListener('click', ()=>{
+  const canvas = document.getElementById('storyCanvas');
+  const link = document.createElement('a');
+  link.download = 'story-rifa-arthur.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+  mostrarToast('Story baixado! Já pode postar.');
+});
+
+/* ============================================================
+   MODAIS — fechar clicando fora / ESC
+============================================================ */
+document.querySelectorAll('.overlay').forEach(ov=>{
+  ov.addEventListener('click', (e)=>{ if(e.target===ov) ov.classList.remove('open'); });
+});
+document.addEventListener('keydown', (e)=>{
+  if(e.key==='Escape'){
+    document.querySelectorAll('.overlay.open').forEach(ov=>ov.classList.remove('open'));
+    fecharLightbox();
+  }
+});
+
+/* ============================================================
+   INIT
+============================================================ */
+renderGrid();
+iniciarContagem();
+aplicarLinkDireto();
+Persistencia.iniciar();
+</script>
+</body>
+</html>
