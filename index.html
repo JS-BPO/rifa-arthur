@@ -3299,11 +3299,12 @@ function renderSorteio(){
     : `<b>${base.length} ${base.length===1?'número confirmado participa':'números confirmados participam'}</b> deste sorteio`;
   document.getElementById('sorteioChips').innerHTML = base
     .map(i=>`<span class="${jaGanharam.has(i.numero)?'fora':''}">${pad2(i.numero)}</span>`).join('');
-  document.getElementById('sorteioJa').innerHTML = vs.length
+  // essas duas legendas são só para o ensaio; no sorteio oficial (que vai para o vídeo) ficam escondidas
+  document.getElementById('sorteioJa').innerHTML = (teste && vs.length)
     ? 'Já sorteados: ' + vs.map(v=>`<b>${pad2(v.numero)}</b>`).join(' · ') + ' (não concorrem de novo)'
     : '';
   const reservados = estado.filter(i=>i.status==='reservado').length;
-  document.getElementById('sorteioAlerta').textContent = (!simulado && reservados)
+  document.getElementById('sorteioAlerta').textContent = (teste && !simulado && reservados)
     ? `${reservados} ${reservados===1?'número reservado ainda não foi confirmado e fica':'números reservados ainda não foram confirmados e ficam'} fora do sorteio.`
     : '';
 
@@ -3513,8 +3514,15 @@ document.getElementById('sorteioModos').addEventListener('click', e=>{
   const b = e.target.closest('button'); if(!b || sorteando) return;
   const modo = b.dataset.modo;
   if(modo === sorteio.modo) return;
-  if(modo==='oficial' && sorteio.oficial.vencedores.length===0 &&
-     !confirm('Entrar no SORTEIO OFICIAL?\n\nA partir daqui os resultados valem e não podem ser refeitos.')) return;
+  if(modo==='oficial' && sorteio.oficial.vencedores.length===0){
+    const confirmados = estado.filter(i=>i.status==='confirmado').length;
+    const reservados  = estado.filter(i=>i.status==='reservado').length;
+    let aviso = 'Entrar no SORTEIO OFICIAL?\n\nA partir daqui os resultados valem e não podem ser refeitos.\n\n'
+              + `Participam: ${confirmados} ${confirmados===1?'número confirmado':'números confirmados'}.`;
+    if(reservados) aviso += `\nATENÇÃO: ${reservados} ${reservados===1?'número reservado ainda não foi confirmado e ficará':'números reservados ainda não foram confirmados e ficarão'} de fora.`;
+    if(confirmados < 3) aviso += `\nATENÇÃO: com menos de 3 confirmados não dá para sortear os 3 prêmios.`;
+    if(!confirm(aviso)) return;
+  }
   sorteio.modo = modo; salvarSorteio();
   mostrandoResultado = false;
   renderSorteio();
