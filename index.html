@@ -737,7 +737,47 @@
     padding:9px 13px; margin:0 0 12px;
   }
   .admin-pix-resumo b{color:var(--ink); font-weight:600; font-variant-numeric:tabular-nums;}
-  .admin-tabela{border:1px solid var(--line); border-radius:var(--r-md); overflow:hidden; margin-bottom:14px; max-height:320px; overflow-y:auto;}
+  .admin-filtros{display:flex; gap:5px; background:rgba(41,68,90,.05); padding:4px; border-radius:12px; margin-bottom:8px;}
+  .admin-filtros button{
+    flex:1; border:none; background:transparent; border-radius:9px; padding:9px 4px;
+    font-size:11.5px; font-weight:600; color:var(--ink-soft); line-height:1.3;
+    display:flex; flex-direction:column; align-items:center; gap:2px;
+  }
+  .admin-filtros button i{
+    font-style:normal; font-family:var(--font-display); font-size:17px; font-weight:400;
+    color:var(--ink-faint); font-variant-numeric:tabular-nums; line-height:1;
+  }
+  .admin-filtros button.active{background:var(--paper-2); color:var(--ink); box-shadow:0 1px 3px rgba(41,68,90,.12);}
+  .admin-filtros button.active i{color:var(--ink);}
+  .admin-filtros button.active[data-filtro="pendentes"] i{color:var(--bear);}
+  .admin-filtros button.active[data-filtro="confirmados"] i{color:var(--blue);}
+
+  .admin-busca{margin-bottom:8px;}
+  .admin-busca input{
+    width:100%; padding:11px 13px; border-radius:11px;
+    border:1.5px solid var(--line); background:#fff;
+    font-size:16px; font-family:var(--font-body); color:var(--ink);
+  }
+  .admin-busca input:focus{outline:none; border-color:var(--ink);}
+
+  /* cartão de participante */
+  .grupo{padding:12px 13px; border-top:1px solid var(--line-soft);}
+  .grupo:first-child{border-top:none;}
+  .grupo.pend{background:rgba(240,230,216,.3);}
+  .grupo-topo{display:flex; justify-content:space-between; align-items:flex-start; gap:10px;}
+  .grupo-topo b{font-size:14.5px; font-weight:600; color:var(--ink); line-height:1.25; word-break:break-word;}
+  .grupo-topo span{display:block; font-size:11.5px; color:var(--ink-faint); margin-top:2px; line-height:1.4;}
+  .grupo-chips{display:flex; flex-wrap:wrap; gap:5px; margin:9px 0 10px;}
+  .grupo-chips button{
+    border:1.5px solid var(--beige); background:var(--beige-soft); color:#8A6A4A;
+    border-radius:9px; padding:5px 8px; font-size:12.5px; font-weight:600;
+    font-variant-numeric:tabular-nums; line-height:1.2; display:inline-flex; align-items:center; gap:4px;
+  }
+  .grupo-chips button i{font-style:normal; font-size:9px; font-weight:700; letter-spacing:.06em; opacity:.75;}
+  .grupo-chips button.ok{border-color:rgba(120,150,173,.55); background:var(--sky); color:#2E5570;}
+  .grupo-chips button:active{transform:scale(.94);}
+  .grupo-acoes{display:flex; gap:7px;}
+  .admin-tabela{border:1px solid var(--line); border-radius:var(--r-md); overflow:hidden; margin-bottom:14px; max-height:46vh; overflow-y:auto;}
   .admin-thead{
     display:grid; grid-template-columns:44px 1fr 78px;
     gap:8px; padding:9px 12px; background:rgba(232,239,243,.6);
@@ -1309,6 +1349,18 @@
     <div class="admin-barra" aria-hidden="true"><i class="conf" id="admBarConf"></i><i class="res" id="admBarRes"></i></div>
     <p class="admin-barra-legenda"><span id="admPct">0%</span> da rifa preenchida · <span id="admDeCinquenta">0 de 50</span> números</p>
     <p class="admin-pix-resumo" id="admResumoPix" style="display:none;"></p>
+    <div class="admin-filtros" id="admFiltros">
+      <button data-filtro="pendentes" class="active">Falta entregar <i id="admCntPend">0</i></button>
+      <button data-filtro="confirmados">Confirmados <i id="admCntConf">0</i></button>
+      <button data-filtro="todos">Todos <i id="admCntTodos">0</i></button>
+    </div>
+    <div class="admin-busca" id="admBuscaBox">
+      <input type="search" id="admBusca" placeholder="Buscar por nome ou número" autocomplete="off">
+    </div>
+    <div class="admin-tabela">
+      <div id="admList"></div>
+    </div>
+    <p class="hint">Cada participante aparece uma vez, com todos os números dele. Toque em um número para confirmar ou reabrir só aquele. Para lançar uma participação à mão, toque em um número na grade da página.</p>
     <button class="btn btn-primary btn-full" id="btnSorteador" style="margin-bottom:10px;">Sorteador dos prêmios</button>
     <button class="btn btn-bear btn-full" id="btnStory" style="margin-bottom:10px;">Gerar stories para o Instagram</button>
     <div class="admin-actions">
@@ -1316,11 +1368,6 @@
       <button class="btn btn-ghost" id="btnExportCsv">CSV</button>
       <button class="btn btn-ghost" id="btnResetAll" style="color:#A8443F;">Zerar tudo</button>
     </div>
-    <div class="admin-tabela">
-      <div class="admin-thead"><span>Nº</span><span>Participante · Pacote · Data</span><span>Status</span></div>
-      <div id="admList"></div>
-    </div>
-    <p class="hint">Toque em um número na grade da página para lançar uma participação manualmente. Nas linhas abaixo você confirma a entrega, libera o número ou chama a pessoa no WhatsApp.</p>
     <button class="link-sair" id="btnSairAdmin">Sair da área do organizador</button>
   </div>
 </div>
@@ -2267,6 +2314,39 @@ document.getElementById('closeAdmin').addEventListener('click', ()=>{
   document.getElementById('overlayAdmin').classList.remove('open');
 });
 
+let admFiltro = 'pendentes';     // 'pendentes' | 'confirmados' | 'todos'
+let admBusca = '';
+
+/* (48) 99999-0000 — só para mostrar na tela; o número guardado não muda */
+function foneBonito(tel){
+  const d = (tel||'').replace(/\D/g,'');
+  if(d.length===11) return `(${d.slice(0,2)}) ${d.slice(2,7)}-${d.slice(7)}`;
+  if(d.length===10) return `(${d.slice(0,2)}) ${d.slice(2,6)}-${d.slice(6)}`;
+  return tel || '';
+}
+
+/* junta os números da mesma pessoa (mesmo nome + mesmo WhatsApp) num cartão só */
+function gruposAdmin(){
+  const mapa = new Map();
+  estado.filter(i=>i.status!=='disponivel').forEach(item=>{
+    const chave = (item.nome||'').trim().toLowerCase() + '|' + (item.telefone||'').replace(/\D/g,'');
+    if(!mapa.has(chave)) mapa.set(chave, {nome:(item.nome||'').trim(), telefone:item.telefone||'', itens:[]});
+    mapa.get(chave).itens.push(item);
+  });
+  const grupos = [...mapa.values()];
+  grupos.forEach(g=>{
+    g.itens.sort((a,b)=>a.numero-b.numero);
+    g.pendentes   = g.itens.filter(i=>i.status==='reservado');
+    g.confirmados = g.itens.filter(i=>i.status==='confirmado');
+    g.ehPix = g.itens.some(i=>i.modo==='pix');
+    g.valorPendente = g.pendentes.reduce((soma,i)=> soma + valorDoNumero(i), 0);
+    g.menor = g.itens[0].numero;
+  });
+  // quem ainda não entregou aparece primeiro
+  grupos.sort((a,b)=> (b.pendentes.length>0) - (a.pendentes.length>0) || a.menor - b.menor);
+  return grupos;
+}
+
 function renderAdmin(){
   const conf = estado.filter(i=>i.status==='confirmado').length;
   const res  = estado.filter(i=>i.status==='reservado').length;
@@ -2287,62 +2367,152 @@ function renderAdmin(){
     : '';
   alvoPix.style.display = pendentesPix.length ? 'block' : 'none';
 
-  const lista = estado.filter(i=>i.status!=='disponivel').sort((a,b)=>a.numero-b.numero);
+  const grupos = gruposAdmin();
+  document.getElementById('admCntPend').textContent  = grupos.filter(g=>g.pendentes.length).length;
+  document.getElementById('admCntConf').textContent  = grupos.filter(g=>g.confirmados.length).length;
+  document.getElementById('admCntTodos').textContent = grupos.length;
+  document.querySelectorAll('#admFiltros button').forEach(b=> b.classList.toggle('active', b.dataset.filtro===admFiltro));
+  document.getElementById('admBuscaBox').style.display = grupos.length >= 5 ? 'block' : 'none';
+
+  const termo = admBusca.trim().toLowerCase();
+  const visiveis = grupos.filter(g=>{
+    if(admFiltro==='pendentes'   && !g.pendentes.length)   return false;
+    if(admFiltro==='confirmados' && !g.confirmados.length) return false;
+    if(!termo) return true;
+    return g.nome.toLowerCase().includes(termo)
+        || g.telefone.replace(/\D/g,'').includes(termo.replace(/\D/g,'') || 'x')
+        || g.itens.some(i=> pad2(i.numero)===pad2(parseInt(termo,10)||-1));
+  });
+
   const cont = document.getElementById('admList');
-  if(lista.length===0){
+  if(!grupos.length){
     cont.innerHTML = '<div class="empty-note">Nenhum número escolhido ainda.</div>';
     return;
   }
+  if(!visiveis.length){
+    cont.innerHTML = termo
+      ? '<div class="empty-note">Ninguém encontrado com esse nome ou número.</div>'
+      : (admFiltro==='pendentes'
+          ? '<div class="empty-note">Tudo em dia! Nenhuma entrega pendente. 💙</div>'
+          : '<div class="empty-note">Nenhuma participação confirmada ainda.</div>');
+    return;
+  }
+
   cont.innerHTML = '';
-  lista.forEach(item=>{
-    const faixa = faixaDoNumero(item.numero);
-    const row = document.createElement('div');
-    row.className = 'admin-row';
-    const confirmado = item.status==='confirmado';
-    const ehPix = item.modo==='pix';
-    const forma = ehPix ? `Pix ${item.marca} · ${brl(valorDoNumero(item))}` : 'Entrega';
-    row.innerHTML = `
-      <div class="n">${pad2(item.numero)}<i>${faixa.sigla}</i></div>
-      <div class="info">
-        <b>${item.nome || 'Sem nome'}</b>
-        <span>${faixa.label} · ${forma} · ${item.telefone || 'sem WhatsApp'}</span>
-        <span>${item.dataReserva || '—'}</span>
+  visiveis.forEach(g=>{
+    const temPend = g.pendentes.length > 0;
+    const card = document.createElement('div');
+    card.className = 'grupo' + (temPend ? ' pend' : '');
+
+    const tamanhos = [...new Set(g.itens.map(i=>faixaDoNumero(i.numero).sigla))].join(', ');
+    const forma = g.ehPix
+      ? (temPend ? `Pix · ${brl(g.valorPendente)} a receber` : 'Pix')
+      : 'Entrega';
+    const selo = temPend
+      ? `<span class="status-pill res">${g.pendentes.length === g.itens.length ? 'Falta entregar' : `Falta ${g.pendentes.length}`}</span>`
+      : `<span class="status-pill conf">Confirmado</span>`;
+
+    card.innerHTML = `
+      <div class="grupo-topo">
+        <div>
+          <b>${g.nome || 'Sem nome'}</b>
+          <span>${g.itens.length} número${g.itens.length>1?'s':''} · Pacote ${tamanhos} · ${forma}</span>
+          <span>${foneBonito(g.telefone) || 'sem WhatsApp'}</span>
+        </div>
+        ${selo}
       </div>
-      <span class="status-pill ${confirmado?'conf':'res'}">${confirmado?'Confirmado':(ehPix?'Aguardando Pix':'Aguardando')}</span>
-      <div class="admin-row-acoes">
-        <button class="mini-btn" data-acao="confirmar">${confirmado ? (ehPix?'Reabrir Pix':'Reabrir entrega') : (ehPix?'Confirmar Pix':'Confirmar entrega')}</button>
+      <div class="grupo-chips">
+        ${g.itens.map(i=>`<button data-num="${i.numero}" class="${i.status==='confirmado'?'ok':''}" title="Tocar para ${i.status==='confirmado'?'reabrir':'confirmar'} o número ${pad2(i.numero)}">${pad2(i.numero)}<i>${faixaDoNumero(i.numero).sigla}${i.status==='confirmado'?' ✓':''}</i></button>`).join('')}
+      </div>
+      <div class="grupo-acoes">
+        <button class="mini-btn" data-acao="confirmar">${temPend
+            ? (g.pendentes.length>1 ? `Confirmar os ${g.pendentes.length}` : (g.ehPix ? 'Confirmar Pix' : 'Confirmar entrega'))
+            : 'Reabrir'}</button>
         <button class="mini-btn" data-acao="whats">WhatsApp</button>
         <button class="mini-btn danger" data-acao="liberar">Liberar</button>
-      </div>
-    `;
-    row.querySelectorAll('.mini-btn').forEach(b=>{
-      b.addEventListener('click', ()=> acaoAdmin(item.numero, b.dataset.acao));
+      </div>`;
+
+    card.querySelectorAll('.grupo-chips button').forEach(b=>{
+      b.addEventListener('click', ()=> acaoAdmin(parseInt(b.dataset.num,10), 'confirmar'));
     });
-    cont.appendChild(row);
+    card.querySelectorAll('.grupo-acoes .mini-btn').forEach(b=>{
+      b.addEventListener('click', ()=> acaoGrupo(g, b.dataset.acao));
+    });
+    cont.appendChild(card);
   });
 }
 
+document.getElementById('admFiltros').addEventListener('click', e=>{
+  const b = e.target.closest('button'); if(!b) return;
+  admFiltro = b.dataset.filtro;
+  renderAdmin();
+  document.querySelector('.admin-tabela').scrollTop = 0;   // volta ao topo da lista
+});
+document.getElementById('admBusca').addEventListener('input', e=>{
+  admBusca = e.target.value;
+  renderAdmin();
+});
+
+/* mensagem de WhatsApp para a pessoa, cobrindo todos os números pendentes dela */
+function textoWhatsGrupo(g){
+  const alvos = g.pendentes.length ? g.pendentes : g.itens;
+  const lista = alvos.map(n=>`${pad2(n.numero)} — ${faixaDoNumero(n.numero).label}`).join('\n');
+  const plural = alvos.length > 1;
+  const saudacao = `Oi, ${(g.nome||'').split(' ')[0] || ''}!`.replace(' ,', ',');
+  if(g.ehPix){
+    return `${saudacao} Passando pra confirmar o Pix da Rifa do ${CONFIG.NOME_BEBE}.\n\n`
+         + `*${plural ? 'Números' : 'Número'}:*\n${lista}\n\n`
+         + `*Valor:* ${brl(g.valorPendente || g.itens.reduce((s,i)=>s+valorDoNumero(i),0))}\n`
+         + `*Chave Pix:* ${CONFIG.PIX_CHAVE}`;
+  }
+  return `${saudacao} Passando pra combinar a entrega ${plural ? 'dos pacotes' : 'do pacote'} da Rifa do ${CONFIG.NOME_BEBE}.\n\n`
+       + `*${plural ? 'Números' : 'Número'}:*\n${lista}`;
+}
+
+/* ações que valem para todos os números da pessoa de uma vez */
+async function acaoGrupo(g, acao){
+  if(acao==='whats'){
+    const fone = (g.telefone||'').replace(/\D/g,'');
+    if(!fone){ mostrarToast('Essa participação não tem WhatsApp cadastrado.'); return; }
+    const dd = fone.length<=11 ? '55'+fone : fone;
+    window.open(`https://wa.me/${dd}?text=${encodeURIComponent(textoWhatsGrupo(g))}`, '_blank');
+    return;
+  }
+
+  if(acao==='confirmar'){
+    const alvos = g.pendentes.length ? g.pendentes : g.confirmados;
+    const novo  = g.pendentes.length ? 'confirmado' : 'reservado';
+    if(!alvos.length) return;
+    if(novo==='reservado' && !confirm(`Reabrir ${alvos.length===1 ? 'o número' : `os ${alvos.length} números`} de ${g.nome || 'quem não tem nome'}?\n\nEles voltam para "falta entregar" e saem do sorteio até serem confirmados de novo.`)) return;
+    for(const i of alvos) await Persistencia.atualizarNumero(estado, i.numero, {status: novo});
+    mostrarToast(novo==='confirmado'
+      ? `${alvos.length===1 ? `Número ${pad2(alvos[0].numero)} confirmado` : `${alvos.length} números confirmados`} para ${g.nome || 'essa pessoa'}.`
+      : `${alvos.length===1 ? 'Número voltou' : 'Números voltaram'} para "falta entregar".`);
+  }
+
+  else if(acao==='liberar'){
+    const nums = g.itens.map(i=>pad2(i.numero)).join(', ');
+    if(!confirm(`Liberar ${g.itens.length===1 ? 'o número' : `os ${g.itens.length} números`} ${nums} de ${g.nome || 'quem não tem nome'}?\n\n${g.itens.length===1 ? 'Ele volta' : 'Eles voltam'} a ficar ${g.itens.length===1 ? 'disponível' : 'disponíveis'} e o cadastro é apagado.`)) return;
+    for(const i of g.itens) await Persistencia.atualizarNumero(estado, i.numero, {status:'disponivel', nome:'', telefone:'', dataReserva:'', modo:'', marca:''});
+    mostrarToast(`${g.itens.length===1 ? 'Número liberado' : `${g.itens.length} números liberados`}.`);
+  }
+
+  renderGrid();
+  renderAdmin();
+}
+
+/* ação em um número só (os chips do cartão) */
 function acaoAdmin(numero, acao){
   const item = estado.find(i=>i.numero===numero);
   if(acao==='confirmar'){
     const novo = item.status==='confirmado' ? 'reservado' : 'confirmado';
     Persistencia.atualizarNumero(estado, numero, {status: novo});
-    mostrarToast(novo==='confirmado' ? `Número ${pad2(numero)} confirmado.` : `Número ${pad2(numero)} voltou a aguardar entrega.`);
+    mostrarToast(novo==='confirmado' ? `Número ${pad2(numero)} confirmado.` : `Número ${pad2(numero)} voltou para "falta entregar".`);
   }
   else if(acao==='liberar'){
     if(!confirm(`Liberar o número ${pad2(numero)}? Ele volta a ficar disponível.`)) return;
     Persistencia.atualizarNumero(estado, numero, {status:'disponivel', nome:'', telefone:'', dataReserva:'', modo:'', marca:''});
     mostrarToast(`Número ${pad2(numero)} liberado.`);
-  }
-  else if(acao==='whats'){
-    const fone = (item.telefone||'').replace(/\D/g,'');
-    const texto = item.modo==='pix'
-      ? `Oi, ${item.nome || ''}! Passando pra confirmar o Pix de ${brl(valorDoNumero(item))} referente ao número ${pad2(numero)} (${faixaDoNumero(numero).label}) da Rifa do ${CONFIG.NOME_BEBE}. Chave: ${CONFIG.PIX_CHAVE}`
-      : `Oi, ${item.nome || ''}! Passando pra combinar a entrega do ${faixaDoNumero(numero).label} do número ${pad2(numero)} da Rifa do ${CONFIG.NOME_BEBE}.`;
-    if(!fone){ mostrarToast('Essa participação não tem WhatsApp cadastrado.'); return; }
-    const dd = fone.length<=11 ? '55'+fone : fone;
-    window.open(`https://wa.me/${dd}?text=${encodeURIComponent(texto)}`, '_blank');
-    return;
   }
   renderGrid();
   renderAdmin();
@@ -2371,7 +2541,7 @@ function abrirEdicaoAdmin(numero){
 document.getElementById('btnResetAll').addEventListener('click', async ()=>{
   const resposta = prompt('ATENÇÃO: isso apaga TODAS as reservas e confirmações reais da rifa e não tem como desfazer.\n\nPara confirmar, digite ZERAR:');
   if(resposta === null) return;
-  if(resposta.trim().toUpperCase() !== 'ZERAR'){ mostrarToast('Nada foi apagado.'); return; }
+  if((resposta||'').trim().toUpperCase() !== 'ZERAR'){ mostrarToast('Nada foi apagado.'); return; }
   const r = await Persistencia.zerarTudo();
   if(!r.ok) return;
   renderGrid();
@@ -3536,7 +3706,7 @@ document.getElementById('sorteioRecomecar').addEventListener('click', ()=>{
   } else {
     const r = prompt('Isso apaga o RESULTADO OFICIAL do sorteio (os números e participantes da rifa NÃO são alterados).\n\nPara confirmar, digite RECOMECAR:');
     if(r===null) return;
-    if(r.normalize('NFD').replace(/[̀-ͯ]/g,'').trim().toUpperCase() !== 'RECOMECAR'){ mostrarToast('Resultado mantido.'); return; }
+    if((r||'').normalize('NFD').replace(/[̀-ͯ]/g,'').trim().toUpperCase() !== 'RECOMECAR'){ mostrarToast('Resultado mantido.'); return; }
   }
   sorteio[sorteio.modo] = {vencedores:[]};
   salvarSorteio();
