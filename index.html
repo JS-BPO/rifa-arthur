@@ -752,6 +752,8 @@
   .admin-filtros button.active[data-filtro="pendentes"] i{color:var(--bear);}
   .admin-filtros button.active[data-filtro="confirmados"] i{color:var(--blue);}
 
+  .admin-contagem{font-size:11.5px; color:var(--ink-faint); margin:0 0 7px 2px;}
+  .admin-contagem b{color:var(--ink-soft); font-weight:600;}
   .admin-busca{margin-bottom:8px;}
   .admin-busca input{
     width:100%; padding:11px 13px; border-radius:11px;
@@ -1357,6 +1359,7 @@
     <div class="admin-busca" id="admBuscaBox">
       <input type="search" id="admBusca" placeholder="Buscar por nome ou número" autocomplete="off">
     </div>
+    <p class="admin-contagem" id="admContagem"></p>
     <div class="admin-tabela">
       <div id="admList"></div>
     </div>
@@ -2329,12 +2332,23 @@ function foneBonito(tel){
 function gruposAdmin(){
   const mapa = new Map();
   estado.filter(i=>i.status!=='disponivel').forEach(item=>{
-    const chave = (item.nome||'').trim().toLowerCase() + '|' + (item.telefone||'').replace(/\D/g,'');
-    if(!mapa.has(chave)) mapa.set(chave, {nome:(item.nome||'').trim(), telefone:item.telefone||'', itens:[]});
-    mapa.get(chave).itens.push(item);
+    // mesmo WhatsApp = mesma pessoa, mesmo que tenha escrito o nome de outro jeito;
+    // sem WhatsApp, agrupa por nome
+    const fone = (item.telefone||'').replace(/\D/g,'');
+    const chave = fone.length >= 10
+      ? 'tel:' + fone.slice(-11)
+      : 'nome:' + (item.nome||'').trim().toLowerCase() + '|' + fone;
+    if(!mapa.has(chave)) mapa.set(chave, {nomes:[], telefone:item.telefone||'', itens:[]});
+    const g = mapa.get(chave);
+    const nome = (item.nome||'').trim();
+    if(nome && !g.nomes.some(n=>n.toLowerCase()===nome.toLowerCase())) g.nomes.push(nome);
+    if(!g.telefone && item.telefone) g.telefone = item.telefone;
+    g.itens.push(item);
   });
   const grupos = [...mapa.values()];
   grupos.forEach(g=>{
+    // se escreveu o nome de jeitos diferentes, mostra todos
+    g.nome = g.nomes.sort((a,b)=>b.length-a.length).join(' · ');
     g.itens.sort((a,b)=>a.numero-b.numero);
     g.pendentes   = g.itens.filter(i=>i.status==='reservado');
     g.confirmados = g.itens.filter(i=>i.status==='confirmado');
@@ -2368,9 +2382,10 @@ function renderAdmin(){
   alvoPix.style.display = pendentesPix.length ? 'block' : 'none';
 
   const grupos = gruposAdmin();
-  document.getElementById('admCntPend').textContent  = grupos.filter(g=>g.pendentes.length).length;
-  document.getElementById('admCntConf').textContent  = grupos.filter(g=>g.confirmados.length).length;
-  document.getElementById('admCntTodos').textContent = grupos.length;
+  // as abas contam NÚMEROS, igual ao painel acima; a lista mostra um cartão por pessoa
+  document.getElementById('admCntPend').textContent  = res;
+  document.getElementById('admCntConf').textContent  = conf;
+  document.getElementById('admCntTodos').textContent = conf + res;
   document.querySelectorAll('#admFiltros button').forEach(b=> b.classList.toggle('active', b.dataset.filtro===admFiltro));
   document.getElementById('admBuscaBox').style.display = grupos.length >= 5 ? 'block' : 'none';
 
@@ -2383,6 +2398,13 @@ function renderAdmin(){
         || g.telefone.replace(/\D/g,'').includes(termo.replace(/\D/g,'') || 'x')
         || g.itens.some(i=> pad2(i.numero)===pad2(parseInt(termo,10)||-1));
   });
+
+  const elContagem = document.getElementById('admContagem');
+  elContagem.innerHTML = grupos.length
+    ? (visiveis.length === grupos.length
+        ? `<b>${grupos.length}</b> participante${grupos.length>1?'s':''} · ${conf+res} número${(conf+res)>1?'s':''}`
+        : `<b>${visiveis.length}</b> de ${grupos.length} participantes`)
+    : '';
 
   const cont = document.getElementById('admList');
   if(!grupos.length){
