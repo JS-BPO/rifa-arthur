@@ -1445,7 +1445,7 @@
       <div class="sorteio-premio">
         <img id="sorteioFoto" src="" alt="">
         <div>
-          <span class="sorteio-medalha" id="sorteioMedalha">1º PRÊMIO</span>
+          <span class="sorteio-medalha" id="sorteioMedalha">3º PRÊMIO</span>
           <b id="sorteioPremioNome"></b>
         </div>
       </div>
@@ -1456,7 +1456,7 @@
         <div class="sorteio-confete" id="sorteioConfete" aria-hidden="true"></div>
       </div>
 
-      <button class="btn btn-primary btn-full sorteio-btn" id="sorteioBtn">Sortear o 1º prêmio</button>
+      <button class="btn btn-primary btn-full sorteio-btn" id="sorteioBtn">Sortear o 3º prêmio</button>
 
       <div class="sorteio-info">
         <p id="sorteioElegiveisTxt"></p>
@@ -3413,6 +3413,17 @@ document.addEventListener('keydown', (e)=>{
    - modo TESTE e modo OFICIAL têm resultados separados.
 ============================================================ */
 const SORTEIO_KEY = 'rifa_arthur_sorteio_v1';
+/* ordem em que os prêmios são sorteados: do menor para o maior,
+   então o 1º prêmio (o mais esperado) fica para o final.
+   Os números são as posições em PREMIOS: 2 = 3º prêmio, 1 = 2º, 0 = 1º. */
+const ORDEM_SORTEIO = [2, 1, 0];
+
+/* vencedores na ordem de exibição do resultado (1º, 2º, 3º) */
+function vencedoresEmOrdem(){
+  return sorteioAtual().vencedores
+    .map((v,i)=> ({...v, idx: (typeof v.premioIdx === 'number' ? v.premioIdx : i)}))
+    .sort((a,b)=> a.idx - b.idx);
+}
 function sorteioVazio(){ return {modo:'teste', teste:{vencedores:[]}, oficial:{vencedores:[]}}; }
 function lerSorteio(){
   try{
@@ -3467,11 +3478,12 @@ function renderSorteio(){
   document.getElementById('sorteioDica').style.display = terminou ? 'none' : 'block';
   if(terminou){ renderResultadoFinal(); return; }
 
-  const k = mostrandoResultado ? vs.length - 1 : vs.length;     // prêmio na tela (0, 1 ou 2)
-  const premio = PREMIOS[k];
+  const k = mostrandoResultado ? vs.length - 1 : vs.length;     // etapa do sorteio (0, 1 ou 2)
+  const idx = ORDEM_SORTEIO[k];                                  // qual prêmio é essa etapa
+  const premio = PREMIOS[idx];
   const foto = document.getElementById('sorteioFoto');
   foto.src = premio.foto; foto.alt = nomePremio(premio);
-  document.getElementById('sorteioMedalha').textContent = `${k+1}º PRÊMIO`;
+  document.getElementById('sorteioMedalha').textContent = `${idx+1}º PRÊMIO`;
   document.getElementById('sorteioPremioNome').textContent = nomePremio(premio);
 
   const numEl = document.getElementById('sorteioNumero');
@@ -3502,10 +3514,10 @@ function renderSorteio(){
 
   const btn = document.getElementById('sorteioBtn');
   if(mostrandoResultado){
-    btn.textContent = k < 2 ? `Próximo: sortear o ${k+2}º prêmio` : 'Ver resultado final';
+    btn.textContent = k < 2 ? `Próximo: sortear o ${ORDEM_SORTEIO[k+1]+1}º prêmio` : 'Ver resultado final';
     btn.disabled = false;
   } else {
-    btn.textContent = `Sortear o ${k+1}º prêmio`;
+    btn.textContent = `Sortear o ${idx+1}º prêmio`;
     btn.disabled = sorteando || elegiveis.length === 0;
   }
 }
@@ -3567,9 +3579,11 @@ async function sortearPremio(){
   const vencedor = elegiveis[aleatorio(elegiveis.length)];     // escolhido só entre os elegíveis
   await animarNumeros(elegiveis.map(i=>i.numero), vencedor.numero);
 
+  const idxPremio = ORDEM_SORTEIO[vs.length];
   vs.push({
-    premio: vs.length + 1,
-    premioNome: nomePremio(PREMIOS[vs.length]),
+    premio: idxPremio + 1,
+    premioIdx: idxPremio,
+    premioNome: nomePremio(PREMIOS[idxPremio]),
     numero: vencedor.numero,
     nome: vencedor.nome || '',
     telefone: vencedor.telefone || '',
@@ -3592,24 +3606,22 @@ document.getElementById('sorteioBtn').addEventListener('click', ()=>{
 });
 
 function renderResultadoFinal(){
-  const vs = sorteioAtual().vencedores;
-  document.getElementById('sorteioResultados').innerHTML = vs.map((v,i)=>`
+  document.getElementById('sorteioResultados').innerHTML = vencedoresEmOrdem().map(v=>`
     <div class="sorteio-res">
       <div class="num">${pad2(v.numero)}</div>
       <div>
-        <small>${i+1}º PRÊMIO</small>
+        <small>${v.idx+1}º PRÊMIO</small>
         <b>${primeiroNome(v.nome)}</b>
-        <span>${nomePremio(PREMIOS[i])}</span>
+        <span>${nomePremio(PREMIOS[v.idx])}</span>
       </div>
     </div>`).join('');
   desenharStoryVencedores(document.getElementById('vencedoresCanvas'));
 }
 
 function textoResultado(){
-  const vs = sorteioAtual().vencedores;
   const medalhas = ['🥇','🥈','🥉'];
   return `*Resultado da Rifa do ${CONFIG.NOME_BEBE}* 💙` + (sorteio.modo==='teste' ? ' (TESTE)' : '') + `\n\n`
-    + vs.map((v,i)=>`${medalhas[i]} *${i+1}º prêmio:* ${nomePremio(PREMIOS[i])}\nNº ${pad2(v.numero)} — ${primeiroNome(v.nome)}`).join('\n\n')
+    + vencedoresEmOrdem().map(v=>`${medalhas[v.idx]} *${v.idx+1}º prêmio:* ${nomePremio(PREMIOS[v.idx])}\nNº ${pad2(v.numero)} — ${primeiroNome(v.nome)}`).join('\n\n')
     + `\n\nObrigada a todos que participaram e ajudaram na chegada do ${CONFIG.NOME_BEBE}!`;
 }
 document.getElementById('btnCompartilharResultado').addEventListener('click', async ()=>{
@@ -3625,7 +3637,7 @@ document.getElementById('btnCompartilharResultado').addEventListener('click', as
 async function desenharStoryVencedores(canvas){
   const ctx = canvas.getContext('2d');
   const W = canvas.width, H = canvas.height;
-  const vs = sorteioAtual().vencedores;
+  const vs = vencedoresEmOrdem();
   try{ await garantirFontes(); }catch(e){}
   await prepararFotosPremios();
   ctx.clearRect(0,0,W,H);
@@ -3644,7 +3656,7 @@ async function desenharStoryVencedores(canvas){
   const cardX = 80, cardW = W - 160, cardH = 280, gap = 28, fotoW = 384, fotoH = 240;
   vs.forEach((v,i)=>{
     const y = 560 + i*(cardH+gap);
-    const p = PREMIOS[i];
+    const p = PREMIOS[v.idx];
     ctx.fillStyle = 'rgba(41,68,90,0.05)';
     roundRect(ctx, cardX+4, y+8, cardW, cardH, 30); ctx.fill();
     ctx.fillStyle = '#FFFDFC';
@@ -3663,7 +3675,7 @@ async function desenharStoryVencedores(canvas){
 
     ctx.fillStyle = BEAR_DARK;
     ctx.font = '600 20px Inter, sans-serif';
-    textoEsquerda(ctx, `${i+1}º PRÊMIO`, tx, ty + 18, 4);
+    textoEsquerda(ctx, `${v.idx+1}º PRÊMIO`, tx, ty + 18, 4);
     ctx.fillStyle = NAVY;
     ctx.font = '400 66px Fraunces, Georgia, serif';
     ctx.fillText('Nº ' + pad2(v.numero), tx, ty + 26 + 62);
