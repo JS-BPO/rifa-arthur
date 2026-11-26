@@ -973,9 +973,25 @@
     .reveal{opacity:1; transform:none;}
     html{scroll-behavior:auto;}
   }
+
+  /* aviso fixo quando o banco de dados nao responde */
+  .barra-offline{position:fixed; top:0; left:0; right:0; z-index:9999; display:none;
+    background:#b03030; color:#fff; padding:11px 15px 13px; font-size:13.5px; line-height:1.45;
+    box-shadow:0 2px 12px rgba(0,0,0,.22); text-align:left;}
+  .barra-offline.on{display:block}
+  .barra-offline b{display:block; font-size:14.5px; margin-bottom:3px}
+  .barra-offline button{display:block; margin:10px 0 0; background:#fff; color:#b03030;
+    border:0; border-radius:8px; padding:9px 16px; font-size:13px; font-weight:700;
+    font-family:inherit; cursor:pointer;}
+  .versao-rodape{margin:16px 0 0 !important; font-size:11px; color:#9b9089; letter-spacing:.02em}
 </style>
 </head>
 <body>
+<div class="barra-offline" id="barraOffline" role="alert">
+  <b>Sem conexão com o banco de dados</b>
+  Os números desta tela <u>não são os reais</u>. Não confirme, libere nem zere nada aqui.
+  <button type="button" id="btnTentarDeNovo">Tentar de novo</button>
+</div>
 
 <!-- ================= URSINHO — personagem único, reutilizado ================= -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -1224,6 +1240,7 @@
   </button>
   <br>
   <button class="link-organizador" id="btnAdminOpen">Área do organizador</button>
+  <p class="versao-rodape" id="versaoRodape"></p>
 </footer>
 
 <!-- ================= BARRA DE SELEÇÃO ================= -->
@@ -1489,6 +1506,7 @@
    CONFIGURAÇÃO — edite apenas esta seção para personalizar
 ============================================================ */
 const CONFIG = {
+  VERSAO: "2.1 · 26/11/2026",   // aparece no rodapé, para conferir qual versão o aparelho carregou
   NOME_BEBE: "Arthur",
   NOME_ORGANIZADOR: "mamãe do Arthur",  // usado nos textos da página
   SAUDACAO_PARTICIPANTE: "mamãe do Arthur", // como o participante chama no WhatsApp
@@ -1652,7 +1670,8 @@ const Persistencia = {
       console.error('Firebase indisponível, usando modo local.', e);
       this.modo = 'local';
       grid.classList.remove('carregando');
-      mostrarToast('Não consegui conectar ao banco de dados. Atualize a página.');
+      mostrarToast('Não consegui conectar ao banco de dados.');
+      mostrarBarraOffline();
     }
   },
 
@@ -1847,6 +1866,16 @@ function valorDoNumero(item){
    TOAST
 ============================================================ */
 let toastTimer=null;
+function mostrarBarraOffline(){
+  const b = document.getElementById('barraOffline');
+  if(!b || b.classList.contains('on')) return;
+  b.classList.add('on');
+  /* empurra a pagina para a barra nao cobrir o topo */
+  document.body.style.paddingTop = b.offsetHeight + 'px';
+  window.addEventListener('resize', ()=>{
+    if(b.classList.contains('on')) document.body.style.paddingTop = b.offsetHeight + 'px';
+  });
+}
 function mostrarToast(msg){
   const el = document.getElementById('toast');
   el.textContent = msg;
@@ -1897,13 +1926,17 @@ function iniciarContagem(){
     'Sorteio em ' + alvo.toLocaleDateString('pt-BR', {day:'2-digit', month:'long'}) +
     ', às ' + alvo.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
 
+  let timer = null;      // declarado ANTES de tick(), senao quebra quando a data ja passou
+  let encerrou = false;
+
   function tick(){
     const resta = alvo - new Date();
     if(resta <= 0){
+      encerrou = true;
       document.getElementById('cdLabel').textContent = '';
       document.getElementById('cdBoxes').innerHTML =
         '<div style="max-width:none; background:none;"><span class="cd-encerrado">As escolhas foram encerradas 💙</span></div>';
-      clearInterval(timer);
+      if(timer){ clearInterval(timer); timer = null; }
       return;
     }
     const d = Math.floor(resta/86400000);
@@ -1916,7 +1949,7 @@ function iniciarContagem(){
     document.getElementById('cdS').textContent = String(sg).padStart(2,'0');
   }
   tick();
-  const timer = setInterval(tick, 1000);
+  if(!encerrou) timer = setInterval(tick, 1000);   // sem contagem depois do sorteio
 }
 
 /* ============================================================
@@ -3778,10 +3811,36 @@ document.getElementById('sorteioFechar').addEventListener('click', fecharSorteio
 /* ============================================================
    INIT
 ============================================================ */
-renderGrid();
-iniciarContagem();
-aplicarLinkDireto();
-Persistencia.iniciar();
+/* cada etapa e isolada: uma falha na interface nao pode mais impedir a conexao com o banco */
+function etapa(nome, fn){
+  try{ fn(); }
+  catch(e){ console.error('Falha na etapa "' + nome + '":', e); }
+}
+etapa('renderGrid', renderGrid);
+etapa('iniciarContagem', iniciarContagem);
+etapa('aplicarLinkDireto', aplicarLinkDireto);
+
+/* mostra a versao carregada, para conferir se o aparelho pegou o arquivo novo */
+(function(){
+  const el = document.getElementById('versaoRodape');
+  if(el && CONFIG.VERSAO) el.textContent = 'versão ' + CONFIG.VERSAO;
+})();
+
+/* recarrega ignorando o cache do navegador */
+(function(){
+  const b = document.getElementById('btnTentarDeNovo');
+  if(b) b.addEventListener('click', ()=>{
+    location.replace(location.pathname + '?r=' + Date.now());
+  });
+})();
+
+/* se o Firebase esta configurado mas nao subiu, avisa em vez de falhar calado */
+Persistencia.iniciar().then(()=>{
+  if(CONFIG.FIREBASE && Persistencia.modo !== 'firestore') mostrarBarraOffline();
+}).catch(err=>{
+  console.error('Falha ao iniciar a persistencia:', err);
+  if(CONFIG.FIREBASE) mostrarBarraOffline();
+});
 </script>
 </body>
 </html>
